@@ -15,12 +15,10 @@ import javax.annotation.Resource;
  * Created by 2fx0one on 28/5/2018.
  * TODE 需要重写缓存配置
  */
-@Component
 public class CacheUtils {
 
     private boolean isUseRedis = false;
 
-    @Resource
     private static CacheManager cacheManager = SpringContextHolder.getBean("ehCacheCacheManager");
 
     private static Cache getCache(String cacheName) {
