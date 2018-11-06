@@ -39,6 +39,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         chain.doFilter(request, response);
 
     }
@@ -50,9 +51,9 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             throw new RuntimeException("Token为空");
         }
         // parse the token.
-        String user = null;
+//        String user = null;
         try {
-            user = Jwts.parser()
+            String user = Jwts.parser()
                     .setSigningKey("SIGNING_KEY_123456")
                     .parseClaimsJws(token.replace("Bearer ", ""))
                     .getBody()
