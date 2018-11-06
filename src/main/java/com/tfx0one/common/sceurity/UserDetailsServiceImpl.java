@@ -20,6 +20,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
+        //TODO  拿到角色列表
+
         return new org.springframework.security.core.userdetails.User("admin", "123456", emptyList());
 
     }
