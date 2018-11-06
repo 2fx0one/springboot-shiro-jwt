@@ -1,4 +1,4 @@
-package com.tfx0one.springboot;
+package com.tfx0one;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
