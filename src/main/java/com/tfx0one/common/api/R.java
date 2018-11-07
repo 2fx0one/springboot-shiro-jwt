@@ -16,7 +16,6 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel("返回结果模型")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class R<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -25,7 +25,7 @@
         </commentGenerator>
 
         <!--数据库链接地址账号密码-->
-        <jdbcConnection driverClass="${spring.datasource.driver-class-name}"
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="${spring.datasource.url}"
                         userId="${spring.datasource.username}"
                         password="${spring.datasource.password}">
@@ -60,6 +60,9 @@
         去掉Mybatis Generator生成的一堆 example
         -->
 
+        <table tableName="sys_user" domainObjectName="SysUser" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
 
         <!--<table tableName="e_shop_promotion" domainObjectName="EShopPromotion" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
         <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->

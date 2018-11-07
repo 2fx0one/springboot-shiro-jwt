@@ -9,8 +9,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
+
 //关闭JDK动态代理机制
 @EnableTransactionManagement(proxyTargetClass = true)
+
+//只能扫描 Mapper 注解的 接口
 @MapperScan(basePackages = {"com.tfx0one.center"}, annotationClass = Mapper.class)
 public class SpringbootApplication {
 

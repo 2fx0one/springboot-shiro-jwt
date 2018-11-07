@@ -12,9 +12,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -24,68 +22,119 @@ import javax.annotation.Resource;
 /**
  * Created by 2fx0one on 2018/6/4.
  */
+
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    /**
-     * 需要放行的URL
-     */
-    private static final String[] AUTH_WHITELIST = {
-            // -- register url
-            "/users/signup",
-            // -- swagger ui
+    //springboot安全配置 配合 JWT Token 使用
+
+    @Override
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Resource
+    private com.tfx0one.common.sceurity.impl.UserDetailsServiceImpl UserDetailsServiceImpl;
+
+    @Resource
+    private com.tfx0one.common.sceurity.filter.AuthenticationFilter AuthenticationFilter;
+
+    @Autowired
+    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder
+                // 设置UserDetailsService
+                .userDetailsService(UserDetailsServiceImpl)
+                // 使用BCrypt进行密码的hash
+                .passwordEncoder(passwordEncoder());
+    }
+
+    // 装载BCrypt密码编码器
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+//    @Bean
+//    public JwtAuthenticationTokenFilter authenticationTokenFilter() throws Exception {
+//        return new JwtAuthenticationTokenFilter();
+//    }
+
+    private static String[] antPatternsPermitAllMethodGet = {
+            // 允许对于网站静态资源的无授权访问
+            "/",
             "/v2/api-docs",
-            "/swagger-resources",
             "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**"
-            // other public endpoints of your API may be appended to this array
+            "/*.html",
+            "*.ico",
+            "/**/*.html",
+            "/**/*.png",
+            "/**/*.css",
+            "/**/*.js",
+            //微信主页
+            APIConstant.weChatPageMain,
+            APIConstant.weChatPageInfo,
+
+            //微信主页 分类信息 树状
+            APIConstant.weChatProductGroupTree,
+
+            //微信主页 分类中的商品列表
+            APIConstant.weChatProductGroupProducts,
+
+            //商品详情页需要的数据，整合多个单品数据
+            APIConstant.weChatProductDetail,
+
+            //商品详情页选择规格时需要的价格规格和库存
+            APIConstant.weChatProductSkuDetailList,
+
+            //获取动态二维码
+            APIConstant.weChatQrCodeGenerate,
+
+            APIConstant.wechatVideoGetUrl
     };
 
-    @Resource
-    private UserDetailsService userDetailsService;
+    private static String[] antPatternsPermitAllMethodPost = {
+            APIConstant.paymentNotifyFromWeChat, //微信需要的支付通知
+            APIConstant.weChatQrCodeGenerate,     //获取动态二维码
+            APIConstant.weChatAdvisoryAdd,    //获取用户的反馈信息
+            APIConstant.authSysUserLogin, //后台网页登录
+            APIConstant.authWeChatLogin //微信登录
+    };
 
-    @Resource
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-    /*@Autowired
-    private CustomAccessDeniedHandler customAccessDeniedHandler;
-
-    @Autowired
-    private CustomLogoutSuccessHandler customLogoutSuccessHandler;
-
-    @Autowired
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;*/
-
-    // 设置 HTTP 验证规则
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        LogoutConfigurer<HttpSecurity> httpSecurityLogoutConfigurer = http.cors().and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .anyRequest().authenticated()  // 所有请求需要身份认证
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .cors()
                 .and()
-                .addFilter(new JWTLoginFilter(authenticationManager())) //验证
-                .addFilter(new JWTAuthenticationFilter(authenticationManager())) //授权
-                .logout() // 默认注销行为为logout，可以通过下面的方式来修改
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")// 设置注销成功后跳转页面，默认是跳转到登录页面;
-//                .logoutSuccessHandler(customLogoutSuccessHandler)
-                .permitAll();
-    }
+                // 由于使用的是JWT，我们这里不需要csrf
+                .csrf().disable()
 
-    // 该方法是登录的时候会进入
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 使用自定义身份验证组件
-        auth.authenticationProvider(new CustomAuthenticationProvider(userDetailsService, bCryptPasswordEncoder));
+                // 基于token，所以不需要session
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+
+                .authorizeRequests()
+                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                .antMatchers(
+                        HttpMethod.GET,
+                        antPatternsPermitAllMethodGet
+                ).permitAll()
+
+                .antMatchers(
+                        HttpMethod.POST,
+                        antPatternsPermitAllMethodPost
+                ).permitAll()
+
+                // 除上面外的所有请求全部需要鉴权认证
+                .anyRequest().authenticated();
+
+
+        // 禁用缓存
+        httpSecurity.headers().cacheControl();
+
+        httpSecurity.addFilterBefore(AuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
-

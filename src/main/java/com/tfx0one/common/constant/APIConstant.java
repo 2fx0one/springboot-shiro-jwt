@@ -19,9 +19,13 @@ public class APIConstant {
     //临时的注册
     //    public static final String authRegister = "/auth/register";
     //后台网页登录
-    public static final String authLogin = API_VERSION + "/auth/account/login";
+    public static final String authSysUserLogin = API_VERSION + "/auth/user/login";
     //后台网页
-    public static final String authVendorInfo = API_VERSION + "/auth/account/info";
+    public static final String authSysUserInfo = API_VERSION + "/auth/user/info";
+
+
+
+
     //微信登录
     public static final String authWeChatLogin = "/auth/wxlogin";
 
