@@ -7,7 +7,8 @@ import com.tfx0one.center.sys.model.SysUser;
  * @date : 2018/11/7 11:11
  */
 public interface SysUserService {
-    SysUser getUserByUsername(String username);
+
+    SysUser getByUsername(String username);
 
     SysUser login(String username, String password);
 }

@@ -51,6 +51,7 @@ public class LoginController {
     @RequestMapping(path = APIConstant.authSysUserInfo, method = RequestMethod.POST)
     @ApiOperation("管理后台网页登录的用户信息 菜单信息")
     public R<ResponseUserInfo> sysUserInfo() {
+        //获取菜单列表
         return R.ok();
     }
 }

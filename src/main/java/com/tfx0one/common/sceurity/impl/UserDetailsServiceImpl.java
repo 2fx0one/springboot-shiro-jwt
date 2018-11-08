@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (username == null) {
             throw new UsernameNotFoundException("No user found with username 'null' !");
         }
-        SysUser sysUser = sysUserService.getUserByUsername(username);
+        SysUser sysUser = sysUserService.getByUsername(username);
 
         if (sysUser == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));

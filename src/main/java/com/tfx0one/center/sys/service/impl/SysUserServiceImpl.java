@@ -25,7 +25,7 @@ public class SysUserServiceImpl extends BaseService<SysUser> implements SysUserS
     @Resource
     private AuthenticationManager authenticationManager;
     @Override
-    public SysUser getUserByUsername(String username) {
+    public SysUser getByUsername(String username) {
         return this.selectOne(new SysUser().withUsername(username));
     }
 
@@ -37,7 +37,7 @@ public class SysUserServiceImpl extends BaseService<SysUser> implements SysUserS
         //账号和密码验证
         authenticateUsernameAndPassword(username, password);
 
-        return getUserByUsername(username);
+        return getByUsername(username);
 
     }
 
