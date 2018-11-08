@@ -28,9 +28,6 @@ create table sys_user
 )
 ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='系统用户表';
 
-alter table sys_user comment '系统用户表';
-
-
 CREATE TABLE `sys_role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `role_name` varchar(255) DEFAULT '' COMMENT '角色名字',
@@ -54,14 +51,16 @@ CREATE TABLE `sys_user_role` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='用户和角色 关系表 多对多';
 
 
+
 CREATE TABLE `sys_menu` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) unsigned NOT NULL COMMENT '父级ID',
   `sort_order` tinyint(4) DEFAULT NULL COMMENT '排序',
-  `label` varchar(64) NOT NULL DEFAULT '' COMMENT '菜单名字',
+  `menu_name` varchar(64) NOT NULL DEFAULT '' COMMENT '菜单名字',
   `icon` varchar(255) DEFAULT '' COMMENT '菜单图片',
   `description` varchar(255) DEFAULT '' COMMENT '菜单描述',
   `path` varchar(255) NOT NULL DEFAULT '' COMMENT '菜单链接',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '菜单URL',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `create_by` varchar(64) DEFAULT NULL COMMENT '更新者',
