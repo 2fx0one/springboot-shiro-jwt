@@ -1,9 +1,7 @@
 package com.tfx0one.center.sys.mapper;
 
 import com.tfx0one.center.sys.model.SysRole;
-import com.tfx0one.common.util.CommonMapper;
-import org.apache.ibatis.annotations.Mapper;
+import tk.mybatis.mapper.common.Mapper;
 
-@Mapper
-public interface SysRoleMapper extends CommonMapper<SysRole> {
+public interface SysRoleMapper extends Mapper<SysRole> {
 }

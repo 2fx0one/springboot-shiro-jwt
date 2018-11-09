@@ -66,9 +66,9 @@
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
 
-        <!--<table tableName="sys_user" domainObjectName="SysUser" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
-        <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="sys_user" domainObjectName="SysUser" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
 
         <!--<table tableName="e_shop_promotion" domainObjectName="EShopPromotion" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
         <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
@@ -166,9 +166,9 @@
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
 
-        <table tableName="e_shop_user_order" domainObjectName="EShopUserOrder" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-        </table>
+        <!--<table tableName="e_shop_user_order" domainObjectName="EShopUserOrder" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
 
         <!--<table tableName="e_shop_user_order_goods" domainObjectName="EShopUserOrderGoods" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
         <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
