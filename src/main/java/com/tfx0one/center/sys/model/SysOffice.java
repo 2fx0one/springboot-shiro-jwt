@@ -21,6 +21,9 @@ public class SysOffice extends BaseEntity {
      */
     private String name;
 
+    /**
+     * 排序
+     */
     private Short sort;
 
     /**
@@ -33,18 +36,36 @@ public class SysOffice extends BaseEntity {
      */
     private String grade;
 
+    /**
+     * 地址
+     */
     private String address;
 
+    /**
+     * 邮编
+     */
     @Column(name = "zip_code")
     private String zipCode;
 
+    /**
+     * 传真
+     */
     private String fax;
 
+    /**
+     * 邮件
+     */
     private String email;
 
+    /**
+     * 主要负责人
+     */
     @Column(name = "primary_person")
     private String primaryPerson;
 
+    /**
+     * 副负责人
+     */
     @Column(name = "deputy_person")
     private String deputyPerson;
 
@@ -149,7 +170,9 @@ public class SysOffice extends BaseEntity {
     }
 
     /**
-     * @return sort
+     * 获取排序
+     *
+     * @return sort - 排序
      */
     public Short getSort() {
         return sort;
@@ -161,7 +184,9 @@ public class SysOffice extends BaseEntity {
     }
 
     /**
-     * @param sort
+     * 设置排序
+     *
+     * @param sort 排序
      */
     public void setSort(Short sort) {
         this.sort = sort;
@@ -214,7 +239,9 @@ public class SysOffice extends BaseEntity {
     }
 
     /**
-     * @return address
+     * 获取地址
+     *
+     * @return address - 地址
      */
     public String getAddress() {
         return address;
@@ -226,14 +253,18 @@ public class SysOffice extends BaseEntity {
     }
 
     /**
-     * @param address
+     * 设置地址
+     *
+     * @param address 地址
      */
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
     }
 
     /**
-     * @return zip_code
+     * 获取邮编
+     *
+     * @return zip_code - 邮编
      */
     public String getZipCode() {
         return zipCode;
@@ -245,14 +276,18 @@ public class SysOffice extends BaseEntity {
     }
 
     /**
-     * @param zipCode
+     * 设置邮编
+     *
+     * @param zipCode 邮编
      */
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode == null ? null : zipCode.trim();
     }
 
     /**
-     * @return fax
+     * 获取传真
+     *
+     * @return fax - 传真
      */
     public String getFax() {
         return fax;
@@ -264,14 +299,18 @@ public class SysOffice extends BaseEntity {
     }
 
     /**
-     * @param fax
+     * 设置传真
+     *
+     * @param fax 传真
      */
     public void setFax(String fax) {
         this.fax = fax == null ? null : fax.trim();
     }
 
     /**
-     * @return email
+     * 获取邮件
+     *
+     * @return email - 邮件
      */
     public String getEmail() {
         return email;
@@ -283,14 +322,18 @@ public class SysOffice extends BaseEntity {
     }
 
     /**
-     * @param email
+     * 设置邮件
+     *
+     * @param email 邮件
      */
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
     }
 
     /**
-     * @return primary_person
+     * 获取主要负责人
+     *
+     * @return primary_person - 主要负责人
      */
     public String getPrimaryPerson() {
         return primaryPerson;
@@ -302,14 +345,18 @@ public class SysOffice extends BaseEntity {
     }
 
     /**
-     * @param primaryPerson
+     * 设置主要负责人
+     *
+     * @param primaryPerson 主要负责人
      */
     public void setPrimaryPerson(String primaryPerson) {
         this.primaryPerson = primaryPerson == null ? null : primaryPerson.trim();
     }
 
     /**
-     * @return deputy_person
+     * 获取副负责人
+     *
+     * @return deputy_person - 副负责人
      */
     public String getDeputyPerson() {
         return deputyPerson;
@@ -321,7 +368,9 @@ public class SysOffice extends BaseEntity {
     }
 
     /**
-     * @param deputyPerson
+     * 设置副负责人
+     *
+     * @param deputyPerson 副负责人
      */
     public void setDeputyPerson(String deputyPerson) {
         this.deputyPerson = deputyPerson == null ? null : deputyPerson.trim();

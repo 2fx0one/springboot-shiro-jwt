@@ -16,6 +16,9 @@ public class SysRole extends BaseEntity {
     @Column(name = "office_id")
     private Integer officeId;
 
+    /**
+     * 名称
+     */
     private String name;
 
     /**
@@ -102,7 +105,9 @@ public class SysRole extends BaseEntity {
     }
 
     /**
-     * @return name
+     * 获取名称
+     *
+     * @return name - 名称
      */
     public String getName() {
         return name;
@@ -114,7 +119,9 @@ public class SysRole extends BaseEntity {
     }
 
     /**
-     * @param name
+     * 设置名称
+     *
+     * @param name 名称
      */
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
