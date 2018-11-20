@@ -33,7 +33,6 @@ CREATE TABLE `sys_office` (
   `type` varchar(64) NOT NULL DEFAULT '' COMMENT '部门类型',
   `grade` varchar(64) NOT NULL DEFAULT '' COMMENT '部门等级',
   `icon` varchar(255) DEFAULT '' COMMENT '部门图标',
-
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
