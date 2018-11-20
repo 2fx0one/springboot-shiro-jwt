@@ -1,6 +1,8 @@
 package com.tfx0one.center.sys.controller;
 
+import com.tfx0one.center.sys.model.SysMenu;
 import com.tfx0one.center.sys.model.SysUser;
+import com.tfx0one.center.sys.service.SysMenuService;
 import com.tfx0one.center.sys.service.SysUserService;
 import com.tfx0one.center.sys.vo.RequestUserLogin;
 import com.tfx0one.center.sys.vo.ResponseUserInfo;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author : 2fx0one
@@ -28,6 +31,9 @@ public class LoginController {
     @Resource
     SysUserService sysUserService;
 
+    @Resource
+    SysMenuService sysMenuService;
+
 //    @RequestMapping(path = "/", method = RequestMethod.GET)
 //    public R index() {
 //        return R.ok("index");
@@ -36,6 +42,7 @@ public class LoginController {
     @ApiOperation("管理后台网页登录")
     @RequestMapping(path = APIConstant.authSysUserLogin, method = RequestMethod.POST)
     public R sysUserlogin(@RequestBody RequestUserLogin login) {
+
         //验证用户
         SysUser sysUser = sysUserService.login(login.getUsername(), login.getPassword());
 
@@ -44,6 +51,9 @@ public class LoginController {
 
         System.out.println("token =  " + token);
 
+        List<SysMenu> l = sysMenuService.select(null);
+        l.forEach(System.out::println);
+
         return R.ok("success 登录成功!", ResponseUserLogin.create(sysUser, token));
     }
 
@@ -51,6 +61,7 @@ public class LoginController {
     @RequestMapping(path = APIConstant.authSysUserInfo, method = RequestMethod.POST)
     @ApiOperation("管理后台网页登录的用户信息 菜单信息")
     public R<ResponseUserInfo> sysUserInfo() {
+
         //获取菜单列表
         return R.ok();
     }

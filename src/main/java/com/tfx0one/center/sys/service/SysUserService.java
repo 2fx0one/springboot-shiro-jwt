@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * @author : 2fx0one
  * @date : 2018/11/7 11:12
@@ -20,6 +22,7 @@ public class SysUserService extends BaseService<SysUser> {
 
     private final Logger logger = LoggerFactory.getLogger(SysUserService.class);
 
+    @Resource
     private AuthenticationManager authenticationManager;
 
     public SysUser getByUsername(String username) {
@@ -34,7 +37,6 @@ public class SysUserService extends BaseService<SysUser> {
         authenticateUsernameAndPassword(username, password);
 
         return getByUsername(username);
-
     }
 
     //密码验证: authentication 会调用配置好的 UserDetailsService.loadUserByUsername(username)

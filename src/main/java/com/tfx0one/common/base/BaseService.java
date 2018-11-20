@@ -1,7 +1,5 @@
 package com.tfx0one.common.base;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -15,7 +13,7 @@ public abstract class BaseService<T extends BaseEntity> implements Service<T> {
     @Autowired
     protected Mapper<T> mapper;
 
-//    public Mapper<T> getMapper() {
+    //    public Mapper<T> getMapper() {
 //        return mapper;
 //    }
     @Override

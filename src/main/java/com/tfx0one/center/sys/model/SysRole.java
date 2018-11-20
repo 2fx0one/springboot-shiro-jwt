@@ -6,9 +6,9 @@ import javax.persistence.*;
 
 @Table(name = "sys_role")
 public class SysRole extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Integer id;
 
     /**
      * 角色名字
@@ -62,24 +62,13 @@ public class SysRole extends BaseEntity {
     @Column(name = "del_flag")
     private Byte delFlag;
 
-    /**
-     * @return id
-     */
-    public Integer getId() {
-        return id;
-    }
+
 
     public SysRole withId(Integer id) {
         this.setId(id);
         return this;
     }
 
-    /**
-     * @param id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     /**
      * 获取角色名字
@@ -294,7 +283,7 @@ public class SysRole extends BaseEntity {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
+//        sb.append(", id=").append(id);
         sb.append(", roleName=").append(roleName);
         sb.append(", displayName=").append(displayName);
         sb.append(", description=").append(description);
