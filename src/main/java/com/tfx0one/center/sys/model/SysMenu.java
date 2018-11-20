@@ -19,14 +19,12 @@ public class SysMenu extends BaseEntity {
     /**
      * 排序
      */
-    @Column(name = "sort_order")
-    private Byte sortOrder;
+    private Byte sort;
 
     /**
      * 菜单名字
      */
-    @Column(name = "menu_name")
-    private String menuName;
+    private String name;
 
     /**
      * 菜单图片
@@ -34,31 +32,36 @@ public class SysMenu extends BaseEntity {
     private String icon;
 
     /**
-     * 菜单描述
+     * 菜单类型
      */
-    private String description;
+    private Byte type;
+
+    /**
+     * 是否显示
+     */
+    private Byte show;
 
     /**
      * 菜单链接
      */
-    private String path;
+    private String permission;
 
     /**
      * 菜单URL
      */
-    private String url;
+    private String href;
 
     /**
      * 创建时间
      */
-    @Column(name = "create_time")
-    private Date createTime;
+    @Column(name = "create_date")
+    private Date createDate;
 
     /**
      * 更新时间
      */
-    @Column(name = "update_time")
-    private Date updateTime;
+    @Column(name = "update_date")
+    private Date updateDate;
 
     /**
      * 更新者
@@ -128,47 +131,47 @@ public class SysMenu extends BaseEntity {
     /**
      * 获取排序
      *
-     * @return sort_order - 排序
+     * @return sort - 排序
      */
-    public Byte getSortOrder() {
-        return sortOrder;
+    public Byte getSort() {
+        return sort;
     }
 
-    public SysMenu withSortOrder(Byte sortOrder) {
-        this.setSortOrder(sortOrder);
+    public SysMenu withSort(Byte sort) {
+        this.setSort(sort);
         return this;
     }
 
     /**
      * 设置排序
      *
-     * @param sortOrder 排序
+     * @param sort 排序
      */
-    public void setSortOrder(Byte sortOrder) {
-        this.sortOrder = sortOrder;
+    public void setSort(Byte sort) {
+        this.sort = sort;
     }
 
     /**
      * 获取菜单名字
      *
-     * @return menu_name - 菜单名字
+     * @return name - 菜单名字
      */
-    public String getMenuName() {
-        return menuName;
+    public String getName() {
+        return name;
     }
 
-    public SysMenu withMenuName(String menuName) {
-        this.setMenuName(menuName);
+    public SysMenu withName(String name) {
+        this.setName(name);
         return this;
     }
 
     /**
      * 设置菜单名字
      *
-     * @param menuName 菜单名字
+     * @param name 菜单名字
      */
-    public void setMenuName(String menuName) {
-        this.menuName = menuName == null ? null : menuName.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     /**
@@ -195,118 +198,141 @@ public class SysMenu extends BaseEntity {
     }
 
     /**
-     * 获取菜单描述
+     * 获取菜单类型
      *
-     * @return description - 菜单描述
+     * @return type - 菜单类型
      */
-    public String getDescription() {
-        return description;
+    public Byte getType() {
+        return type;
     }
 
-    public SysMenu withDescription(String description) {
-        this.setDescription(description);
+    public SysMenu withType(Byte type) {
+        this.setType(type);
         return this;
     }
 
     /**
-     * 设置菜单描述
+     * 设置菜单类型
      *
-     * @param description 菜单描述
+     * @param type 菜单类型
      */
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
+    /**
+     * 获取是否显示
+     *
+     * @return show - 是否显示
+     */
+    public Byte getShow() {
+        return show;
+    }
+
+    public SysMenu withShow(Byte show) {
+        this.setShow(show);
+        return this;
+    }
+
+    /**
+     * 设置是否显示
+     *
+     * @param show 是否显示
+     */
+    public void setShow(Byte show) {
+        this.show = show;
     }
 
     /**
      * 获取菜单链接
      *
-     * @return path - 菜单链接
+     * @return permission - 菜单链接
      */
-    public String getPath() {
-        return path;
+    public String getPermission() {
+        return permission;
     }
 
-    public SysMenu withPath(String path) {
-        this.setPath(path);
+    public SysMenu withPermission(String permission) {
+        this.setPermission(permission);
         return this;
     }
 
     /**
      * 设置菜单链接
      *
-     * @param path 菜单链接
+     * @param permission 菜单链接
      */
-    public void setPath(String path) {
-        this.path = path == null ? null : path.trim();
+    public void setPermission(String permission) {
+        this.permission = permission == null ? null : permission.trim();
     }
 
     /**
      * 获取菜单URL
      *
-     * @return url - 菜单URL
+     * @return href - 菜单URL
      */
-    public String getUrl() {
-        return url;
+    public String getHref() {
+        return href;
     }
 
-    public SysMenu withUrl(String url) {
-        this.setUrl(url);
+    public SysMenu withHref(String href) {
+        this.setHref(href);
         return this;
     }
 
     /**
      * 设置菜单URL
      *
-     * @param url 菜单URL
+     * @param href 菜单URL
      */
-    public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
+    public void setHref(String href) {
+        this.href = href == null ? null : href.trim();
     }
 
     /**
      * 获取创建时间
      *
-     * @return create_time - 创建时间
+     * @return create_date - 创建时间
      */
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public SysMenu withCreateTime(Date createTime) {
-        this.setCreateTime(createTime);
+    public SysMenu withCreateDate(Date createDate) {
+        this.setCreateDate(createDate);
         return this;
     }
 
     /**
      * 设置创建时间
      *
-     * @param createTime 创建时间
+     * @param createDate 创建时间
      */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     /**
      * 获取更新时间
      *
-     * @return update_time - 更新时间
+     * @return update_date - 更新时间
      */
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUpdateDate() {
+        return updateDate;
     }
 
-    public SysMenu withUpdateTime(Date updateTime) {
-        this.setUpdateTime(updateTime);
+    public SysMenu withUpdateDate(Date updateDate) {
+        this.setUpdateDate(updateDate);
         return this;
     }
 
     /**
      * 设置更新时间
      *
-     * @param updateTime 更新时间
+     * @param updateDate 更新时间
      */
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
     /**
@@ -409,14 +435,15 @@ public class SysMenu extends BaseEntity {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", parentId=").append(parentId);
-        sb.append(", sortOrder=").append(sortOrder);
-        sb.append(", menuName=").append(menuName);
+        sb.append(", sort=").append(sort);
+        sb.append(", name=").append(name);
         sb.append(", icon=").append(icon);
-        sb.append(", description=").append(description);
-        sb.append(", path=").append(path);
-        sb.append(", url=").append(url);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
+        sb.append(", type=").append(type);
+        sb.append(", show=").append(show);
+        sb.append(", permission=").append(permission);
+        sb.append(", href=").append(href);
+        sb.append(", createDate=").append(createDate);
+        sb.append(", updateDate=").append(updateDate);
         sb.append(", createBy=").append(createBy);
         sb.append(", updateBy=").append(updateBy);
         sb.append(", remarks=").append(remarks);

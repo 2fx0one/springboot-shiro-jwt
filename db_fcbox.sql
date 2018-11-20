@@ -62,15 +62,15 @@ CREATE TABLE `sys_office` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) unsigned NOT NULL COMMENT '父ID',
   `name` varchar(255) DEFAULT '' COMMENT '部门名字',
-  `sort` smallint(6) NOT NULL,
+  `sort` smallint(6) NOT NULL COMMENT '排序',
   `type` char(1) NOT NULL DEFAULT '' COMMENT '部门类型',
   `grade` char(1) NOT NULL DEFAULT '' COMMENT '部门等级',
-  `address` varchar(255) DEFAULT '',
-  `zip_code` varchar(100) DEFAULT NULL,
-  `fax` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `primary_person` varchar(255) DEFAULT NULL,
-  `deputy_person` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT '' COMMENT '地址',
+  `zip_code` varchar(100) DEFAULT NULL COMMENT '邮编',
+  `fax` varchar(255) DEFAULT NULL COMMENT '传真',
+  `email` varchar(255) DEFAULT NULL COMMENT '邮件',
+  `primary_person` varchar(255) DEFAULT NULL COMMENT '主要负责人',
+  `deputy_person` varchar(255) DEFAULT NULL COMMENT '副负责人',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
@@ -100,7 +100,7 @@ DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `office_id` int(64) unsigned NOT NULL COMMENT '角色用户前端展示的名字',
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL COMMENT '名称',
   `data_scope` char(1) DEFAULT '' COMMENT '数据范围',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
@@ -130,7 +130,7 @@ DROP TABLE IF EXISTS `sys_role_menu`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_role_menu` (
   `role_id` int(10) unsigned NOT NULL COMMENT '角色ID',
-  `menu_id` int(10) unsigned NOT NULL COMMENT '商品ID',
+  `menu_id` int(10) unsigned NOT NULL COMMENT '菜单ID',
   PRIMARY KEY (`role_id`,`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色和菜单 关系表 多对多';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -216,4 +216,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-20 10:04:28
+-- Dump completed on 2018-11-20 10:07:50

@@ -6,38 +6,35 @@ import javax.persistence.*;
 
 @Table(name = "sys_role")
 public class SysRole extends BaseEntity {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer id;
-
-    /**
-     * 角色名字
-     */
-    @Column(name = "role_name")
-    private String roleName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     /**
      * 角色用户前端展示的名字
      */
-    @Column(name = "display_name")
-    private String displayName;
+    @Column(name = "office_id")
+    private Integer officeId;
+
+    private String name;
 
     /**
-     * 角色描述
+     * 数据范围
      */
-    private String description;
+    @Column(name = "data_scope")
+    private String dataScope;
 
     /**
      * 创建时间
      */
-    @Column(name = "create_time")
-    private Date createTime;
+    @Column(name = "create_date")
+    private Date createDate;
 
     /**
      * 更新时间
      */
-    @Column(name = "update_time")
-    private Date updateTime;
+    @Column(name = "update_date")
+    private Date updateDate;
 
     /**
      * 创建者
@@ -62,127 +59,134 @@ public class SysRole extends BaseEntity {
     @Column(name = "del_flag")
     private Byte delFlag;
 
-
+    /**
+     * @return id
+     */
+    public Integer getId() {
+        return id;
+    }
 
     public SysRole withId(Integer id) {
         this.setId(id);
         return this;
     }
 
-
     /**
-     * 获取角色名字
-     *
-     * @return role_name - 角色名字
+     * @param id
      */
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public SysRole withRoleName(String roleName) {
-        this.setRoleName(roleName);
-        return this;
-    }
-
-    /**
-     * 设置角色名字
-     *
-     * @param roleName 角色名字
-     */
-    public void setRoleName(String roleName) {
-        this.roleName = roleName == null ? null : roleName.trim();
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**
      * 获取角色用户前端展示的名字
      *
-     * @return display_name - 角色用户前端展示的名字
+     * @return office_id - 角色用户前端展示的名字
      */
-    public String getDisplayName() {
-        return displayName;
+    public Integer getOfficeId() {
+        return officeId;
     }
 
-    public SysRole withDisplayName(String displayName) {
-        this.setDisplayName(displayName);
+    public SysRole withOfficeId(Integer officeId) {
+        this.setOfficeId(officeId);
         return this;
     }
 
     /**
      * 设置角色用户前端展示的名字
      *
-     * @param displayName 角色用户前端展示的名字
+     * @param officeId 角色用户前端展示的名字
      */
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName == null ? null : displayName.trim();
+    public void setOfficeId(Integer officeId) {
+        this.officeId = officeId;
     }
 
     /**
-     * 获取角色描述
-     *
-     * @return description - 角色描述
+     * @return name
      */
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
-    public SysRole withDescription(String description) {
-        this.setDescription(description);
+    public SysRole withName(String name) {
+        this.setName(name);
         return this;
     }
 
     /**
-     * 设置角色描述
-     *
-     * @param description 角色描述
+     * @param name
      */
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    /**
+     * 获取数据范围
+     *
+     * @return data_scope - 数据范围
+     */
+    public String getDataScope() {
+        return dataScope;
+    }
+
+    public SysRole withDataScope(String dataScope) {
+        this.setDataScope(dataScope);
+        return this;
+    }
+
+    /**
+     * 设置数据范围
+     *
+     * @param dataScope 数据范围
+     */
+    public void setDataScope(String dataScope) {
+        this.dataScope = dataScope == null ? null : dataScope.trim();
     }
 
     /**
      * 获取创建时间
      *
-     * @return create_time - 创建时间
+     * @return create_date - 创建时间
      */
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public SysRole withCreateTime(Date createTime) {
-        this.setCreateTime(createTime);
+    public SysRole withCreateDate(Date createDate) {
+        this.setCreateDate(createDate);
         return this;
     }
 
     /**
      * 设置创建时间
      *
-     * @param createTime 创建时间
+     * @param createDate 创建时间
      */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     /**
      * 获取更新时间
      *
-     * @return update_time - 更新时间
+     * @return update_date - 更新时间
      */
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUpdateDate() {
+        return updateDate;
     }
 
-    public SysRole withUpdateTime(Date updateTime) {
-        this.setUpdateTime(updateTime);
+    public SysRole withUpdateDate(Date updateDate) {
+        this.setUpdateDate(updateDate);
         return this;
     }
 
     /**
      * 设置更新时间
      *
-     * @param updateTime 更新时间
+     * @param updateDate 更新时间
      */
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
     /**
@@ -283,12 +287,12 @@ public class SysRole extends BaseEntity {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-//        sb.append(", id=").append(id);
-        sb.append(", roleName=").append(roleName);
-        sb.append(", displayName=").append(displayName);
-        sb.append(", description=").append(description);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
+        sb.append(", id=").append(id);
+        sb.append(", officeId=").append(officeId);
+        sb.append(", name=").append(name);
+        sb.append(", dataScope=").append(dataScope);
+        sb.append(", createDate=").append(createDate);
+        sb.append(", updateDate=").append(updateDate);
         sb.append(", createBy=").append(createBy);
         sb.append(", updateBy=").append(updateBy);
         sb.append(", remarks=").append(remarks);

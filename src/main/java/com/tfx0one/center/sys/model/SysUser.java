@@ -80,8 +80,8 @@ public class SysUser extends BaseEntity {
     /**
      * 创建时间
      */
-    @Column(name = "create_time")
-    private Date createTime;
+    @Column(name = "create_date")
+    private Date createDate;
 
     /**
      * 更新着
@@ -92,8 +92,8 @@ public class SysUser extends BaseEntity {
     /**
      * 更新时间
      */
-    @Column(name = "update_time")
-    private Date updateTime;
+    @Column(name = "update_date")
+    private Date updateDate;
 
     /**
      * 备注
@@ -401,24 +401,24 @@ public class SysUser extends BaseEntity {
     /**
      * 获取创建时间
      *
-     * @return create_time - 创建时间
+     * @return create_date - 创建时间
      */
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public SysUser withCreateTime(Date createTime) {
-        this.setCreateTime(createTime);
+    public SysUser withCreateDate(Date createDate) {
+        this.setCreateDate(createDate);
         return this;
     }
 
     /**
      * 设置创建时间
      *
-     * @param createTime 创建时间
+     * @param createDate 创建时间
      */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     /**
@@ -447,24 +447,24 @@ public class SysUser extends BaseEntity {
     /**
      * 获取更新时间
      *
-     * @return update_time - 更新时间
+     * @return update_date - 更新时间
      */
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUpdateDate() {
+        return updateDate;
     }
 
-    public SysUser withUpdateTime(Date updateTime) {
-        this.setUpdateTime(updateTime);
+    public SysUser withUpdateDate(Date updateDate) {
+        this.setUpdateDate(updateDate);
         return this;
     }
 
     /**
      * 设置更新时间
      *
-     * @param updateTime 更新时间
+     * @param updateDate 更新时间
      */
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
     /**
@@ -528,9 +528,9 @@ public class SysUser extends BaseEntity {
         sb.append(", telphone=").append(telphone);
         sb.append(", mobilePhone=").append(mobilePhone);
         sb.append(", createBy=").append(createBy);
-        sb.append(", createTime=").append(createTime);
+        sb.append(", createDate=").append(createDate);
         sb.append(", updateBy=").append(updateBy);
-        sb.append(", updateTime=").append(updateTime);
+        sb.append(", updateDate=").append(updateDate);
         sb.append(", remarks=").append(remarks);
         sb.append(", delFlag=").append(delFlag);
         sb.append("]");
