@@ -24,7 +24,7 @@ public class SysOffice extends BaseEntity {
     /**
      * 排序
      */
-    private Short sort;
+    private Byte sort;
 
     /**
      * 部门类型
@@ -99,7 +99,7 @@ public class SysOffice extends BaseEntity {
     private String remarks;
 
     /**
-     * 删除标记 0：正常， -1：删除
+     * 删除标记
      */
     @Column(name = "del_flag")
     private Byte delFlag;
@@ -174,11 +174,11 @@ public class SysOffice extends BaseEntity {
      *
      * @return sort - 排序
      */
-    public Short getSort() {
+    public Byte getSort() {
         return sort;
     }
 
-    public SysOffice withSort(Short sort) {
+    public SysOffice withSort(Byte sort) {
         this.setSort(sort);
         return this;
     }
@@ -188,7 +188,7 @@ public class SysOffice extends BaseEntity {
      *
      * @param sort 排序
      */
-    public void setSort(Short sort) {
+    public void setSort(Byte sort) {
         this.sort = sort;
     }
 
@@ -492,9 +492,9 @@ public class SysOffice extends BaseEntity {
     }
 
     /**
-     * 获取删除标记 0：正常， -1：删除
+     * 获取删除标记
      *
-     * @return del_flag - 删除标记 0：正常， -1：删除
+     * @return del_flag - 删除标记
      */
     public Byte getDelFlag() {
         return delFlag;
@@ -506,9 +506,9 @@ public class SysOffice extends BaseEntity {
     }
 
     /**
-     * 设置删除标记 0：正常， -1：删除
+     * 设置删除标记
      *
-     * @param delFlag 删除标记 0：正常， -1：删除
+     * @param delFlag 删除标记
      */
     public void setDelFlag(Byte delFlag) {
         this.delFlag = delFlag;

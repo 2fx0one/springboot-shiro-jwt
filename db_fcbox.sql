@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) unsigned NOT NULL COMMENT '父级ID',
-  `sort` tinyint(4) DEFAULT NULL COMMENT '排序',
+  `sort` tinyint(1) DEFAULT NULL COMMENT '排序',
   `name` varchar(64) NOT NULL DEFAULT '' COMMENT '菜单名字',
   `icon` varchar(255) DEFAULT '' COMMENT '菜单图片',
   `type` tinyint(255) DEFAULT NULL COMMENT '菜单类型',
@@ -62,7 +62,7 @@ CREATE TABLE `sys_office` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) unsigned NOT NULL COMMENT '父ID',
   `name` varchar(255) DEFAULT '' COMMENT '部门名字',
-  `sort` smallint(6) NOT NULL COMMENT '排序',
+  `sort` tinyint(1) NOT NULL COMMENT '排序',
   `type` char(1) NOT NULL DEFAULT '' COMMENT '部门类型',
   `grade` char(1) NOT NULL DEFAULT '' COMMENT '部门等级',
   `address` varchar(255) DEFAULT '' COMMENT '地址',
@@ -76,7 +76,7 @@ CREATE TABLE `sys_office` (
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
   `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
-  `del_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记 0：正常， -1：删除',
+  `del_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统部门表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -101,13 +101,13 @@ CREATE TABLE `sys_role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `office_id` int(64) unsigned NOT NULL COMMENT '角色用户前端展示的名字',
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
-  `data_scope` char(1) DEFAULT '' COMMENT '数据范围',
+  `data_scope` tinyint(1) DEFAULT NULL COMMENT '数据范围',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
   `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
-  `del_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记 0：正常， 1：删除',
+  `del_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统角色表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -169,7 +169,7 @@ CREATE TABLE `sys_user` (
   `update_by` varchar(255) DEFAULT NULL COMMENT '更新着',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
-  `del_flag` tinyint(4) NOT NULL DEFAULT '0',
+  `del_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='系统用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -216,4 +216,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-20 10:07:50
+-- Dump completed on 2018-11-20 11:01:00

@@ -8,7 +8,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="sort" jdbcType="SMALLINT" property="sort" />
+    <result column="sort" jdbcType="TINYINT" property="sort" />
     <result column="type" jdbcType="CHAR" property="type" />
     <result column="grade" jdbcType="CHAR" property="grade" />
     <result column="address" jdbcType="VARCHAR" property="address" />

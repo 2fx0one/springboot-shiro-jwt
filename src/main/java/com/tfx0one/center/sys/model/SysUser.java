@@ -100,6 +100,9 @@ public class SysUser extends BaseEntity {
      */
     private String remarks;
 
+    /**
+     * 删除标记
+     */
     @Column(name = "del_flag")
     private Byte delFlag;
 
@@ -491,7 +494,9 @@ public class SysUser extends BaseEntity {
     }
 
     /**
-     * @return del_flag
+     * 获取删除标记
+     *
+     * @return del_flag - 删除标记
      */
     public Byte getDelFlag() {
         return delFlag;
@@ -503,7 +508,9 @@ public class SysUser extends BaseEntity {
     }
 
     /**
-     * @param delFlag
+     * 设置删除标记
+     *
+     * @param delFlag 删除标记
      */
     public void setDelFlag(Byte delFlag) {
         this.delFlag = delFlag;

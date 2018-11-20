@@ -25,7 +25,7 @@ public class SysRole extends BaseEntity {
      * 数据范围
      */
     @Column(name = "data_scope")
-    private String dataScope;
+    private Byte dataScope;
 
     /**
      * 创建时间
@@ -57,7 +57,7 @@ public class SysRole extends BaseEntity {
     private String remarks;
 
     /**
-     * 删除标记 0：正常， 1：删除
+     * 删除标记
      */
     @Column(name = "del_flag")
     private Byte delFlag;
@@ -132,11 +132,11 @@ public class SysRole extends BaseEntity {
      *
      * @return data_scope - 数据范围
      */
-    public String getDataScope() {
+    public Byte getDataScope() {
         return dataScope;
     }
 
-    public SysRole withDataScope(String dataScope) {
+    public SysRole withDataScope(Byte dataScope) {
         this.setDataScope(dataScope);
         return this;
     }
@@ -146,8 +146,8 @@ public class SysRole extends BaseEntity {
      *
      * @param dataScope 数据范围
      */
-    public void setDataScope(String dataScope) {
-        this.dataScope = dataScope == null ? null : dataScope.trim();
+    public void setDataScope(Byte dataScope) {
+        this.dataScope = dataScope;
     }
 
     /**
@@ -266,9 +266,9 @@ public class SysRole extends BaseEntity {
     }
 
     /**
-     * 获取删除标记 0：正常， 1：删除
+     * 获取删除标记
      *
-     * @return del_flag - 删除标记 0：正常， 1：删除
+     * @return del_flag - 删除标记
      */
     public Byte getDelFlag() {
         return delFlag;
@@ -280,9 +280,9 @@ public class SysRole extends BaseEntity {
     }
 
     /**
-     * 设置删除标记 0：正常， 1：删除
+     * 设置删除标记
      *
-     * @param delFlag 删除标记 0：正常， 1：删除
+     * @param delFlag 删除标记
      */
     public void setDelFlag(Byte delFlag) {
         this.delFlag = delFlag;

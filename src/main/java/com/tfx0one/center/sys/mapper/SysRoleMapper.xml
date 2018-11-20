@@ -8,7 +8,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="office_id" jdbcType="INTEGER" property="officeId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="data_scope" jdbcType="CHAR" property="dataScope" />
+    <result column="data_scope" jdbcType="TINYINT" property="dataScope" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
