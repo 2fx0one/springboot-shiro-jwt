@@ -25,12 +25,13 @@ DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) unsigned NOT NULL COMMENT '父级ID',
-  `sort_order` tinyint(4) DEFAULT NULL COMMENT '排序',
-  `menu_name` varchar(64) NOT NULL DEFAULT '' COMMENT '菜单名字',
+  `sort` tinyint(4) DEFAULT NULL COMMENT '排序',
+  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '菜单名字',
   `icon` varchar(255) DEFAULT '' COMMENT '菜单图片',
-  `description` varchar(255) DEFAULT '' COMMENT '菜单描述',
-  `path` varchar(255) NOT NULL DEFAULT '' COMMENT '菜单链接',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '菜单URL',
+  `type` tinyint(255) DEFAULT NULL COMMENT '菜单类型',
+  `show` tinyint(11) NOT NULL DEFAULT '0' COMMENT '是否显示',
+  `permission` varchar(255) NOT NULL DEFAULT '' COMMENT '菜单链接',
+  `href` varchar(255) NOT NULL DEFAULT '' COMMENT '菜单URL',
   `create_date` datetime NOT NULL COMMENT '创建时间',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   `create_by` varchar(64) DEFAULT NULL COMMENT '更新者',
@@ -215,4 +216,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-20  9:51:33
+-- Dump completed on 2018-11-20 10:04:28
