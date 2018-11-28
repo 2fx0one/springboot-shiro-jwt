@@ -45,7 +45,7 @@ public class DictUtils {
 //            }
 //            return StringUtils.join(valueList, ",");
 //        }
-//        return defaultValue;
+        return defaultValue;
     }
 
     public static String getDictValue(String label, String type, String defaultLabel) {
