@@ -17,7 +17,7 @@ public abstract class BaseService<T extends BaseEntity> implements Service<T> {
 //        return mapper;
 //    }
     @Override
-    public List<T> select(T entity) {
+    public List<T> selectList(T entity) {
         //说明：根据实体类不为null的字段进行查询,条件全部使用=号and条件
         return mapper.select(entity);
 
@@ -27,7 +27,6 @@ public abstract class BaseService<T extends BaseEntity> implements Service<T> {
     public int selectCount(T entity) {
         //说明：根据实体类不为null的字段查询总数,条件全部使用=号and条件
         return mapper.selectCount(entity);
-
     }
 
     @Override
@@ -56,29 +55,29 @@ public abstract class BaseService<T extends BaseEntity> implements Service<T> {
     }
 
     @Override
+    //说明：根据主键字段进行删除，方法参数必须包含完整的主键属性
     public int deleteByPrimaryKey(Object key) {
-        //说明：根据主键字段进行删除，方法参数必须包含完整的主键属性
         return mapper.deleteByPrimaryKey(key);
     }
 
     @Override
+    //根据主键更新属性不为null的值
     public int updateByPrimaryWithoutNull(T entity) {
-        //根据主键更新属性不为null的值
         return mapper.updateByPrimaryKeySelective(entity);
     }
 
     @Override
+    //说明：根据主键更新实体全部字段，null值会被更新
     public int updateByPrimaryKeyWithNull(T entity) {
-        //说明：根据主键更新实体全部字段，null值会被更新
         return mapper.updateByPrimaryKey(entity);
     }
 
-    @Override
-    public List<T> selectByExample(Object example) {
-        //说明：根据Example条件进行查询
-        //重点：这个查询支持通过Example类指定查询列，通过selectProperties方法指定查询列
-        return mapper.selectByExample(example);
-    }
+//    @Override
+//    public List<T> selectByExample(Object example) {
+//        //说明：根据Example条件进行查询
+//        //重点：这个查询支持通过Example类指定查询列，通过selectProperties方法指定查询列
+//        return mapper.selectByExample(example);
+//    }
 
 
 }

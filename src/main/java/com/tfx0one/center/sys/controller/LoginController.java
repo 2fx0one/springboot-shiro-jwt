@@ -51,7 +51,7 @@ public class LoginController {
 
         System.out.println("token =  " + token);
 
-        List<SysMenu> l = sysMenuService.select(null);
+        List<SysMenu> l = sysMenuService.selectList(null);
         l.forEach(System.out::println);
 
         return R.ok("success 登录成功!", ResponseUserLogin.create(sysUser, token));

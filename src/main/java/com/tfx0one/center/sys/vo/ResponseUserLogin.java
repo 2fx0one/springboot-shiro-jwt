@@ -18,7 +18,7 @@ public class ResponseUserLogin {
     private String username;
 
     @ApiModelProperty(value = "用户ID", required = true, position = 3)
-    private Integer userId;
+    private String userId;
 
 //    @ApiModelProperty(value = "用户ID", required = true, position = 5)
 //    private Byte accountType;

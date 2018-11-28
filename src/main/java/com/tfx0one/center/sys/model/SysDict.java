@@ -4,8 +4,8 @@ import com.tfx0one.common.base.BaseEntity;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "sys_menu")
-public class SysMenu extends BaseEntity {
+@Table(name = "sys_dict")
+public class SysDict extends BaseEntity {
     /**
      * 编号
      */
@@ -14,52 +14,35 @@ public class SysMenu extends BaseEntity {
     private String id;
 
     /**
-     * 父级编号
+     * 数据值
      */
-    @Column(name = "parent_id")
-    private String parentId;
+    private String value;
 
     /**
-     * 所有父级编号
+     * 标签名
      */
-    @Column(name = "parent_ids")
-    private String parentIds;
+    private String label;
 
     /**
-     * 名称
+     * 类型
      */
-    private String name;
+    private String type;
 
     /**
-     * 排序
+     * 描述
+     */
+    private String description;
+
+    /**
+     * 排序（升序）
      */
     private Long sort;
 
     /**
-     * 链接
+     * 父级编号
      */
-    private String href;
-
-    /**
-     * 目标
-     */
-    private String target;
-
-    /**
-     * 图标
-     */
-    private String icon;
-
-    /**
-     * 是否在菜单中显示
-     */
-    @Column(name = "is_show")
-    private String isShow;
-
-    /**
-     * 权限标识
-     */
-    private String permission;
+    @Column(name = "parent_id")
+    private String parentId;
 
     /**
      * 创建者
@@ -105,7 +88,7 @@ public class SysMenu extends BaseEntity {
         return id;
     }
 
-    public SysMenu withId(String id) {
+    public SysDict withId(String id) {
         this.setId(id);
         return this;
     }
@@ -120,6 +103,121 @@ public class SysMenu extends BaseEntity {
     }
 
     /**
+     * 获取数据值
+     *
+     * @return value - 数据值
+     */
+    public String getValue() {
+        return value;
+    }
+
+    public SysDict withValue(String value) {
+        this.setValue(value);
+        return this;
+    }
+
+    /**
+     * 设置数据值
+     *
+     * @param value 数据值
+     */
+    public void setValue(String value) {
+        this.value = value == null ? null : value.trim();
+    }
+
+    /**
+     * 获取标签名
+     *
+     * @return label - 标签名
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    public SysDict withLabel(String label) {
+        this.setLabel(label);
+        return this;
+    }
+
+    /**
+     * 设置标签名
+     *
+     * @param label 标签名
+     */
+    public void setLabel(String label) {
+        this.label = label == null ? null : label.trim();
+    }
+
+    /**
+     * 获取类型
+     *
+     * @return type - 类型
+     */
+    public String getType() {
+        return type;
+    }
+
+    public SysDict withType(String type) {
+        this.setType(type);
+        return this;
+    }
+
+    /**
+     * 设置类型
+     *
+     * @param type 类型
+     */
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
+    }
+
+    /**
+     * 获取描述
+     *
+     * @return description - 描述
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    public SysDict withDescription(String description) {
+        this.setDescription(description);
+        return this;
+    }
+
+    /**
+     * 设置描述
+     *
+     * @param description 描述
+     */
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
+    }
+
+    /**
+     * 获取排序（升序）
+     *
+     * @return sort - 排序（升序）
+     */
+    public Long getSort() {
+        return sort;
+    }
+
+    public SysDict withSort(Long sort) {
+        this.setSort(sort);
+        return this;
+    }
+
+    /**
+     * 设置排序（升序）
+     *
+     * @param sort 排序（升序）
+     */
+    public void setSort(Long sort) {
+        this.sort = sort;
+    }
+
+    /**
      * 获取父级编号
      *
      * @return parent_id - 父级编号
@@ -128,7 +226,7 @@ public class SysMenu extends BaseEntity {
         return parentId;
     }
 
-    public SysMenu withParentId(String parentId) {
+    public SysDict withParentId(String parentId) {
         this.setParentId(parentId);
         return this;
     }
@@ -143,190 +241,6 @@ public class SysMenu extends BaseEntity {
     }
 
     /**
-     * 获取所有父级编号
-     *
-     * @return parent_ids - 所有父级编号
-     */
-    public String getParentIds() {
-        return parentIds;
-    }
-
-    public SysMenu withParentIds(String parentIds) {
-        this.setParentIds(parentIds);
-        return this;
-    }
-
-    /**
-     * 设置所有父级编号
-     *
-     * @param parentIds 所有父级编号
-     */
-    public void setParentIds(String parentIds) {
-        this.parentIds = parentIds == null ? null : parentIds.trim();
-    }
-
-    /**
-     * 获取名称
-     *
-     * @return name - 名称
-     */
-    public String getName() {
-        return name;
-    }
-
-    public SysMenu withName(String name) {
-        this.setName(name);
-        return this;
-    }
-
-    /**
-     * 设置名称
-     *
-     * @param name 名称
-     */
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    /**
-     * 获取排序
-     *
-     * @return sort - 排序
-     */
-    public Long getSort() {
-        return sort;
-    }
-
-    public SysMenu withSort(Long sort) {
-        this.setSort(sort);
-        return this;
-    }
-
-    /**
-     * 设置排序
-     *
-     * @param sort 排序
-     */
-    public void setSort(Long sort) {
-        this.sort = sort;
-    }
-
-    /**
-     * 获取链接
-     *
-     * @return href - 链接
-     */
-    public String getHref() {
-        return href;
-    }
-
-    public SysMenu withHref(String href) {
-        this.setHref(href);
-        return this;
-    }
-
-    /**
-     * 设置链接
-     *
-     * @param href 链接
-     */
-    public void setHref(String href) {
-        this.href = href == null ? null : href.trim();
-    }
-
-    /**
-     * 获取目标
-     *
-     * @return target - 目标
-     */
-    public String getTarget() {
-        return target;
-    }
-
-    public SysMenu withTarget(String target) {
-        this.setTarget(target);
-        return this;
-    }
-
-    /**
-     * 设置目标
-     *
-     * @param target 目标
-     */
-    public void setTarget(String target) {
-        this.target = target == null ? null : target.trim();
-    }
-
-    /**
-     * 获取图标
-     *
-     * @return icon - 图标
-     */
-    public String getIcon() {
-        return icon;
-    }
-
-    public SysMenu withIcon(String icon) {
-        this.setIcon(icon);
-        return this;
-    }
-
-    /**
-     * 设置图标
-     *
-     * @param icon 图标
-     */
-    public void setIcon(String icon) {
-        this.icon = icon == null ? null : icon.trim();
-    }
-
-    /**
-     * 获取是否在菜单中显示
-     *
-     * @return is_show - 是否在菜单中显示
-     */
-    public String getIsShow() {
-        return isShow;
-    }
-
-    public SysMenu withIsShow(String isShow) {
-        this.setIsShow(isShow);
-        return this;
-    }
-
-    /**
-     * 设置是否在菜单中显示
-     *
-     * @param isShow 是否在菜单中显示
-     */
-    public void setIsShow(String isShow) {
-        this.isShow = isShow == null ? null : isShow.trim();
-    }
-
-    /**
-     * 获取权限标识
-     *
-     * @return permission - 权限标识
-     */
-    public String getPermission() {
-        return permission;
-    }
-
-    public SysMenu withPermission(String permission) {
-        this.setPermission(permission);
-        return this;
-    }
-
-    /**
-     * 设置权限标识
-     *
-     * @param permission 权限标识
-     */
-    public void setPermission(String permission) {
-        this.permission = permission == null ? null : permission.trim();
-    }
-
-    /**
      * 获取创建者
      *
      * @return create_by - 创建者
@@ -335,7 +249,7 @@ public class SysMenu extends BaseEntity {
         return createBy;
     }
 
-    public SysMenu withCreateBy(String createBy) {
+    public SysDict withCreateBy(String createBy) {
         this.setCreateBy(createBy);
         return this;
     }
@@ -358,7 +272,7 @@ public class SysMenu extends BaseEntity {
         return createDate;
     }
 
-    public SysMenu withCreateDate(Date createDate) {
+    public SysDict withCreateDate(Date createDate) {
         this.setCreateDate(createDate);
         return this;
     }
@@ -381,7 +295,7 @@ public class SysMenu extends BaseEntity {
         return updateBy;
     }
 
-    public SysMenu withUpdateBy(String updateBy) {
+    public SysDict withUpdateBy(String updateBy) {
         this.setUpdateBy(updateBy);
         return this;
     }
@@ -404,7 +318,7 @@ public class SysMenu extends BaseEntity {
         return updateDate;
     }
 
-    public SysMenu withUpdateDate(Date updateDate) {
+    public SysDict withUpdateDate(Date updateDate) {
         this.setUpdateDate(updateDate);
         return this;
     }
@@ -427,7 +341,7 @@ public class SysMenu extends BaseEntity {
         return remarks;
     }
 
-    public SysMenu withRemarks(String remarks) {
+    public SysDict withRemarks(String remarks) {
         this.setRemarks(remarks);
         return this;
     }
@@ -450,7 +364,7 @@ public class SysMenu extends BaseEntity {
         return delFlag;
     }
 
-    public SysMenu withDelFlag(String delFlag) {
+    public SysDict withDelFlag(String delFlag) {
         this.setDelFlag(delFlag);
         return this;
     }
@@ -471,15 +385,12 @@ public class SysMenu extends BaseEntity {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", parentId=").append(parentId);
-        sb.append(", parentIds=").append(parentIds);
-        sb.append(", name=").append(name);
+        sb.append(", value=").append(value);
+        sb.append(", label=").append(label);
+        sb.append(", type=").append(type);
+        sb.append(", description=").append(description);
         sb.append(", sort=").append(sort);
-        sb.append(", href=").append(href);
-        sb.append(", target=").append(target);
-        sb.append(", icon=").append(icon);
-        sb.append(", isShow=").append(isShow);
-        sb.append(", permission=").append(permission);
+        sb.append(", parentId=").append(parentId);
         sb.append(", createBy=").append(createBy);
         sb.append(", createDate=").append(createDate);
         sb.append(", updateBy=").append(updateBy);

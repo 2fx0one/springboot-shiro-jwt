@@ -4,8 +4,8 @@ import com.tfx0one.common.base.BaseEntity;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "sys_menu")
-public class SysMenu extends BaseEntity {
+@Table(name = "sys_area")
+public class SysArea extends BaseEntity {
     /**
      * 编号
      */
@@ -36,30 +36,14 @@ public class SysMenu extends BaseEntity {
     private Long sort;
 
     /**
-     * 链接
+     * 区域编码
      */
-    private String href;
+    private String code;
 
     /**
-     * 目标
+     * 区域类型
      */
-    private String target;
-
-    /**
-     * 图标
-     */
-    private String icon;
-
-    /**
-     * 是否在菜单中显示
-     */
-    @Column(name = "is_show")
-    private String isShow;
-
-    /**
-     * 权限标识
-     */
-    private String permission;
+    private String type;
 
     /**
      * 创建者
@@ -105,7 +89,7 @@ public class SysMenu extends BaseEntity {
         return id;
     }
 
-    public SysMenu withId(String id) {
+    public SysArea withId(String id) {
         this.setId(id);
         return this;
     }
@@ -128,7 +112,7 @@ public class SysMenu extends BaseEntity {
         return parentId;
     }
 
-    public SysMenu withParentId(String parentId) {
+    public SysArea withParentId(String parentId) {
         this.setParentId(parentId);
         return this;
     }
@@ -151,7 +135,7 @@ public class SysMenu extends BaseEntity {
         return parentIds;
     }
 
-    public SysMenu withParentIds(String parentIds) {
+    public SysArea withParentIds(String parentIds) {
         this.setParentIds(parentIds);
         return this;
     }
@@ -174,7 +158,7 @@ public class SysMenu extends BaseEntity {
         return name;
     }
 
-    public SysMenu withName(String name) {
+    public SysArea withName(String name) {
         this.setName(name);
         return this;
     }
@@ -197,7 +181,7 @@ public class SysMenu extends BaseEntity {
         return sort;
     }
 
-    public SysMenu withSort(Long sort) {
+    public SysArea withSort(Long sort) {
         this.setSort(sort);
         return this;
     }
@@ -212,118 +196,49 @@ public class SysMenu extends BaseEntity {
     }
 
     /**
-     * 获取链接
+     * 获取区域编码
      *
-     * @return href - 链接
+     * @return code - 区域编码
      */
-    public String getHref() {
-        return href;
+    public String getCode() {
+        return code;
     }
 
-    public SysMenu withHref(String href) {
-        this.setHref(href);
+    public SysArea withCode(String code) {
+        this.setCode(code);
         return this;
     }
 
     /**
-     * 设置链接
+     * 设置区域编码
      *
-     * @param href 链接
+     * @param code 区域编码
      */
-    public void setHref(String href) {
-        this.href = href == null ? null : href.trim();
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
     }
 
     /**
-     * 获取目标
+     * 获取区域类型
      *
-     * @return target - 目标
+     * @return type - 区域类型
      */
-    public String getTarget() {
-        return target;
+    public String getType() {
+        return type;
     }
 
-    public SysMenu withTarget(String target) {
-        this.setTarget(target);
+    public SysArea withType(String type) {
+        this.setType(type);
         return this;
     }
 
     /**
-     * 设置目标
+     * 设置区域类型
      *
-     * @param target 目标
+     * @param type 区域类型
      */
-    public void setTarget(String target) {
-        this.target = target == null ? null : target.trim();
-    }
-
-    /**
-     * 获取图标
-     *
-     * @return icon - 图标
-     */
-    public String getIcon() {
-        return icon;
-    }
-
-    public SysMenu withIcon(String icon) {
-        this.setIcon(icon);
-        return this;
-    }
-
-    /**
-     * 设置图标
-     *
-     * @param icon 图标
-     */
-    public void setIcon(String icon) {
-        this.icon = icon == null ? null : icon.trim();
-    }
-
-    /**
-     * 获取是否在菜单中显示
-     *
-     * @return is_show - 是否在菜单中显示
-     */
-    public String getIsShow() {
-        return isShow;
-    }
-
-    public SysMenu withIsShow(String isShow) {
-        this.setIsShow(isShow);
-        return this;
-    }
-
-    /**
-     * 设置是否在菜单中显示
-     *
-     * @param isShow 是否在菜单中显示
-     */
-    public void setIsShow(String isShow) {
-        this.isShow = isShow == null ? null : isShow.trim();
-    }
-
-    /**
-     * 获取权限标识
-     *
-     * @return permission - 权限标识
-     */
-    public String getPermission() {
-        return permission;
-    }
-
-    public SysMenu withPermission(String permission) {
-        this.setPermission(permission);
-        return this;
-    }
-
-    /**
-     * 设置权限标识
-     *
-     * @param permission 权限标识
-     */
-    public void setPermission(String permission) {
-        this.permission = permission == null ? null : permission.trim();
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     /**
@@ -335,7 +250,7 @@ public class SysMenu extends BaseEntity {
         return createBy;
     }
 
-    public SysMenu withCreateBy(String createBy) {
+    public SysArea withCreateBy(String createBy) {
         this.setCreateBy(createBy);
         return this;
     }
@@ -358,7 +273,7 @@ public class SysMenu extends BaseEntity {
         return createDate;
     }
 
-    public SysMenu withCreateDate(Date createDate) {
+    public SysArea withCreateDate(Date createDate) {
         this.setCreateDate(createDate);
         return this;
     }
@@ -381,7 +296,7 @@ public class SysMenu extends BaseEntity {
         return updateBy;
     }
 
-    public SysMenu withUpdateBy(String updateBy) {
+    public SysArea withUpdateBy(String updateBy) {
         this.setUpdateBy(updateBy);
         return this;
     }
@@ -404,7 +319,7 @@ public class SysMenu extends BaseEntity {
         return updateDate;
     }
 
-    public SysMenu withUpdateDate(Date updateDate) {
+    public SysArea withUpdateDate(Date updateDate) {
         this.setUpdateDate(updateDate);
         return this;
     }
@@ -427,7 +342,7 @@ public class SysMenu extends BaseEntity {
         return remarks;
     }
 
-    public SysMenu withRemarks(String remarks) {
+    public SysArea withRemarks(String remarks) {
         this.setRemarks(remarks);
         return this;
     }
@@ -450,7 +365,7 @@ public class SysMenu extends BaseEntity {
         return delFlag;
     }
 
-    public SysMenu withDelFlag(String delFlag) {
+    public SysArea withDelFlag(String delFlag) {
         this.setDelFlag(delFlag);
         return this;
     }
@@ -475,11 +390,8 @@ public class SysMenu extends BaseEntity {
         sb.append(", parentIds=").append(parentIds);
         sb.append(", name=").append(name);
         sb.append(", sort=").append(sort);
-        sb.append(", href=").append(href);
-        sb.append(", target=").append(target);
-        sb.append(", icon=").append(icon);
-        sb.append(", isShow=").append(isShow);
-        sb.append(", permission=").append(permission);
+        sb.append(", code=").append(code);
+        sb.append(", type=").append(type);
         sb.append(", createBy=").append(createBy);
         sb.append(", createDate=").append(createDate);
         sb.append(", updateBy=").append(updateBy);

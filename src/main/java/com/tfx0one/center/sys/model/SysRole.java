@@ -6,38 +6,51 @@ import javax.persistence.*;
 
 @Table(name = "sys_role")
 public class SysRole extends BaseEntity {
+    /**
+     * 编号
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
 
     /**
-     * 角色用户前端展示的名字
+     * 归属机构
      */
     @Column(name = "office_id")
-    private Integer officeId;
+    private String officeId;
 
     /**
-     * 名称
+     * 角色名称
      */
     private String name;
+
+    /**
+     * 英文名称
+     */
+    private String enname;
+
+    /**
+     * 角色类型
+     */
+    @Column(name = "role_type")
+    private String roleType;
 
     /**
      * 数据范围
      */
     @Column(name = "data_scope")
-    private Byte dataScope;
+    private String dataScope;
 
     /**
-     * 创建时间
+     * 是否系统数据
      */
-    @Column(name = "create_date")
-    private Date createDate;
+    @Column(name = "is_sys")
+    private String isSys;
 
     /**
-     * 更新时间
+     * 是否可用
      */
-    @Column(name = "update_date")
-    private Date updateDate;
+    private String useable;
 
     /**
      * 创建者
@@ -46,13 +59,25 @@ public class SysRole extends BaseEntity {
     private String createBy;
 
     /**
+     * 创建时间
+     */
+    @Column(name = "create_date")
+    private Date createDate;
+
+    /**
      * 更新者
      */
     @Column(name = "update_by")
     private String updateBy;
 
     /**
-     * 备注
+     * 更新时间
+     */
+    @Column(name = "update_date")
+    private Date updateDate;
+
+    /**
+     * 备注信息
      */
     private String remarks;
 
@@ -60,54 +85,58 @@ public class SysRole extends BaseEntity {
      * 删除标记
      */
     @Column(name = "del_flag")
-    private Byte delFlag;
+    private String delFlag;
 
     /**
-     * @return id
+     * 获取编号
+     *
+     * @return id - 编号
      */
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public SysRole withId(Integer id) {
+    public SysRole withId(String id) {
         this.setId(id);
         return this;
     }
 
     /**
-     * @param id
+     * 设置编号
+     *
+     * @param id 编号
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
     /**
-     * 获取角色用户前端展示的名字
+     * 获取归属机构
      *
-     * @return office_id - 角色用户前端展示的名字
+     * @return office_id - 归属机构
      */
-    public Integer getOfficeId() {
+    public String getOfficeId() {
         return officeId;
     }
 
-    public SysRole withOfficeId(Integer officeId) {
+    public SysRole withOfficeId(String officeId) {
         this.setOfficeId(officeId);
         return this;
     }
 
     /**
-     * 设置角色用户前端展示的名字
+     * 设置归属机构
      *
-     * @param officeId 角色用户前端展示的名字
+     * @param officeId 归属机构
      */
-    public void setOfficeId(Integer officeId) {
-        this.officeId = officeId;
+    public void setOfficeId(String officeId) {
+        this.officeId = officeId == null ? null : officeId.trim();
     }
 
     /**
-     * 获取名称
+     * 获取角色名称
      *
-     * @return name - 名称
+     * @return name - 角色名称
      */
     public String getName() {
         return name;
@@ -119,12 +148,58 @@ public class SysRole extends BaseEntity {
     }
 
     /**
-     * 设置名称
+     * 设置角色名称
      *
-     * @param name 名称
+     * @param name 角色名称
      */
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    /**
+     * 获取英文名称
+     *
+     * @return enname - 英文名称
+     */
+    public String getEnname() {
+        return enname;
+    }
+
+    public SysRole withEnname(String enname) {
+        this.setEnname(enname);
+        return this;
+    }
+
+    /**
+     * 设置英文名称
+     *
+     * @param enname 英文名称
+     */
+    public void setEnname(String enname) {
+        this.enname = enname == null ? null : enname.trim();
+    }
+
+    /**
+     * 获取角色类型
+     *
+     * @return role_type - 角色类型
+     */
+    public String getRoleType() {
+        return roleType;
+    }
+
+    public SysRole withRoleType(String roleType) {
+        this.setRoleType(roleType);
+        return this;
+    }
+
+    /**
+     * 设置角色类型
+     *
+     * @param roleType 角色类型
+     */
+    public void setRoleType(String roleType) {
+        this.roleType = roleType == null ? null : roleType.trim();
     }
 
     /**
@@ -132,11 +207,11 @@ public class SysRole extends BaseEntity {
      *
      * @return data_scope - 数据范围
      */
-    public Byte getDataScope() {
+    public String getDataScope() {
         return dataScope;
     }
 
-    public SysRole withDataScope(Byte dataScope) {
+    public SysRole withDataScope(String dataScope) {
         this.setDataScope(dataScope);
         return this;
     }
@@ -146,54 +221,54 @@ public class SysRole extends BaseEntity {
      *
      * @param dataScope 数据范围
      */
-    public void setDataScope(Byte dataScope) {
-        this.dataScope = dataScope;
+    public void setDataScope(String dataScope) {
+        this.dataScope = dataScope == null ? null : dataScope.trim();
     }
 
     /**
-     * 获取创建时间
+     * 获取是否系统数据
      *
-     * @return create_date - 创建时间
+     * @return is_sys - 是否系统数据
      */
-    public Date getCreateDate() {
-        return createDate;
+    public String getIsSys() {
+        return isSys;
     }
 
-    public SysRole withCreateDate(Date createDate) {
-        this.setCreateDate(createDate);
+    public SysRole withIsSys(String isSys) {
+        this.setIsSys(isSys);
         return this;
     }
 
     /**
-     * 设置创建时间
+     * 设置是否系统数据
      *
-     * @param createDate 创建时间
+     * @param isSys 是否系统数据
      */
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setIsSys(String isSys) {
+        this.isSys = isSys == null ? null : isSys.trim();
     }
 
     /**
-     * 获取更新时间
+     * 获取是否可用
      *
-     * @return update_date - 更新时间
+     * @return useable - 是否可用
      */
-    public Date getUpdateDate() {
-        return updateDate;
+    public String getUseable() {
+        return useable;
     }
 
-    public SysRole withUpdateDate(Date updateDate) {
-        this.setUpdateDate(updateDate);
+    public SysRole withUseable(String useable) {
+        this.setUseable(useable);
         return this;
     }
 
     /**
-     * 设置更新时间
+     * 设置是否可用
      *
-     * @param updateDate 更新时间
+     * @param useable 是否可用
      */
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
+    public void setUseable(String useable) {
+        this.useable = useable == null ? null : useable.trim();
     }
 
     /**
@@ -220,6 +295,29 @@ public class SysRole extends BaseEntity {
     }
 
     /**
+     * 获取创建时间
+     *
+     * @return create_date - 创建时间
+     */
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public SysRole withCreateDate(Date createDate) {
+        this.setCreateDate(createDate);
+        return this;
+    }
+
+    /**
+     * 设置创建时间
+     *
+     * @param createDate 创建时间
+     */
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    /**
      * 获取更新者
      *
      * @return update_by - 更新者
@@ -243,9 +341,32 @@ public class SysRole extends BaseEntity {
     }
 
     /**
-     * 获取备注
+     * 获取更新时间
      *
-     * @return remarks - 备注
+     * @return update_date - 更新时间
+     */
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public SysRole withUpdateDate(Date updateDate) {
+        this.setUpdateDate(updateDate);
+        return this;
+    }
+
+    /**
+     * 设置更新时间
+     *
+     * @param updateDate 更新时间
+     */
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    /**
+     * 获取备注信息
+     *
+     * @return remarks - 备注信息
      */
     public String getRemarks() {
         return remarks;
@@ -257,9 +378,9 @@ public class SysRole extends BaseEntity {
     }
 
     /**
-     * 设置备注
+     * 设置备注信息
      *
-     * @param remarks 备注
+     * @param remarks 备注信息
      */
     public void setRemarks(String remarks) {
         this.remarks = remarks == null ? null : remarks.trim();
@@ -270,11 +391,11 @@ public class SysRole extends BaseEntity {
      *
      * @return del_flag - 删除标记
      */
-    public Byte getDelFlag() {
+    public String getDelFlag() {
         return delFlag;
     }
 
-    public SysRole withDelFlag(Byte delFlag) {
+    public SysRole withDelFlag(String delFlag) {
         this.setDelFlag(delFlag);
         return this;
     }
@@ -284,8 +405,8 @@ public class SysRole extends BaseEntity {
      *
      * @param delFlag 删除标记
      */
-    public void setDelFlag(Byte delFlag) {
-        this.delFlag = delFlag;
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag == null ? null : delFlag.trim();
     }
 
     @Override
@@ -297,11 +418,15 @@ public class SysRole extends BaseEntity {
         sb.append(", id=").append(id);
         sb.append(", officeId=").append(officeId);
         sb.append(", name=").append(name);
+        sb.append(", enname=").append(enname);
+        sb.append(", roleType=").append(roleType);
         sb.append(", dataScope=").append(dataScope);
-        sb.append(", createDate=").append(createDate);
-        sb.append(", updateDate=").append(updateDate);
+        sb.append(", isSys=").append(isSys);
+        sb.append(", useable=").append(useable);
         sb.append(", createBy=").append(createBy);
+        sb.append(", createDate=").append(createDate);
         sb.append(", updateBy=").append(updateBy);
+        sb.append(", updateDate=").append(updateDate);
         sb.append(", remarks=").append(remarks);
         sb.append(", delFlag=").append(delFlag);
         sb.append("]");

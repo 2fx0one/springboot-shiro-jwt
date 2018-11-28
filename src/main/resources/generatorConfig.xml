@@ -59,7 +59,8 @@
         <!--生成对应表及类名
         去掉Mybatis Generator生成的一堆 example
         -->
-        <table tableName="sys_office" domainObjectName="SysOffice" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        <table tableName="sys_Area" domainObjectName="SysArea" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
 
@@ -67,7 +68,15 @@
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
 
+        <table tableName="sys_log" domainObjectName="SysLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
         <table tableName="sys_menu" domainObjectName="SysMenu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table tableName="sys_office" domainObjectName="SysOffice" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
 

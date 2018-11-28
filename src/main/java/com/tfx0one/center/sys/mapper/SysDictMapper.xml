@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tfx0one.center.sys.mapper.SysRoleMapper">
-  <resultMap id="BaseResultMap" type="com.tfx0one.center.sys.model.SysRole">
+<mapper namespace="com.tfx0one.center.sys.mapper.SysDictMapper">
+  <resultMap id="BaseResultMap" type="com.tfx0one.center.sys.model.SysDict">
     <!--
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="office_id" jdbcType="VARCHAR" property="officeId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="enname" jdbcType="VARCHAR" property="enname" />
-    <result column="role_type" jdbcType="VARCHAR" property="roleType" />
-    <result column="data_scope" jdbcType="CHAR" property="dataScope" />
-    <result column="is_sys" jdbcType="VARCHAR" property="isSys" />
-    <result column="useable" jdbcType="VARCHAR" property="useable" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="sort" jdbcType="DECIMAL" property="sort" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_by" jdbcType="VARCHAR" property="updateBy" />

@@ -43,7 +43,7 @@ public class JWTUtils {
     private static final String KEY_ACCOUNT_TYPE = "account_type";
 
 
-    public static String generateToken(Integer id, String username, List<String> roles) {
+    public static String generateToken(String id, String username, List<String> roles) {
         Map<String, Object> data = new HashMap<>();
         data.put(KEY_ID, id);
         data.put(KEY_USERNAME, username);
