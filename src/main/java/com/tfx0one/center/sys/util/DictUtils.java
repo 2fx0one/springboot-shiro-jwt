@@ -7,6 +7,7 @@ import com.tfx0one.common.util.CacheUtils;
 import com.tfx0one.common.util.SpringContextHolder;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,13 +33,19 @@ public class DictUtils {
 
     public static String getDictLabels(String values, String type, String defaultValue) {
         if (StringUtils.isNotBlank(type) && StringUtils.isNotBlank(values)) {
-            List<String> valueList = Lists.newArrayList();
-            for (String value : StringUtils.split(values, ",")) {
-                valueList.add(getDictLabel(value, type, defaultValue));
-            }
-            return StringUtils.join(valueList, ",");
+
+            List<String> valueList = Arrays.asList(StringUtils.split(values, ","));
+            return getDictList(type).stream()
+                    .filter(d -> valueList.contains(d.getValue()))
+                    .map(SysDict::getLabel)
+                    .collect(Collectors.joining(","));
         }
-        return defaultValue;
+//            for (String value : StringUtils.split(values, ",")) {
+//                valueList.add(getDictLabel(value, type, defaultValue));
+//            }
+//            return StringUtils.join(valueList, ",");
+//        }
+//        return defaultValue;
     }
 
     public static String getDictValue(String label, String type, String defaultLabel) {
