@@ -1,4 +1,4 @@
-package com.tfx0one.common.cache;
+package com.tfx0one.common.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;

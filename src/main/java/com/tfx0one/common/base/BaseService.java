@@ -1,5 +1,7 @@
 package com.tfx0one.common.base;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -9,6 +11,11 @@ import java.util.List;
  * Created by 2fx0one on 24/5/2018.
  */
 public abstract class BaseService<T extends BaseEntity> implements Service<T> {
+
+    /**
+     * 日志对象
+     */
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     protected Mapper<T> mapper;
