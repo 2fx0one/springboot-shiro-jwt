@@ -1,12 +1,11 @@
 package com.tfx0one.common.sceurity;
 
-import com.tfx0one.center.sys.model.SysUser;
+import com.tfx0one.web.sys.entity.SysUser;
 import com.tfx0one.common.sceurity.impl.UserDetailsImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-import java.io.IOException;
 import java.util.*;
 
 /**

@@ -75,7 +75,7 @@ public class APIConstant {
 
     //=============== 支付相关 ============================================
     //微信发来的 异步支付结果通知.    //支付通知成功后的回调地址 必须配置是哪个域名的!!!
-    public static final String paymentNotifyFromWeChat = API_VERSION_VENDOR + "/payment/notify/from/wechat/pay/center";
+    public static final String paymentNotifyFromWeChat = API_VERSION_VENDOR + "/payment/notify/from/wechat/pay/web";
 
 
 
@@ -238,7 +238,7 @@ public class APIConstant {
     public static final String vendorCouponCreate = API_VERSION_VENDOR + "/coupon/create";
 
     //查询优惠券列表
-    public static final String vendorCouponSelectByParams = API_VERSION_VENDOR + "/coupon/selectList/parmas";
+    public static final String vendorCouponSelectByParams = API_VERSION_VENDOR + "/coupon/list/parmas";
     //编辑
     public static final String vendorCouponEditResponse = API_VERSION_VENDOR + "/coupon/edit/response";
     //编辑存入数据库
@@ -372,7 +372,7 @@ public class APIConstant {
     //领取优惠券
     public static final String wechatUserCreateCoupon = API_VERSION_WECHAT + "/coupon/create";
     //动态查询所有的券
-    public static final String wechatUserSelectCuopons = API_VERSION_WECHAT + "/coupons/selectList";
+    public static final String wechatUserSelectCuopons = API_VERSION_WECHAT + "/coupons/list";
     //使用优惠券
     public static final String wechatUserUseCoupon = API_VERSION_WECHAT + "/coupons/use";
     //获取用户最优的优惠券
@@ -388,7 +388,7 @@ public class APIConstant {
     //创建收藏接口
     public static final String wechatUserStarCreate = API_VERSION_WECHAT + "/star/create";
     //创建收藏接口
-    public static final String wechatUserStarSelect = API_VERSION_WECHAT + "/star/selectList";
+    public static final String wechatUserStarSelect = API_VERSION_WECHAT + "/star/list";
     //创建收藏接口
     public static final String wechatUserStarDelete = API_VERSION_WECHAT + "/star/delete";
     //判断商品或者图文是否收藏接口

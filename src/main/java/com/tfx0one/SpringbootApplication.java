@@ -14,8 +14,8 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableTransactionManagement(proxyTargetClass = true)
 
 //只能扫描 Mapper 注解的 接口
-//@MapperScan(basePackages = {"com.tfx0one.center"}, annotationClass = Mapper.class)
-@MapperScan(basePackages = "com.tfx0one.center")
+//@MapperScan(basePackages = {"com.tfx0one.web"}, annotationClass = Mapper.class)
+@MapperScan(basePackages = "com.tfx0one.web")
 public class SpringbootApplication {
 
     @Bean

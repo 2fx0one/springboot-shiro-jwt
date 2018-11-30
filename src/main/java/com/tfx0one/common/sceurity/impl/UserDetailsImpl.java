@@ -1,7 +1,7 @@
 package com.tfx0one.common.sceurity.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tfx0one.center.sys.model.SysUser;
+import com.tfx0one.web.sys.entity.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

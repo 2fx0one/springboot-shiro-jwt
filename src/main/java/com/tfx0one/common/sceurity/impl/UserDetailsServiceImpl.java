@@ -1,7 +1,7 @@
 package com.tfx0one.common.sceurity.impl;
 
-import com.tfx0one.center.sys.model.SysUser;
-import com.tfx0one.center.sys.service.SysUserService;
+import com.tfx0one.web.sys.entity.SysUser;
+import com.tfx0one.web.sys.service.SysUserService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //        authorities.add(new SimpleGrantedAuthority("ROLE_ID_" + sysUser.getId().toString()));
         return new UserDetailsImpl(
 //                sysUser,
-                sysUser.getUsername(),
+                sysUser.getLoginName(),
                 sysUser.getPassword(),
                 authorities);
     }

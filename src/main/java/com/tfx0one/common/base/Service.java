@@ -7,31 +7,33 @@ public interface Service<T> {
     /**
      * 根据实体类不为null的字段进行查询,条件全部使用=号and条件
      */
-    public List<T> selectList(T record);
+    public List<T> list(T record);
 
     /**
      * 根据实体类不为null的字段查询总数,条件全部使用=号and条件
      */
-    public int selectCount(T record);
+    public int count(T record);
 
-    T selectByPrimaryKey(Object key);
+    T getByPrimaryKey(Object key);
 
-    T selectOne(T entity);
+    T get(T entity);
 
-    int insertWithNull(T entity);
+    int save(T entity);
 
-    int insertWithoutNull(T entity);
+//    int saveWithoutNull(T entity);
+
+    int delete(T entity);
 
     //说明：根据主键字段进行删除，方法参数必须包含完整的主键属性
     int deleteByPrimaryKey(Object key);
 
     //根据主键更新属性不为null的值
-    int updateByPrimaryWithoutNull(T entity);
+//    int updateByPrimaryKeyWithoutNull(T entity);
 
     //说明：根据主键更新实体全部字段，null值会被更新
-    int updateByPrimaryKeyWithNull(T entity);
+//    int updateByPrimaryKeyWithNull(T entity);
 
-//    List<T> selectByExample(Object example);
+//    List<T> selectByExample(Example example);
 
     //TODO 其他...
 }
