@@ -1,4 +1,4 @@
-package com.tfx0one.common;
+package com.tfx0one.common.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

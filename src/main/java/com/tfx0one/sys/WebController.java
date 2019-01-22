@@ -1,6 +1,6 @@
 package com.tfx0one.sys;
 
-import com.tfx0one.common.JWTUtil;
+import com.tfx0one.common.util.JWTUtil;
 import com.tfx0one.common.R;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.annotation.Logical;
