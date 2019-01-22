@@ -1,272 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ehcache updateCheck="false" name="defaultCache">
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         updateCheck="false" monitoring="autodetect"
+         dynamicConfig="true">
 
-    <diskStore path="java.io.tmpdir/temp/ehcache/default"/>
+    <diskStore path="java.io.tmpdir/ehcache"/>
 
-    <!-- DefaultCache setting. -->
-    <defaultCache maxEntriesLocalHeap="100" eternal="false"
-                  timeToIdleSeconds="300" timeToLiveSeconds="600" overflowToDisk="true"
-                  maxEntriesLocalDisk="100000"/>
+    <defaultCache
+            maxElementsInMemory="50000"
+            eternal="false"
+            timeToIdleSeconds="3600"
+            timeToLiveSeconds="3600"
+            overflowToDisk="true"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+    />
 
-
-    <cache name="CACHE_WX_SESSION_KEY_BY_USER_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
+    <cache name="authorizationCache"
+           maxEntriesLocalHeap="2000"
            eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-    <cache name="CACHE_WX_BASE_ACCESS_TOKEN_BY_APPID_ID"
-           maxEntriesLocalHeap="10000"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="3600"
            overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+    <cache name="authenticationCache"
+           maxEntriesLocalHeap="2000"
            eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-
-
-    <cache name="CACHE_ACCOUNT_BY_USERNAME"
-           maxEntriesLocalHeap="10000"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="3600"
            overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
+           statistics="true">
+    </cache>
 
-    <cache name="CACHE_USER_ROLE_BY_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-    <cache name="CACHE_VENDOR_BY_APP_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-    <cache name="CACHE_PRODUCT_SPU_BY_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-    <cache name="CACHE_PRODUCT_SPU_BY_VENDOR_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-
-    <cache name="CACHE_PRODUCT_GROUP_BY_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-    <cache name="CACHE_PRODUCT_GROUP_BY_VENDOR_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-
-    <cache name="CACHE_PRODUCT_SKU_BY_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-    <cache name="CACHE_PRODUCT_SKU_BY_PRODUCT_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-
-    <cache name="CACHE_SKU_ATTR_BY_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-    <cache name="CACHE_SKU_ATTR_BY_PRODUCT_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-    <cache name="CACHE_SKU_ATTR_BY_VENDOR_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-    <cache name="CACHE_MARKETING_BY_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-    <cache name="CACHE_MARKETING_DETAIL_BY_PRODUCT_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-
-    <!--<cache name="CACHE_ALL_PERMISSION"-->
-    <!--maxEntriesLocalHeap="10000"-->
-    <!--overflowToDisk="false"-->
-    <!--eternal="false"-->
-    <!--diskPersistent="false"-->
-    <!--timeToLiveSeconds="0"-->
-    <!--timeToIdleSeconds="0"-->
-    <!--statistics="true"/>-->
-
-    <cache name="CACHE_ROLE_PERMISSION_BY_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-    <cache name="CACHE_ROLE_PERMISSION_BY_ROLE_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-    <cache name="CACHE_PRODUCT_STORAGE_BY_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-
-    <cache name="CACHE_VENDOR_IMAGE_BY_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-    <cache name="CACHE_VENDOR_IMAGE_BY_VENDOR_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-
-    <cache name="CACHE_ORDER_BY_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-    <cache name="CACHE_VERIFICATION_CODE_BY_USER_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-
-    <cache name="CACHE_RESERVATION_BY_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-    <cache name="CACHE_RESERVATION_ITEM_BY_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-    <cache name="CACHE_RESERVATION_BY_USER_ID"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-    <!--
-    name：Cache的唯一标识
-    maxElementsInMemory：内存中最大缓存对象数
-    maxElementsOnDisk：磁盘中最大缓存对象数，若是0表示无穷大
-    eternal：Element是否永久有效，一但设置了，timeout将不起作用
-    overflowToDisk：配置此属性，当内存中Element数量达到maxElementsInMemory时，Ehcache将会Element写到磁盘中
-    timeToIdleSeconds：设置Element在失效前的允许闲置时间。仅当element不是永久有效时使用，可选属性，默认值是0，也就是可闲置时间无穷大
-    timeToLiveSeconds：设置Element在失效前允许存活时间。最大时间介于创建时间和失效时间之间。仅当element不是永久有效时使用，默认是0.，也就是element存活时间无穷大
-    diskPersistent：是否缓存虚拟机重启期数据
-    diskExpiryThreadIntervalSeconds：磁盘失效线程运行时间间隔，默认是120秒
-    diskSpoolBufferSizeMB：这个参数设置DiskStore（磁盘缓存）的缓存区大小。默认是30MB。每个Cache都应该有自己的一个缓冲区
-    memoryStoreEvictionPolicy：当达到maxElementsInMemory限制时，Ehcache将会根据指定的策略去清理内存。默认策略是LRU（最近最少使用）。你可以设置为FIFO（先进先出）或是LFU（较少使用）
-    -->
+    <cache name="org.apache.shiro.realm.text.PropertiesRealm-0-accounts"
+           maxElementsInMemory="1000"
+           eternal="true"
+           overflowToDisk="true"/>
 
 </ehcache>
+
+        <!--
+            maxElementsInMemory="10000" 	//Cache中最多允许保存的数据对象的数量
+            external="false" 				//缓存中对象是否为永久的，如果是，超时设置将被忽略，对象从不过期
+            timeToLiveSeconds="3600"  		//缓存的存活时间，从开始创建的时间算起
+            timeToIdleSeconds="3600"  		//多长时间不访问该缓存，那么ehcache 就会清除该缓存
+
+            这两个参数很容易误解，看文档根本没用，我仔细分析了ehcache的代码。结论如下：
+            1、timeToLiveSeconds的定义是：以创建时间为基准开始计算的超时时长；
+            2、timeToIdleSeconds的定义是：在创建时间和最近访问时间中取出离现在最近的时间作为基准计算的超时时长；
+            3、如果仅设置了timeToLiveSeconds，则该对象的超时时间=创建时间+timeToLiveSeconds，假设为A；
+            4、如果没设置timeToLiveSeconds，则该对象的超时时间=min(创建时间，最近访问时间)+timeToIdleSeconds，假设为B；
+            5、如果两者都设置了，则取出A、B最少的值，即min(A,B)，表示只要有一个超时成立即算超时。
+
+            overflowToDisk="true"    		//内存不足时，是否启用磁盘缓存
+            diskSpoolBufferSizeMB	//设置DiskStore（磁盘缓存）的缓存区大小。默认是30MB。每个Cache都应该有自己的一个缓冲区
+            maxElementsOnDisk		//硬盘最大缓存个数
+            diskPersistent			//是否缓存虚拟机重启期数据The default value is false
+            diskExpiryThreadIntervalSeconds	//磁盘失效线程运行时间间隔，默认是120秒。
+            memoryStoreEvictionPolicy="LRU" //当达到maxElementsInMemory限制时，Ehcache将会根据指定的策略去清理内存。默认策略是LRU（最近最少使用）。你可以设置为FIFO（先进先出）或是LFU（较少使用）。
+            clearOnFlush	//内存数量最大时是否清除
+            maxEntriesLocalHeap="0"
+            maxEntriesLocalDisk="1000"
+        -->

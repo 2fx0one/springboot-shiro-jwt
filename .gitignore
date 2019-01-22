@@ -10,12 +10,12 @@
 .springBeans
 .sts4-cache
 
+**.DS_Stores
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
-.mvn
 
 ### NetBeans ###
 /nbproject/private/
@@ -24,7 +24,3 @@
 /dist/
 /nbdist/
 /.nb-gradle/
-
-**/.DS_Store
-
-log
