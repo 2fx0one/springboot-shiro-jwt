@@ -53,11 +53,14 @@ public class CustomRealm extends AuthorizingRealm {
         /*
          * 当没有使用缓存的时候，不断刷新页面的话，这个代码会不断执行，
          * 当其实没有必要每次都重新设置权限信息，所以我们需要放到缓存中进行管理；
-         * 当放到缓存中时，这样的话，doGetAuthorizationInfo就只会执行一次了，
+         * 当放到缓存中时，这样的话，doGetAuthorizationInfo 就只会执行一次了，
          * 缓存过期之后会再次执行。
          */
-        String loginName = JWTUtil.getUsername(principalCollection.toString());
-        User user = userService.getByLoginName(loginName);
+//        Cache<Object, AuthorizationInfo> cache = getAvailableAuthorizationCache();
+//        String loginName = JWTUtil.getUsername(principalCollection.toString());
+
+//        User user = userService.getByLoginName(loginName);
+        User user = (User) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         //TODO role and perssmisson
         simpleAuthorizationInfo.addRole(user.getName());
@@ -78,6 +81,8 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+
+        System.out.println(authenticationToken.getPrincipal());
         String token = (String) authenticationToken.getCredentials();
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtil.getUsername(token);
@@ -94,6 +99,6 @@ public class CustomRealm extends AuthorizingRealm {
             throw new AuthenticationException("Username or password error");
         }
 
-        return new SimpleAuthenticationInfo(token, token, "my_realm");
+        return new SimpleAuthenticationInfo(user, token, "CustomRealm");
     }
 }

@@ -34,11 +34,6 @@
            statistics="true">
     </cache>
 
-    <cache name="org.apache.shiro.realm.text.PropertiesRealm-0-accounts"
-           maxElementsInMemory="1000"
-           eternal="true"
-           overflowToDisk="true"/>
-
 </ehcache>
 
         <!--

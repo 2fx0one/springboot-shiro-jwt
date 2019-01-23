@@ -41,10 +41,14 @@ public class ShiroConfig {
     public DefaultWebSecurityManager getManager(CustomRealm customRealm, EhCacheManager cacheManager) {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 
-        //自己的 customRealm
-        manager.setRealm(customRealm);
-
+        //缓存
         manager.setCacheManager(cacheManager);
+
+        //自己的 customRealm
+        customRealm.setAuthenticationCacheName("authenticationCache");
+        customRealm.setAuthorizationCacheName("authorizationCache");
+        customRealm.setAuthenticationCachingEnabled(true);
+        manager.setRealm(customRealm);
 
         //关闭 shiro session
         // http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
@@ -55,6 +59,7 @@ public class ShiroConfig {
         subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
 
         manager.setSubjectDAO(subjectDAO);
+
 
         return manager;
     }
