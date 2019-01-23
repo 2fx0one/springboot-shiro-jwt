@@ -27,7 +27,7 @@ public class Swagger2Config {
     //   访问可以查看api http://localhost:8080/swagger-ui.html
 
     @Value("${swagger2.ui.enable}")
-    private boolean isEnable = true;
+    private boolean isEnable = false;
 
     @Bean
     public Docket createRestApi() {

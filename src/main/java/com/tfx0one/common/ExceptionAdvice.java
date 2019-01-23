@@ -1,7 +1,7 @@
 package com.tfx0one.common;
 
+import com.tfx0one.common.api.R;
 import org.apache.shiro.ShiroException;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

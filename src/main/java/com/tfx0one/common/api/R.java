@@ -1,4 +1,4 @@
-package com.tfx0one.common;
+package com.tfx0one.common.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
