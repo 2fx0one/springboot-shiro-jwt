@@ -1,8 +1,8 @@
 package com.tfx0one.common.shiro;
 
 import com.tfx0one.common.util.JWTUtil;
-import com.tfx0one.sys.User;
-import com.tfx0one.sys.UserService;
+import com.tfx0one.sys.entity.User;
+import com.tfx0one.sys.service.UserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,6 +33,7 @@ public class CustomRealm extends AuthorizingRealm {
     }
 
     //权限
+
     /**
      * 此方法调用hasRole,hasPermission的时候才会进行回调.
      * <p>
@@ -56,16 +56,18 @@ public class CustomRealm extends AuthorizingRealm {
          * 当放到缓存中时，这样的话，doGetAuthorizationInfo就只会执行一次了，
          * 缓存过期之后会再次执行。
          */
-        String username = JWTUtil.getUsername(principalCollection.toString());
-        User user = userService.getByUsername(username);
+        String loginName = JWTUtil.getUsername(principalCollection.toString());
+        User user = userService.getByLoginName(loginName);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        simpleAuthorizationInfo.addRole(user.getRole());
-        Set<String> permission = new HashSet<>(Arrays.asList(user.getPermission().split(",")));
+        //TODO role and perssmisson
+        simpleAuthorizationInfo.addRole(user.getName());
+        Set<String> permission = new HashSet<>();
         simpleAuthorizationInfo.addStringPermissions(permission);
         return simpleAuthorizationInfo;
     }
 
     //身份验证\
+
     /**
      * 认证信息(身份验证)
      * Authentication 是用来验证用户身份
@@ -83,12 +85,12 @@ public class CustomRealm extends AuthorizingRealm {
             throw new AuthenticationException("token invalid");
         }
 
-        User user = userService.getByUsername(username);
+        User user = userService.getByLoginName(username);
         if (user == null) {
             throw new AuthenticationException("User didn't existed!");
         }
 
-        if (! JWTUtil.verify(token, username, user.getPassword())) {
+        if (!JWTUtil.verify(token, username, user.getPassword())) {
             throw new AuthenticationException("Username or password error");
         }
 
