@@ -1,5 +1,6 @@
 package com.tfx0one.common.shiro;
 
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +12,12 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /*
  * @Auth 2fx0one
  * 22/1/2019 21:24
  */
-@Component
 public class JWTFilter extends BasicHttpAuthenticationFilter {
     private Logger log = LoggerFactory.getLogger(this.getClass());
     //执行流程preHandle->isAccessAllowed->isLoginAttempt->executeLogin
@@ -40,16 +41,27 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
 
         JWTToken token = new JWTToken(authorization);
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获
-        try {
-            // try 为了让service抛异常。这样全局的 RestControllerAdvice 就可以拿到异常了。
-            getSubject(request, response).login(token);
-        } catch (Exception e) {
-            e.printStackTrace();
+        getSubject(request, response).login(token);
+//        try {
+//            // try 为了让service抛异常。这样全局的 RestControllerAdvice 就可以拿到异常了。
+//            getSubject(request, response).login(token);
+//        } catch (Exception e) {
+//            e.printStackTrace();
 //            errorStrWriteToResponse(response, 40001, "未登录");
 //            return false;
-        }
+//        }
         // 如果没有抛出异常则代表登入成功，返回true
         return true;
+    }
+    private void errorStrWriteToResponse(ServletResponse response, int code, String errorCode) {
+        String errStr = "{\"code\":" + code + ",\"msg\":\"" + errorCode + "\"}";
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        try {
+            response.getWriter().println(errStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -64,16 +76,18 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         if (isLoginAttempt(request, response)) {
-//            try {
-            return executeLogin(request, response);
-//            } catch (Exception e) {
+            try {
+                return executeLogin(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+//                errorStrWriteToResponse(response, 40001, "未登录");
 //                throw new UnauthorizedException("登录失败");
-//                response401(request, response);
-//            }
+            }
         }
         return true;
     }
-
+    //执行流程preHandle->isAccessAllowed->isLoginAttempt->executeLogin
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;

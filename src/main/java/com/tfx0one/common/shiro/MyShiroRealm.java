@@ -31,52 +31,12 @@ public class MyShiroRealm extends AuthorizingRealm {
     public boolean supports(AuthenticationToken token) {
         return token instanceof JWTToken;
     }
-
-    //权限
-
-    /**
-     * 此方法调用hasRole,hasPermission的时候才会进行回调.
-     * <p>
-     * 权限信息.(授权):
-     * 1、如果用户正常退出，缓存自动清空；
-     * 2、如果用户非正常退出，缓存自动清空；
-     * 3、如果我们修改了用户的权限，而用户不退出系统，修改的权限无法立即生效。
-     * （需要手动编程进行实现；放在service进行调用）
-     * 在权限修改后调用realm中的方法，realm已经由spring管理，所以从spring中获取realm实例，调用clearCached方法；
-     * :Authorization 是授权访问控制，用于对用户进行的操作授权，证明该用户是否允许进行当前操作，如访问某个链接，某个资源文件等。
-     *
-     * @param principals
-     * @return
-     */
-    @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        /*
-         * 当没有使用缓存的时候，不断刷新页面的话，这个代码会不断执行，
-         * 当其实没有必要每次都重新设置权限信息，所以我们需要放到缓存中进行管理；
-         * 当放到缓存中时，这样的话，doGetAuthorizationInfo 就只会执行一次了，
-         * 缓存过期之后会再次执行。
-         */
-//        Cache<Object, AuthorizationInfo> cache = getAvailableAuthorizationCache();
-//        String loginName = JWTUtil.getUsername(principalCollection.toString());
-
-//        User user = userService.getByLoginName(loginName);
-        log.info("权限信息.(授权) ===> MyShiroRealm.doGetAuthorizationInfo()");
-        User user = (User) principalCollection.getPrimaryPrincipal();
-        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        //TODO role and perssmisson
-        simpleAuthorizationInfo.addRole(user.getName());
-        Set<String> permission = new HashSet<>();
-        simpleAuthorizationInfo.addStringPermissions(permission);
-        return simpleAuthorizationInfo;
-    }
-
-    //身份验证\
-
+    
     /**
      * 认证信息(身份验证)
      * Authentication 是用来验证用户身份
      *
-     * @param auth
+     * @param authenticationToken
      * @return
      * @throws AuthenticationException
      */
@@ -93,13 +53,50 @@ public class MyShiroRealm extends AuthorizingRealm {
 
         User user = userService.getByLoginName(username);
         if (user == null) {
-            throw new AuthenticationException("User didn't existed!");
+            throw new AuthenticationException(" 用户不存在 User didn't existed!");
         }
 
         if (!JWTUtil.verify(token, username, user.getPassword())) {
-            throw new AuthenticationException("Username or password error");
+            throw new AuthenticationException("Token认证失败");
         }
 
-        return new SimpleAuthenticationInfo(user, token, "CustomRealm");
+        return new SimpleAuthenticationInfo(user, token, getName());
+    }
+
+
+    /**
+     * 此方法调用hasRole,hasPermission的时候才会进行回调.
+     * <p>
+     * 权限信息.(授权):
+     * 1、如果用户正常退出，缓存自动清空；
+     * 2、如果用户非正常退出，缓存自动清空；
+     * 3、如果我们修改了用户的权限，而用户不退出系统，修改的权限无法立即生效。
+     * （需要手动编程进行实现；放在service进行调用）
+     * 在权限修改后调用realm中的方法，realm已经由spring管理，所以从spring中获取realm实例，调用clearCached方法；
+     * :Authorization 是授权访问控制，用于对用户进行的操作授权，证明该用户是否允许进行当前操作，如访问某个链接，某个资源文件等。
+     *
+     * @param principals
+     * @return
+     */
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        /*
+         * 当没有使用缓存的时候，不断刷新页面的话，这个代码会不断执行，
+         * 当其实没有必要每次都重新设置权限信息，所以我们需要放到缓存中进行管理；
+         * 当放到缓存中时，这样的话，doGetAuthorizationInfo 就只会执行一次了，
+         * 缓存过期之后会再次执行。
+         */
+//        Cache<Object, AuthorizationInfo> cache = getAvailableAuthorizationCache();
+//        String loginName = JWTUtil.getUsername(principalCollection.toString());
+
+//        User user = userService.getByLoginName(loginName);
+        log.info("权限信息.(授权) ===> MyShiroRealm.doGetAuthorizationInfo()");
+        User user = (User) principals.getPrimaryPrincipal();
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        //TODO role and perssmisson
+        simpleAuthorizationInfo.addRole(user.getName());
+        Set<String> permission = new HashSet<>();
+        simpleAuthorizationInfo.addStringPermissions(permission);
+        return simpleAuthorizationInfo;
     }
 }
