@@ -1,11 +1,11 @@
 package com.tfx0one.common.shiro;
 
-import org.apache.shiro.authz.UnauthorizedException;
+import com.alibaba.fastjson.JSONObject;
+import com.tfx0one.common.api.R;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
@@ -19,9 +19,10 @@ import java.io.IOException;
  * 22/1/2019 21:24
  */
 public class JWTFilter extends BasicHttpAuthenticationFilter {
-    private Logger log = LoggerFactory.getLogger(this.getClass());
-    //执行流程preHandle->isAccessAllowed->isLoginAttempt->executeLogin
 
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
+    //执行流程preHandle->isAccessAllowed->isLoginAttempt->executeLogin
 
     /**
      * 判断用户是否想要登入。
@@ -42,26 +43,8 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         JWTToken token = new JWTToken(authorization);
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获
         getSubject(request, response).login(token);
-//        try {
-//            // try 为了让service抛异常。这样全局的 RestControllerAdvice 就可以拿到异常了。
-//            getSubject(request, response).login(token);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            errorStrWriteToResponse(response, 40001, "未登录");
-//            return false;
-//        }
         // 如果没有抛出异常则代表登入成功，返回true
         return true;
-    }
-    private void errorStrWriteToResponse(ServletResponse response, int code, String errorCode) {
-        String errStr = "{\"code\":" + code + ",\"msg\":\"" + errorCode + "\"}";
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        try {
-            response.getWriter().println(errStr);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -76,17 +59,15 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         if (isLoginAttempt(request, response)) {
-            try {
-                return executeLogin(request, response);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-//                errorStrWriteToResponse(response, 40001, "未登录");
-//                throw new UnauthorizedException("登录失败");
-            }
+//            try {
+            executeLogin(request, response);
+//            } catch (Exception e) {
+//                response401(request, response);
+//            }
         }
         return true;
     }
+
     //执行流程preHandle->isAccessAllowed->isLoginAttempt->executeLogin
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
@@ -100,6 +81,21 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             httpServletResponse.setStatus(HttpStatus.OK.value());
             return false;
         }
-        return super.preHandle(request, response);
+        try {
+            return super.preHandle(request, response);
+        } catch (Exception e) {
+            errorStrWriteToResponse(httpServletResponse, 401, e.getMessage());
+            return false;
+        }
+    }
+
+
+    private void errorStrWriteToResponse(HttpServletResponse response, int code, String msg) throws IOException {
+//        R r = R.error(code, msg);
+//        new ObjectMapper().writeValueAsString(R.error(code, msg));
+//        String errStr = "{\"code\":" + code + ",\"msg\":\"" + errorCode + "\"}";
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        response.getWriter().println(JSONObject.toJSON(R.error(code, msg)));
     }
 }

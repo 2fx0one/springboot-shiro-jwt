@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.tfx0one.sys.entity.User;
 
@@ -27,10 +28,8 @@ public class JWTUtil {
                     .withClaim("username", username)
                     .build();
             DecodedJWT jwt = verifier.verify(token);
-//            System.out.println(jwt.getExpiresAt());
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (JWTVerificationException e) {
             return false;
         }
     }

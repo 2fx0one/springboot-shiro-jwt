@@ -35,7 +35,7 @@ public class Swagger2Config {
 
         if (isEnable) {
             List<Parameter> pars = new ArrayList<>();
-            tokenPar.name("Authorization").description("token需要拼接在 Bearer 后!").modelRef(new ModelRef("string")).parameterType("header").required(false).defaultValue("Bearer ").build();
+            tokenPar.name("Authorization").description("token!").modelRef(new ModelRef("string")).parameterType("header").required(false).defaultValue("").build();
             pars.add(tokenPar.build());
             return new Docket(DocumentationType.SWAGGER_2)
                     .apiInfo(apiInfo())

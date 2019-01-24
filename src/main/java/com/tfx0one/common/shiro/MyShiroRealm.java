@@ -31,7 +31,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     public boolean supports(AuthenticationToken token) {
         return token instanceof JWTToken;
     }
-    
+
     /**
      * 认证信息(身份验证)
      * Authentication 是用来验证用户身份
@@ -57,7 +57,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
 
         if (!JWTUtil.verify(token, username, user.getPassword())) {
-            throw new AuthenticationException("Token认证失败");
+            throw new AuthenticationException("token 认证失败, 请重新登录！");
         }
 
         return new SimpleAuthenticationInfo(user, token, getName());
