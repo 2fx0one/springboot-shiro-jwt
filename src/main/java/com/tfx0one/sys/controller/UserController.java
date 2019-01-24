@@ -4,11 +4,14 @@ package com.tfx0one.sys.controller;
 import com.tfx0one.common.api.R;
 import com.tfx0one.common.base.BaseController;
 import com.tfx0one.common.util.JWTUtil;
+import com.tfx0one.common.util.ShiroUtil;
 import com.tfx0one.sys.entity.User;
 import com.tfx0one.sys.service.UserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,8 +37,10 @@ public class UserController extends BaseController {
     @GetMapping("/login")
     public R login(@RequestParam String username, @RequestParam String password) {
         User u = userService.getByLoginName(username);
-        if (u.getPassword().equals(password)) {
-            return R.ok("login success!", JWTUtil.sign(username, password));
+        String salt = u.getId();
+        String simpleHashPassword = ShiroUtil.md5(password, salt);
+        if (u.getPassword().equals(simpleHashPassword)) {
+            return R.ok("login success!", JWTUtil.sign(u));
         } else {
             throw new AuthenticationException("账号或密码错误");
         }
@@ -43,6 +48,7 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/a")
+    @RequiresAuthentication
     @RequiresPermissions(value = {"user:list:view", "user:list:edit"})
     public R a() {
         return R.ok("success");

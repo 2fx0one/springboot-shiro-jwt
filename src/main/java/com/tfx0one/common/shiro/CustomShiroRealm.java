@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class CustomRealm extends AuthorizingRealm {
+public class CustomShiroRealm extends AuthorizingRealm {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 

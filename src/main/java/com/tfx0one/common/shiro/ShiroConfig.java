@@ -38,17 +38,17 @@ public class ShiroConfig {
     }
 
     @Bean("securityManager")
-    public DefaultWebSecurityManager getManager(CustomRealm customRealm, EhCacheManager cacheManager) {
+    public DefaultWebSecurityManager getManager(CustomShiroRealm customShiroRealm, EhCacheManager cacheManager) {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 
         //缓存
         manager.setCacheManager(cacheManager);
 
-        //自己的 customRealm
-        customRealm.setAuthenticationCacheName("authenticationCache");
-        customRealm.setAuthorizationCacheName("authorizationCache");
-        customRealm.setAuthenticationCachingEnabled(true);
-        manager.setRealm(customRealm);
+        //自己的 customShiroRealm
+//        customShiroRealm.setAuthenticationCacheName("authenticationCache");
+//        customShiroRealm.setAuthorizationCacheName("authorizationCache");
+        customShiroRealm.setAuthenticationCachingEnabled(true);
+        manager.setRealm(customShiroRealm);
 
         //关闭 shiro session
         // http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
@@ -93,17 +93,16 @@ public class ShiroConfig {
         return new LifecycleBeanPostProcessor();
     }
 
+//    @Bean
+//    @DependsOn("lifecycleBeanPostProcessor")
+//    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+//        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+//        // 强制使用cglib，防止重复代理和可能引起代理出错的问题
+//        // https://zhuanlan.zhihu.com/p/29161098
+//        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
+//        return defaultAdvisorAutoProxyCreator;
+//    }
     //注解支持
-    @Bean
-    @DependsOn("lifecycleBeanPostProcessor")
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
-        // 强制使用cglib，防止重复代理和可能引起代理出错的问题
-        // https://zhuanlan.zhihu.com/p/29161098
-        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
-        return defaultAdvisorAutoProxyCreator;
-    }
-
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();

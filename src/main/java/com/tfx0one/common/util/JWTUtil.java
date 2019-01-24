@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.tfx0one.sys.entity.User;
 
 import java.util.Date;
 
@@ -61,5 +62,9 @@ public class JWTUtil {
                 .withClaim("username", username)
                 .withExpiresAt(date)
                 .sign(algorithm);
+    }
+
+    public static String sign(User user) {
+        return sign(user.getLoginName(), user.getPassword());
     }
 }
