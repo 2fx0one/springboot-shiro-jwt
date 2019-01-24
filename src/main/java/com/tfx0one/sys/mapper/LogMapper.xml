@@ -4,17 +4,17 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.tfx0one.sys.entity.Log">
-    <result column="id" property="id" />
-    <result column="create_by" property="createBy" />
-    <result column="create_date" property="createDate" />
-        <result column="type" property="type" />
-        <result column="title" property="title" />
-        <result column="remote_addr" property="remoteAddr" />
-        <result column="user_agent" property="userAgent" />
-        <result column="request_uri" property="requestUri" />
-        <result column="method" property="method" />
-        <result column="params" property="params" />
-        <result column="exception" property="exception" />
+        <result column="id" property="id"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_date" property="createDate"/>
+        <result column="type" property="type"/>
+        <result column="title" property="title"/>
+        <result column="remote_addr" property="remoteAddr"/>
+        <result column="user_agent" property="userAgent"/>
+        <result column="request_uri" property="requestUri"/>
+        <result column="method" property="method"/>
+        <result column="params" property="params"/>
+        <result column="exception" property="exception"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
