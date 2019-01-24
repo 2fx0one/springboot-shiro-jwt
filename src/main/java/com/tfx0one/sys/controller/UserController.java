@@ -33,20 +33,6 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-
-    @GetMapping("/login")
-    public R login(@RequestParam String username, @RequestParam String password) {
-        User u = userService.getByLoginName(username);
-        String salt = u.getId();
-        String simpleHashPassword = ShiroUtil.md5(password, salt);
-        if (u.getPassword().equals(simpleHashPassword)) {
-            return R.ok("login success!", JWTUtil.sign(u));
-        } else {
-            throw new AuthenticationException("账号或密码错误");
-        }
-
-    }
-
     @GetMapping("/a")
     @RequiresAuthentication
     @RequiresPermissions(value = {"user:list:view", "user:list:edit"})
