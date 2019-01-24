@@ -15,7 +15,9 @@
  */
 package com.tfx0one.common.util;
 
+import com.tfx0one.sys.entity.User;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
@@ -167,6 +169,14 @@ public class ShiroUtil {
      */
     public static boolean isUser() {
         return getSubject() != null && getSubject().getPrincipal() != null;
+    }
+
+    public static User getCurrentUser() {
+        if (isUser()) {
+            return (User) getSubject().getPrincipal();
+        }else {
+            throw new AuthenticationException("不是认证用户！");
+        }
     }
 
     /**

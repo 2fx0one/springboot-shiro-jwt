@@ -1,10 +1,14 @@
 package com.tfx0one.sys.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.tfx0one.common.api.R;
 import com.tfx0one.common.base.BaseController;
+import com.tfx0one.common.util.ShiroUtil;
+import com.tfx0one.sys.entity.User;
+import com.tfx0one.sys.vo.ApiResponseUserInfo;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -18,4 +22,10 @@ import com.tfx0one.common.base.BaseController;
 @RequestMapping("/sys/user")
 public class UserController extends BaseController {
 
+    @GetMapping("/info")
+    public R<ApiResponseUserInfo> userInfo() {
+        User u = ShiroUtil.getCurrentUser();
+        System.out.println(u);
+        return R.ok("success", new ApiResponseUserInfo());
+    }
 }
