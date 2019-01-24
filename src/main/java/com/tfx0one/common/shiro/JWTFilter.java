@@ -44,7 +44,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             // try 为了让service抛异常。这样全局的 RestControllerAdvice 就可以拿到异常了。
             getSubject(request, response).login(token);
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
 //            errorStrWriteToResponse(response, 40001, "未登录");
 //            return false;
         }
@@ -88,28 +88,4 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         }
         return super.preHandle(request, response);
     }
-
-//    /**
-//     * 将非法请求跳转到 /401
-//     */
-//    private void response401(ServletRequest req, ServletResponse resp) {
-//        try {
-//            HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
-//            httpServletResponse.sendRedirect("/401");
-//
-//        } catch (IOException e) {
-//            log.error(e.getMessage());
-//        }
-//    }
-//
-//    private void errorStrWriteToResponse(ServletResponse response, int code, String errorCode) {
-//        String errStr = "{\"code\":" + code + ",\"msg\":\"" + errorCode + "\"}";
-//        response.setCharacterEncoding("UTF-8");
-//        response.setContentType("application/json; charset=utf-8");
-//        try {
-//            response.getWriter().println(errStr);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

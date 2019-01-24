@@ -27,6 +27,7 @@ public class JWTUtil {
                     .withClaim("username", username)
                     .build();
             DecodedJWT jwt = verifier.verify(token);
+            System.out.println(jwt.getExpiresAt());
             return true;
         } catch (Exception exception) {
             return false;

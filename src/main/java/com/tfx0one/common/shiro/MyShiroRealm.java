@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class CustomShiroRealm extends AuthorizingRealm {
+public class MyShiroRealm extends AuthorizingRealm {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -60,6 +60,7 @@ public class CustomShiroRealm extends AuthorizingRealm {
 //        String loginName = JWTUtil.getUsername(principalCollection.toString());
 
 //        User user = userService.getByLoginName(loginName);
+        log.info("权限信息.(授权) ===> MyShiroRealm.doGetAuthorizationInfo()");
         User user = (User) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         //TODO role and perssmisson
@@ -81,7 +82,7 @@ public class CustomShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-
+        log.info("认证信息(身份验证) ===> MyShiroRealm.doGetAuthenticationInfo()");
         System.out.println(authenticationToken.getPrincipal());
         String token = (String) authenticationToken.getCredentials();
         // 解密获得username，用于和数据库进行对比
