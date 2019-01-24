@@ -49,6 +49,18 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         System.out.println("project Path = " + projectPath);
+        gc.setFileOverride(false); //!!! 慎用！会直接覆盖 使用前一定要提交git !!!
+        gc.setActiveRecord(false);// 不需要ActiveRecord特性的请改为false
+        gc.setEnableCache(false);// XML 二级缓存
+        gc.setBaseResultMap(true);// XML ResultMap
+        gc.setBaseColumnList(true);// XML columList
+
+        // 自定义文件命名，注意 %s 会自动填充表实体属性！
+        // gc.setMapperName("%sDao");
+        // gc.setXmlName("%sDao");
+        // gc.setServiceName("MP%sService");
+        // gc.setServiceImplName("%sServiceDiy");
+        // gc.setControllerName("%sAction");
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("2fx0one");
         gc.setOpen(false);

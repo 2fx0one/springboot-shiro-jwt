@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
  * 机构表 服务实现类
  * </p>
  *
- * @author kelvin
- * @since 2019-01-23
+ * @author 2fx0one
+ * @since 2019-01-24
  */
 @Service
 public class OfficeServiceImpl extends ServiceImpl<OfficeMapper, Office> implements OfficeService {

@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 机构表 Mapper 接口
  * </p>
  *
- * @author kelvin
- * @since 2019-01-23
+ * @author 2fx0one
+ * @since 2019-01-24
  */
 public interface OfficeMapper extends BaseMapper<Office> {
 

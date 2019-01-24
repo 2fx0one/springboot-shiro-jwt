@@ -14,13 +14,14 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
   @Override
   public void insertFill(MetaObject metaObject) {
     System.out.println("插入方法实体填充");
-    setFieldValByName("create_date", new Date(), metaObject);
+    //!!! 注意这里是 fieldName 不是数据库名字
+    setFieldValByName("createDate", new Date(), metaObject);
   }
 
   @Override
   public void updateFill(MetaObject metaObject) {
     System.out.println("更新方法实体填充");
-    setFieldValByName("update_date", new Date(), metaObject);
+    setFieldValByName("updateDate", new Date(), metaObject);
 //    setFieldValByName("email", LocalDateTime, metaObject);
   }
 }

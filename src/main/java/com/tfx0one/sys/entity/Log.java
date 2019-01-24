@@ -11,8 +11,8 @@ import lombok.experimental.Accessors;
  * 日志表
  * </p>
  *
- * @author kelvin
- * @since 2019-01-23
+ * @author 2fx0one
+ * @since 2019-01-24
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

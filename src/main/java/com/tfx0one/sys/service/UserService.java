@@ -8,9 +8,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 用户表 服务类
  * </p>
  *
- * @author kelvin
- * @since 2019-01-23
+ * @author 2fx0one
+ * @since 2019-01-24
  */
 public interface UserService extends IService<User> {
+
     User getByLoginName(String username);
 }

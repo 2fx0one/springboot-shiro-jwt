@@ -3,7 +3,6 @@ package com.tfx0one.sys.entity;
 import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.tfx0one.common.base.BaseEntity;
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -13,8 +12,8 @@ import lombok.experimental.Accessors;
  * 机构表
  * </p>
  *
- * @author kelvin
- * @since 2019-01-23
+ * @author 2fx0one
+ * @since 2019-01-24
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -97,19 +96,16 @@ public class Office extends BaseEntity {
     /**
      * 是否启用
      */
-    @TableField("USEABLE")
     private String useable;
 
     /**
      * 主负责人
      */
-    @TableField("PRIMARY_PERSON")
     private String primaryPerson;
 
     /**
      * 副负责人
      */
-    @TableField("DEPUTY_PERSON")
     private String deputyPerson;
 
 

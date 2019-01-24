@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
  * 日志表 服务实现类
  * </p>
  *
- * @author kelvin
- * @since 2019-01-23
+ * @author 2fx0one
+ * @since 2019-01-24
  */
 @Service
 public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements LogService {
