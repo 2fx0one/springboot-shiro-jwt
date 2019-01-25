@@ -60,6 +60,7 @@ public class JWTUtils {
         Algorithm algorithm = Algorithm.HMAC256(secret);
         // 附带username信息
         return JWT.create()
+//                .withSubject()
                 .withClaim("username", username)
                 .withExpiresAt(date)
                 .sign(algorithm);

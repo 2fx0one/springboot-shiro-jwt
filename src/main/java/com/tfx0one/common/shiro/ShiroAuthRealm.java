@@ -25,7 +25,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class MyShiroRealm extends AuthorizingRealm {
+public class ShiroAuthRealm extends AuthorizingRealm {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -55,6 +55,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         log.info("认证信息(身份验证) ===> MyShiroRealm.doGetAuthenticationInfo()");
 //        authenticationToken 实际是 JWTToken对象包装 在 executeLogin 中  getSubject(request, response).login(token); 传入
         System.out.println(authenticationToken.getPrincipal());
+//        String token = (String) authenticationToken.getPrincipal();
         String token = (String) authenticationToken.getCredentials();
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtils.getUsername(token);
@@ -72,7 +73,7 @@ public class MyShiroRealm extends AuthorizingRealm {
             throw new AuthenticationException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
         }
 
-        return new SimpleAuthenticationInfo(user, token, getName());
+        return new SimpleAuthenticationInfo(token, token, getName());
     }
 
 
@@ -95,7 +96,7 @@ public class MyShiroRealm extends AuthorizingRealm {
      * @return
      */
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) { //也是key
         /*
          * 当没有使用缓存的时候，不断刷新页面的话，这个代码会不断执行，
          * 当其实没有必要每次都重新设置权限信息，所以我们需要放到缓存中进行管理；

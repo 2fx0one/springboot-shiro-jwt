@@ -44,17 +44,17 @@ public class ShiroConfig {
     }
 
     @Bean("securityManager")
-    public DefaultWebSecurityManager getManager(MyShiroRealm myShiroRealm, EhCacheManager cacheManager) {
+    public DefaultWebSecurityManager getManager(ShiroAuthRealm shiroAuthRealm, EhCacheManager cacheManager) {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 
         //缓存
         manager.setCacheManager(cacheManager);
 
         //自己的 customShiroRealm
-        myShiroRealm.setAuthenticationCacheName(AUTHENTICATION_CACHE_NAME);
-        myShiroRealm.setAuthorizationCacheName(AUTHORIZATION_CACHE_NAME);
-        myShiroRealm.setAuthenticationCachingEnabled(true);
-        manager.setRealm(myShiroRealm);
+        shiroAuthRealm.setAuthenticationCacheName(AUTHENTICATION_CACHE_NAME);
+        shiroAuthRealm.setAuthorizationCacheName(AUTHORIZATION_CACHE_NAME);
+        shiroAuthRealm.setAuthenticationCachingEnabled(true);
+        manager.setRealm(shiroAuthRealm);
 
         //关闭 shiro session
         // http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
