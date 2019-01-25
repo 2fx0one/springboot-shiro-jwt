@@ -45,8 +45,8 @@ public class ShiroConfig {
         manager.setCacheManager(cacheManager);
 
         //自己的 customShiroRealm
-//        customShiroRealm.setAuthenticationCacheName("authenticationCache");
-//        customShiroRealm.setAuthorizationCacheName("authorizationCache");
+        myShiroRealm.setAuthenticationCacheName("authenticationCache");
+        myShiroRealm.setAuthorizationCacheName("authorizationCache");
         myShiroRealm.setAuthenticationCachingEnabled(true);
         manager.setRealm(myShiroRealm);
 

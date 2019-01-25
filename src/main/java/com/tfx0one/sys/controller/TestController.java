@@ -1,6 +1,7 @@
 package com.tfx0one.sys.controller;
 
 import com.tfx0one.common.api.R;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,13 @@ public class TestController {
     @GetMapping("/c")
     @RequiresPermissions({"sys:dict:view"})
     public R c() {
+        return R.ok("bbb");
+    }
+
+
+    @GetMapping("/d")
+    @RequiresPermissions({"sys:dict:view"})
+    public R d() {
         return R.ok("bbb");
     }
 
