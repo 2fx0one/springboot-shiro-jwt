@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tfx0one.common.util;
+package com.tfx0one.common.utils;
 
+import com.tfx0one.common.constant.GlobalConstant;
+import com.tfx0one.common.shiro.ShiroConfig;
 import com.tfx0one.sys.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
@@ -27,19 +30,7 @@ import org.apache.shiro.subject.Subject;
  *
  * @author dafei, Chill Zhuang
  */
-public class ShiroUtil {
-
-    private static final String NAMES_DELIMETER = ",";
-
-    /**
-     * 散列算法
-     */
-    public final static String HASH_ALGORITHM_NAME = "MD5";
-
-    /**
-     * 循环次数
-     */
-    public final static int HASH_ITERATIONS = 1;
+public class ShiroUtils {
 
     public static void main(String[] args) {
         //所需加密的参数  即  密码
@@ -48,18 +39,43 @@ public class ShiroUtil {
         String salt = "1";
         //加密次数
         System.out.println(md5(pwd, salt));
+        System.out.println(sha256(pwd, salt));
     }
 
+
+
     /**
-     * shiro密码加密工具类
+     * 循环次数
+     */
+    public final static int HASH_ITERATIONS = 1;
+
+    private static CacheManager cacheManager = SpringContextHolder.getBean(CacheManager.class);
+
+    public static void clearAllUserAuthorization() {
+        cacheManager.getCache(ShiroConfig.AUTHORIZATION_CACHE_NAME).clear();
+    }
+    public static void clearCurrentUserAuthorization() {
+        cacheManager.getCache(ShiroConfig.AUTHORIZATION_CACHE_NAME).remove(getSubject().getPrincipals());
+
+    }
+
+
+
+    /**
+     * shiro密码加密工具类 散列算法
      *
      * @param credentials 密码
      * @param saltSource  密码盐
      * @return
      */
     public static String md5(String credentials, String saltSource) {
-        return new SimpleHash(HASH_ALGORITHM_NAME, credentials, saltSource, HASH_ITERATIONS).toHex();
+        return new SimpleHash("MD5", credentials, saltSource, HASH_ITERATIONS).toHex();
     }
+
+    public static String sha256(String credentials, String saltSource) {
+        return new SimpleHash("SHA-256", credentials, saltSource, HASH_ITERATIONS).toHex();
+    }
+
 
     /**
      * 获取随机盐值
@@ -112,7 +128,7 @@ public class ShiroUtil {
         boolean hasAnyRole = false;
         Subject subject = getSubject();
         if (subject != null && roleNames != null && roleNames.length() > 0) {
-            for (String role : roleNames.split(NAMES_DELIMETER)) {
+            for (String role : roleNames.split(GlobalConstant.SPLIT_DELIMETER)) {
                 if (subject.hasRole(role.trim())) {
                     hasAnyRole = true;
                     break;

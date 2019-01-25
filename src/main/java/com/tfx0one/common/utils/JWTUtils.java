@@ -1,4 +1,4 @@
-package com.tfx0one.common.util;
+package com.tfx0one.common.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -8,12 +8,11 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.tfx0one.sys.entity.User;
 
-import javax.naming.AuthenticationException;
 import java.util.Date;
 
-public class JWTUtil {
-    // 过期时间30分钟
-    private static final long EXPIRE_TIME = 30 * 60 * 1000;
+public class JWTUtils {
+    // 过期时间 24 小时
+    private static final long EXPIRE_TIME = 24 * 60 * 60 * 1000;
 
     /**
      * 校验token是否正确

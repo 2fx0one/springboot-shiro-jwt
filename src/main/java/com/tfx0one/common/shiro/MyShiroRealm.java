@@ -1,6 +1,7 @@
 package com.tfx0one.common.shiro;
 
-import com.tfx0one.common.util.JWTUtil;
+import com.tfx0one.common.constant.GlobalConstant;
+import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.sys.entity.Menu;
 import com.tfx0one.sys.entity.Role;
 import com.tfx0one.sys.entity.User;
@@ -49,22 +50,22 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         log.info("认证信息(身份验证) ===> MyShiroRealm.doGetAuthenticationInfo()");
-        System.out.println(authenticationToken.getPrincipal());
+//        System.out.println(authenticationToken.getPrincipal());
         String token = (String) authenticationToken.getCredentials();
         // 解密获得username，用于和数据库进行对比
-        String username = JWTUtil.getUsername(token);
+        String username = JWTUtils.getUsername(token);
         if (username == null) {
-            throw new AuthenticationException("token invalid");
+            throw new AuthenticationException("[用户不存在] token invalid");
         }
 
         User user = userService.getByLoginName(username);
         if (user == null) {
-            throw new AuthenticationException(" 用户不存在 User didn't existed!");
+            throw new AuthenticationException("[用户不存在] User didn't existed!");
         }
 
-        if(!JWTUtil.verify(token, username, user.getPassword())) {
+        if(!JWTUtils.verify(token, username, user.getPassword())) {
             //产生 JWTVerificationException 抛出异常
-            throw new AuthenticationException("TOKEN 认证信息(身份验证) 认证失败, 请重新登录！");
+            throw new AuthenticationException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
         }
 
         return new SimpleAuthenticationInfo(user, token, getName());
@@ -93,14 +94,9 @@ public class MyShiroRealm extends AuthorizingRealm {
          * 当放到缓存中时，这样的话，doGetAuthorizationInfo 就只会执行一次了，
          * 缓存过期之后会再次执行。
          */
-//        Cache<Object, AuthorizationInfo> cache = getAvailableAuthorizationCache();
-//        String loginName = JWTUtil.getUsername(principalCollection.toString());
-
-//        User user = userService.getByLoginName(loginName);
         log.info("权限信息.(授权) ===> MyShiroRealm.doGetAuthorizationInfo()");
         User user = (User) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        //TODO role and perssmisson
         List<Role> roleList = roleService.listByUserId(user);
 
         //角色
@@ -111,7 +107,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         List<String> permissions = roleList.stream()
                 .map(Role::getMenuList).flatMap(Collection::stream)
                 .map(Menu::getPermission).filter(StringUtils::isNotEmpty) //过滤空
-                .flatMap(s -> Arrays.stream(s.split(",")))
+                .flatMap(s -> Arrays.stream(s.split(GlobalConstant.SPLIT_DELIMETER)))
                 .sorted()
                 .collect(Collectors.toList());
         simpleAuthorizationInfo.addStringPermissions(permissions);

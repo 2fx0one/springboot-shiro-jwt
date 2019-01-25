@@ -22,6 +22,12 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
+
+    //身份验证缓存
+    public static final String AUTHENTICATION_CACHE_NAME = "authenticationCacheName";
+
+    //权限验证缓存
+    public static final String AUTHORIZATION_CACHE_NAME = "authorizationCacheName";
     /**
      * shiro缓存管理器;
      * 需要注入对应的其它的实体类中：
@@ -45,8 +51,8 @@ public class ShiroConfig {
         manager.setCacheManager(cacheManager);
 
         //自己的 customShiroRealm
-        myShiroRealm.setAuthenticationCacheName("authenticationCache");
-        myShiroRealm.setAuthorizationCacheName("authorizationCache");
+        myShiroRealm.setAuthenticationCacheName(AUTHENTICATION_CACHE_NAME);
+        myShiroRealm.setAuthorizationCacheName(AUTHORIZATION_CACHE_NAME);
         myShiroRealm.setAuthenticationCachingEnabled(true);
         manager.setRealm(myShiroRealm);
 
