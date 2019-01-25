@@ -43,6 +43,9 @@ public class MyShiroRealm extends AuthorizingRealm {
      * 认证信息(身份验证)
      * Authentication 是用来验证用户身份
      *
+     * 缓存KEY 使用的是 token.getPrincipal() == jwt_token。
+     * AuthenticatingRealm::getAuthenticationCacheKey() -> return token != null ? token.getPrincipal() : null;
+     *
      * @param authenticationToken
      * @return
      * @throws AuthenticationException
@@ -50,7 +53,8 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         log.info("认证信息(身份验证) ===> MyShiroRealm.doGetAuthenticationInfo()");
-//        System.out.println(authenticationToken.getPrincipal());
+//        authenticationToken 实际是 JWTToken对象包装 在 executeLogin 中  getSubject(request, response).login(token); 传入
+        System.out.println(authenticationToken.getPrincipal());
         String token = (String) authenticationToken.getCredentials();
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtils.getUsername(token);
@@ -63,7 +67,7 @@ public class MyShiroRealm extends AuthorizingRealm {
             throw new AuthenticationException("[用户不存在] User didn't existed!");
         }
 
-        if(!JWTUtils.verify(token, username, user.getPassword())) {
+        if (!JWTUtils.verify(token, username, user.getPassword())) {
             //产生 JWTVerificationException 抛出异常
             throw new AuthenticationException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
         }
@@ -82,6 +86,10 @@ public class MyShiroRealm extends AuthorizingRealm {
      * （需要手动编程进行实现；放在service进行调用）
      * 在权限修改后调用realm中的方法，realm已经由spring管理，所以从spring中获取realm实例，调用clearCached方法；
      * :Authorization 是授权访问控制，用于对用户进行的操作授权，证明该用户是否允许进行当前操作，如访问某个链接，某个资源文件等。
+     * <p>
+     *
+     * 缓存KEY 使用的是 PrincipalCollection principals。
+     * AuthorizingRealm::getAuthorizationCacheKey(PrincipalCollection principals) -> reuturn principals
      *
      * @param principals
      * @return
@@ -115,11 +123,13 @@ public class MyShiroRealm extends AuthorizingRealm {
         return simpleAuthorizationInfo;
     }
 
+    //方便外部调用 获取该用户的权限
     @Override
     public AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
         return super.getAuthorizationInfo(principals);
     }
 
+    //方便外部调用 清理该用户的认证和权限
     @Override
     public void doClearCache(PrincipalCollection principals) {
         super.doClearCache(principals);

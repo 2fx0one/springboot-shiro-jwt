@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequiresAuthentication
 @RequestMapping("/sys/auth")
 public class AuthController extends BaseController {
 
@@ -49,16 +48,19 @@ public class AuthController extends BaseController {
     }
 
     @PostMapping("/logout")
+    @RequiresAuthentication
     public R logout() {
         ShiroUtils.getSubject().logout();
         return R.ok("logout success");
     }
 
     @GetMapping("/user/info")
+    @RequiresAuthentication
     public R userInfo() {
         //用户角色信息 菜单 权限
         AuthorizationInfo info = ShiroUtils.getAuthorizationInfo();
 //        List<Role> roles = roleService.listByUserId(user);
+
         return R.ok("success", info);
     }
 
