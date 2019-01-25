@@ -4,18 +4,15 @@ import com.tfx0one.common.api.R;
 import com.tfx0one.common.base.BaseController;
 import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.common.utils.ShiroUtils;
-import com.tfx0one.sys.entity.Role;
 import com.tfx0one.sys.entity.User;
 import com.tfx0one.sys.service.RoleService;
 import com.tfx0one.sys.service.UserService;
 import com.tfx0one.sys.vo.ApiRequestLoginUser;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @projectName: base-web
@@ -25,10 +22,11 @@ import java.util.List;
  */
 
 @RestController
+@RequiresAuthentication
 @RequestMapping("/sys/auth")
 public class AuthController extends BaseController {
 
-    @Resource
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -51,19 +49,17 @@ public class AuthController extends BaseController {
     }
 
     @PostMapping("/logout")
-    @RequiresAuthentication
     public R logout() {
         ShiroUtils.getSubject().logout();
         return R.ok("logout success");
     }
 
     @GetMapping("/user/info")
-    @RequiresAuthentication
     public R userInfo() {
         //用户角色信息 菜单 权限
-        User user = ShiroUtils.getCurrentUser();
-        List<Role> roles = roleService.listByUserId(user);
-        return R.ok("success");
+        AuthorizationInfo info = ShiroUtils.getAuthorizationInfo();
+//        List<Role> roles = roleService.listByUserId(user);
+        return R.ok("success", info);
     }
 
 

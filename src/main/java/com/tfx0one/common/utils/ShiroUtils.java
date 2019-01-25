@@ -16,13 +16,16 @@
 package com.tfx0one.common.utils;
 
 import com.tfx0one.common.constant.GlobalConstant;
+import com.tfx0one.common.shiro.MyShiroRealm;
 import com.tfx0one.common.shiro.ShiroConfig;
 import com.tfx0one.sys.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
 /**
@@ -50,15 +53,24 @@ public class ShiroUtils {
     public final static int HASH_ITERATIONS = 1;
 
     private static CacheManager cacheManager = SpringContextHolder.getBean(CacheManager.class);
+    private static MyShiroRealm myShiroRealm = SpringContextHolder.getBean(MyShiroRealm.class);
 
+    //缓存清除 直接在清空授权的缓存。注意没有清空身份认证authc的缓存
     public static void clearAllUserAuthorization() {
         cacheManager.getCache(ShiroConfig.AUTHORIZATION_CACHE_NAME).clear();
     }
+
+    //清空某个用户的身份认证和授权信息。一般可以用在修改了密码的情况。
     public static void clearCurrentUserAuthorization() {
-        cacheManager.getCache(ShiroConfig.AUTHORIZATION_CACHE_NAME).remove(getSubject().getPrincipals());
+        myShiroRealm.doClearCache(getSubject().getPrincipals());
+//        cacheManager.getCache(ShiroConfig.AUTHORIZATION_CACHE_NAME).remove(getSubject().getPrincipals());
 
     }
 
+    //获取当前用户的授权信息，会放入缓存。登录时获取
+    public static AuthorizationInfo getAuthorizationInfo() {
+        return myShiroRealm.getAuthorizationInfo(getSubject().getPrincipals());
+    }
 
 
     /**

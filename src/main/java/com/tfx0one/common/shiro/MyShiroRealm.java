@@ -114,4 +114,14 @@ public class MyShiroRealm extends AuthorizingRealm {
 
         return simpleAuthorizationInfo;
     }
+
+    @Override
+    public AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
+        return super.getAuthorizationInfo(principals);
+    }
+
+    @Override
+    public void doClearCache(PrincipalCollection principals) {
+        super.doClearCache(principals);
+    }
 }
