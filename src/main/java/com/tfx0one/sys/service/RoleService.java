@@ -2,6 +2,9 @@ package com.tfx0one.sys.service;
 
 import com.tfx0one.sys.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.tfx0one.sys.entity.User;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface RoleService extends IService<Role> {
 
+    List<Role> listByUserId(User user);
 }

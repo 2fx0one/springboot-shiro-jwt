@@ -6,9 +6,13 @@ import com.tfx0one.common.util.JWTUtil;
 import com.tfx0one.common.util.ShiroUtil;
 import com.tfx0one.sys.entity.Role;
 import com.tfx0one.sys.entity.User;
+import com.tfx0one.sys.service.RoleService;
 import com.tfx0one.sys.service.UserService;
 import com.tfx0one.sys.vo.ApiRequestLoginUser;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,6 +33,9 @@ public class AuthController extends BaseController {
     @Resource
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
+
 
     @PostMapping("/login")
     public R login(@RequestBody ApiRequestLoginUser login) {
@@ -47,7 +54,11 @@ public class AuthController extends BaseController {
 
     @GetMapping("/user/info")
     public R userInfo() {
+        //用户角色信息 菜单 权限
+        User user = ShiroUtil.getCurrentUser();
+        List<Role> roles = roleService.listByUserId(user);
         return R.ok("success");
     }
+
 
 }

@@ -8,11 +8,12 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.tfx0one.sys.entity.User;
 
+import javax.naming.AuthenticationException;
 import java.util.Date;
 
 public class JWTUtil {
-    // 过期时间5分钟
-    private static final long EXPIRE_TIME = 5 * 60 * 1000;
+    // 过期时间30分钟
+    private static final long EXPIRE_TIME = 30 * 60 * 1000;
 
     /**
      * 校验token是否正确

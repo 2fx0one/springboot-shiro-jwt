@@ -2,6 +2,9 @@ package com.tfx0one.sys.mapper;
 
 import com.tfx0one.sys.entity.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.tfx0one.sys.entity.User;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface RoleMapper extends BaseMapper<Role> {
 
+    List<Role> listByUserId(User user);
 }

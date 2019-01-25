@@ -76,14 +76,20 @@ public class ShiroConfig {
         factoryBean.setUnauthorizedUrl("/401");
 
         //自定义URL
-        Map<String, String> filterRuleMap = new HashMap<>();
-        //所有请求都要过jwt
-        filterRuleMap.put("/**", "jwt");
+        Map<String, String> rule = new HashMap<>();
+        rule.put("/sys/auth/login", "anon");
+
+        //swagger ui
+        rule.put("/swagger-ui.html", "anon");
+        rule.put("/swagger-resources", "anon");
+        rule.put("/v2/api-docs", "anon");
+        rule.put("/webjars/springfox-swagger-ui/**", "anon");
         //401 页面不需要
-        filterRuleMap.put("/login", "anon");
-        filterRuleMap.put("/401", "anon");
-        filterRuleMap.put("/404", "anon");
-        factoryBean.setFilterChainDefinitionMap(filterRuleMap);
+        rule.put("/401", "anon");
+        rule.put("/404", "anon");
+        //所有请求都要过jwt
+        rule.put("/**", "jwt"); //需要放最后
+        factoryBean.setFilterChainDefinitionMap(rule);
 
         return factoryBean;
     }

@@ -55,4 +55,13 @@ public class BaseEntity implements Serializable {
     @TableField("del_flag")
     private String delFlag;
 
+    /**
+     * 删除标记（0：正常；1：删除；2：审核；）
+     */
+    @TableField(exist = false)
+    public static final String DEL_FLAG_NORMAL = "0";
+    @TableField(exist = false)
+    public static final String DEL_FLAG_DELETE = "1";
+    @TableField(exist = false)
+    public static final String DEL_FLAG_AUDIT = "2";
 }

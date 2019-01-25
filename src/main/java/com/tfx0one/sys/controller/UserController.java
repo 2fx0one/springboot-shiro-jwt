@@ -22,10 +22,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/sys/user")
 public class UserController extends BaseController {
 
-    @GetMapping("/info")
-    public R<ApiResponseUserInfo> userInfo() {
-        User u = ShiroUtil.getCurrentUser();
-        System.out.println(u);
-        return R.ok("success", new ApiResponseUserInfo());
-    }
 }

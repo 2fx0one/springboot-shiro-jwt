@@ -1,9 +1,12 @@
 package com.tfx0one.common.shiro;
 
 import com.tfx0one.common.util.JWTUtil;
+import com.tfx0one.sys.entity.Menu;
+import com.tfx0one.sys.entity.Role;
 import com.tfx0one.sys.entity.User;
 import com.tfx0one.sys.service.RoleService;
 import com.tfx0one.sys.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -16,10 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class MyShiroRealm extends AuthorizingRealm {
@@ -60,8 +62,9 @@ public class MyShiroRealm extends AuthorizingRealm {
             throw new AuthenticationException(" 用户不存在 User didn't existed!");
         }
 
-        if (!JWTUtil.verify(token, username, user.getPassword())) {
-            throw new AuthenticationException("token 认证失败, 请重新登录！");
+        if(!JWTUtil.verify(token, username, user.getPassword())) {
+            //产生 JWTVerificationException 抛出异常
+            throw new AuthenticationException("TOKEN 认证信息(身份验证) 认证失败, 请重新登录！");
         }
 
         return new SimpleAuthenticationInfo(user, token, getName());
@@ -98,9 +101,21 @@ public class MyShiroRealm extends AuthorizingRealm {
         User user = (User) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         //TODO role and perssmisson
-        simpleAuthorizationInfo.addRole(user.getName());
-        Set<String> permission = new HashSet<>();
-        simpleAuthorizationInfo.addStringPermissions(permission);
+        List<Role> roleList = roleService.listByUserId(user);
+
+        //角色
+        List<String> roles = roleList.stream().map(Role::getEnname).collect(Collectors.toList());
+        simpleAuthorizationInfo.addRoles(roles);
+
+        //权限
+        List<String> permissions = roleList.stream()
+                .map(Role::getMenuList).flatMap(Collection::stream)
+                .map(Menu::getPermission).filter(StringUtils::isNotEmpty) //过滤空
+                .flatMap(s -> Arrays.stream(s.split(",")))
+                .sorted()
+                .collect(Collectors.toList());
+        simpleAuthorizationInfo.addStringPermissions(permissions);
+
         return simpleAuthorizationInfo;
     }
 }

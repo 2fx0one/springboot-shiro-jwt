@@ -29,7 +29,8 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({Exception.class})
     public R globalException(HttpServletRequest request, Throwable ex) {
-        return R.error(getStatus(request).value(), ex.getMessage());
+        ex.printStackTrace();
+        return R.error(getStatus(request).value(),  "系统错误：" + ex);
     }
 
     private HttpStatus getStatus(HttpServletRequest request) {

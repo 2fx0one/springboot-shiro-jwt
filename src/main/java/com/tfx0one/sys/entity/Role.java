@@ -1,10 +1,13 @@
 package com.tfx0one.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.tfx0one.common.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.util.List;
 
 /**
  * <p>
@@ -21,6 +24,9 @@ import lombok.experimental.Accessors;
 public class Role extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    @TableField(exist = false)
+    List<Menu> menuList;
 
     /**
      * 归属机构
