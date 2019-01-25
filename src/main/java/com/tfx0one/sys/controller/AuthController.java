@@ -52,7 +52,15 @@ public class AuthController extends BaseController {
         }
     }
 
+    @PostMapping("/logout")
+    @RequiresAuthentication
+    public R logout() {
+        ShiroUtil.getSubject().logout();
+        return R.ok("logout success");
+    }
+
     @GetMapping("/user/info")
+    @RequiresAuthentication
     public R userInfo() {
         //用户角色信息 菜单 权限
         User user = ShiroUtil.getCurrentUser();

@@ -64,6 +64,8 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
 //            } catch (Exception e) {
 //                response401(request, response);
 //            }
+//        } else {
+//            return false;
         }
         return true;
     }

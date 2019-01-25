@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
+@RequiresAuthentication
 @RequestMapping("/sys/test")
 public class TestController {
     @GetMapping("/a")
@@ -23,15 +24,21 @@ public class TestController {
     }
 
     @GetMapping("/b")
-    @RequiresAuthentication
     public R b() {
         return R.ok("bbb");
     }
 
     @GetMapping("/c")
-    @RequiresAuthentication
     @RequiresPermissions({"sys:dict:view"})
     public R c() {
         return R.ok("bbb");
     }
+
+    @GetMapping("/z")
+    @RequiresPermissions({"zzzz"})
+    public R z() {
+        return R.ok("zzz");
+    }
+
+
 }
