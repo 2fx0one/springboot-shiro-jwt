@@ -77,6 +77,10 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         List<Role> roleList = roleService.listByUserId(user);
         user.setRoleList(roleList);
 
+        List<Menu> menuList = roleList.stream()
+                .map(Role::getMenuList).flatMap(Collection::stream).collect(Collectors.toList());
+        user.setMenuList(menuList);
+
         return new SimpleAuthenticationInfo(user, token, getName());
     }
 
@@ -118,9 +122,10 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         List<String> roles = roleList.stream().map(Role::getEnname).collect(Collectors.toList());
         simpleAuthorizationInfo.addRoles(roles);
 
+        List<Menu> menuList = user.getMenuList();
         //权限
-        List<String> permissions = roleList.stream()
-                .map(Role::getMenuList).flatMap(Collection::stream)
+        List<String> permissions = menuList.stream()
+//                .map(Role::getMenuList).flatMap(Collection::stream)
                 .map(Menu::getPermission).filter(StringUtils::isNotEmpty) //过滤空
                 .flatMap(s -> Arrays.stream(s.split(GlobalConstant.SPLIT_DELIMETER)))
                 .sorted()
@@ -136,7 +141,7 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         return ((User) principals.getPrimaryPrincipal()).getId();
     }
 
-//    //方便外部调用 获取该用户的权限
+    //方便外部调用 获取该用户的权限
     @Override
     public AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
         return super.getAuthorizationInfo(principals);

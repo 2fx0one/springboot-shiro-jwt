@@ -28,6 +28,9 @@ public class User extends BaseEntity {
 
     @TableField(exist = false)
     private List<Role> roleList;
+
+    @TableField(exist = false)
+    private List<Menu> menuList;
     /**
      * 归属公司
      */

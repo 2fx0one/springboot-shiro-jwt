@@ -4,11 +4,13 @@ import com.tfx0one.common.api.R;
 import com.tfx0one.common.base.BaseController;
 import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.common.utils.ShiroUtils;
+import com.tfx0one.sys.entity.Menu;
 import com.tfx0one.sys.entity.Role;
 import com.tfx0one.sys.entity.User;
 import com.tfx0one.sys.service.RoleService;
 import com.tfx0one.sys.service.UserService;
 import com.tfx0one.sys.vo.ApiRequestLoginUser;
+import com.tfx0one.sys.vo.ApiResponseUserInfo;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -62,11 +65,12 @@ public class AuthController extends BaseController {
     @RequiresAuthentication
     public R userInfo() {
         //用户角色信息 菜单 权限
-        ShiroUtils.getCurrentUser().getRoleList().stream().map(Role::getMenuList).flatMap(Collection::stream).collect(Collectors.toList());
+        List<Menu> menuList = ShiroUtils.getCurrentUser().getMenuList();
+//        List<Role> roleList = ShiroUtils.getCurrentUser().getRoleList();
         AuthorizationInfo info = ShiroUtils.getAuthorizationInfo();
-//        List<Role> roles = roleService.listByUserId(user);
 
-        return R.ok("success", info);
+        return R.ok("success",ApiResponseUserInfo.create(menuList, info.getStringPermissions()));
+//                .menuList(menuList).permissionList(info.getStringPermissions()));
     }
 
 
