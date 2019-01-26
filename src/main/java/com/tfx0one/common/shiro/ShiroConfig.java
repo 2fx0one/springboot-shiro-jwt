@@ -24,10 +24,10 @@ import java.util.Map;
 public class ShiroConfig {
 
     //身份验证缓存
-    public static final String AUTHENTICATION_CACHE_NAME = "authenticationCacheName";
+    public static final String AUTHENTICATION_CACHE_NAME = "authorizationCache";
 
     //权限验证缓存
-    public static final String AUTHORIZATION_CACHE_NAME = "authorizationCacheName";
+    public static final String AUTHORIZATION_CACHE_NAME = "authenticationCache";
     /**
      * shiro缓存管理器;
      * 需要注入对应的其它的实体类中：

@@ -48,25 +48,33 @@ public class JWTUtils {
         }
     }
 
+    public static String getUserId(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getSubject();
+        } catch (JWTDecodeException e) {
+            return null;
+        }
+    }
+
     /**
      * 生成签名,5min后过期
      *
-     * @param username 用户名
-     * @param secret   用户的密码
+     * @param user 用户
      * @return 加密的token
      */
-    public static String sign(String username, String secret) {
+    public static String sign(User user) {
         Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
-        Algorithm algorithm = Algorithm.HMAC256(secret);
+        Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
         // 附带username信息
         return JWT.create()
-//                .withSubject()
-                .withClaim("username", username)
+                .withSubject(user.getId())
+                .withClaim("username", user.getLoginName())
                 .withExpiresAt(date)
                 .sign(algorithm);
     }
 
-    public static String sign(User user) {
-        return sign(user.getLoginName(), user.getPassword());
-    }
+//    public static String sign(User user) {
+//        return sign(user.getLoginName(), user.getPassword());
+//    }
 }

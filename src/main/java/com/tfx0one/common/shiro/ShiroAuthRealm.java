@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.temporal.JulianFields;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -72,8 +73,11 @@ public class ShiroAuthRealm extends AuthorizingRealm {
             //产生 JWTVerificationException 抛出异常
             throw new AuthenticationException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
         }
+        //角色也准备好！给authz 使用
+        List<Role> roleList = roleService.listByUserId(user);
+        user.setRoleList(roleList);
 
-        return new SimpleAuthenticationInfo(token, token, getName());
+        return new SimpleAuthenticationInfo(user, token, getName());
     }
 
 
@@ -105,8 +109,10 @@ public class ShiroAuthRealm extends AuthorizingRealm {
          */
         log.info("权限信息.(授权) ===> MyShiroRealm.doGetAuthorizationInfo()");
         User user = (User) principals.getPrimaryPrincipal();
+
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        List<Role> roleList = roleService.listByUserId(user);
+
+        List<Role> roleList = user.getRoleList();
 
         //角色
         List<String> roles = roleList.stream().map(Role::getEnname).collect(Collectors.toList());
@@ -124,7 +130,13 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         return simpleAuthorizationInfo;
     }
 
-    //方便外部调用 获取该用户的权限
+    // 权限缓存 key
+    @Override
+    protected Object getAuthorizationCacheKey(PrincipalCollection principals) {
+        return ((User) principals.getPrimaryPrincipal()).getId();
+    }
+
+//    //方便外部调用 获取该用户的权限
     @Override
     public AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
         return super.getAuthorizationInfo(principals);

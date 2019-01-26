@@ -4,6 +4,7 @@ import com.tfx0one.common.api.R;
 import com.tfx0one.common.base.BaseController;
 import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.common.utils.ShiroUtils;
+import com.tfx0one.sys.entity.Role;
 import com.tfx0one.sys.entity.User;
 import com.tfx0one.sys.service.RoleService;
 import com.tfx0one.sys.service.UserService;
@@ -13,6 +14,9 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * @projectName: base-web
@@ -58,6 +62,7 @@ public class AuthController extends BaseController {
     @RequiresAuthentication
     public R userInfo() {
         //用户角色信息 菜单 权限
+        ShiroUtils.getCurrentUser().getRoleList().stream().map(Role::getMenuList).flatMap(Collection::stream).collect(Collectors.toList());
         AuthorizationInfo info = ShiroUtils.getAuthorizationInfo();
 //        List<Role> roles = roleService.listByUserId(user);
 

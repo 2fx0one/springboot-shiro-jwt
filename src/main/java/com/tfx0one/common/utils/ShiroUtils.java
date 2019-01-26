@@ -54,12 +54,13 @@ public class ShiroUtils {
     private static CacheManager cacheManager = SpringContextHolder.getBean(CacheManager.class);
     private static ShiroAuthRealm shiroAuthRealm = SpringContextHolder.getBean(ShiroAuthRealm.class);
 
-    //缓存清除 直接在清空授权的缓存。注意没有清空身份认证authc的缓存
-    public static void clearAllUserAuthorization() {
+    //清除全部缓存 直接在清空authz授权的缓存 和 身份认证authc的缓存
+    public static void clearAllUserAuth() {
+        cacheManager.getCache(ShiroConfig.AUTHENTICATION_CACHE_NAME).clear();
         cacheManager.getCache(ShiroConfig.AUTHORIZATION_CACHE_NAME).clear();
     }
 
-    //清空某个用户的身份认证和授权信息。一般可以用在修改了密码的情况。
+    //清空某个用户的身份认证和授权信息。可以用在修改了密码的情况。
     public static void clearCurrentUserAuthorization() {
         shiroAuthRealm.doClearCache(getSubject().getPrincipals());
 //        cacheManager.getCache(ShiroConfig.AUTHORIZATION_CACHE_NAME).remove(getSubject().getPrincipals());
@@ -69,6 +70,14 @@ public class ShiroUtils {
     //获取当前用户的授权信息，会放入缓存。登录时获取
     public static AuthorizationInfo getAuthorizationInfo() {
         return shiroAuthRealm.getAuthorizationInfo(getSubject().getPrincipals());
+    }
+
+    public static User getCurrentUser() {
+        if (isUser()) {
+            return (User) getSubject().getPrincipal();
+        }else {
+            throw new AuthenticationException("不是认证用户！");
+        }
     }
 
 
@@ -198,13 +207,6 @@ public class ShiroUtils {
         return getSubject() != null && getSubject().getPrincipal() != null;
     }
 
-    public static User getCurrentUser() {
-        if (isUser()) {
-            return (User) getSubject().getPrincipal();
-        }else {
-            throw new AuthenticationException("不是认证用户！");
-        }
-    }
 
     /**
      * 验证当前用户是否为“访客”，即未认证（包含未记住）的用户。用user搭配使用
