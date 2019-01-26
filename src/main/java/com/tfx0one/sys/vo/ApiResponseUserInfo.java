@@ -26,6 +26,8 @@ public class ApiResponseUserInfo {
     private Collection<String> permissionList;
 
     public static ApiResponseUserInfo create(List<Menu> menuList, Collection<String> stringPermissions) {
-        return new ApiResponseUserInfo().setMenuList(menuList).setPermissionList(stringPermissions);
+        return new ApiResponseUserInfo()
+                .setMenuList(menuList)
+                .setPermissionList(stringPermissions);
     }
 }

@@ -63,14 +63,16 @@ public class AuthController extends BaseController {
 
     @GetMapping("/user/info")
     @RequiresAuthentication
-    public R userInfo() {
+    public R<ApiResponseUserInfo> userInfo() {
         //用户角色信息 菜单 权限
         List<Menu> menuList = ShiroUtils.getCurrentUser().getMenuList();
 //        List<Role> roleList = ShiroUtils.getCurrentUser().getRoleList();
         AuthorizationInfo info = ShiroUtils.getAuthorizationInfo();
 
-        return R.ok("success",ApiResponseUserInfo.create(menuList, info.getStringPermissions()));
-//                .menuList(menuList).permissionList(info.getStringPermissions()));
+        return R.ok("success",
+                ApiResponseUserInfo.create(
+                        menuList,
+                        info.getStringPermissions()));
     }
 
 
