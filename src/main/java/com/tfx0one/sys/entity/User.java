@@ -31,6 +31,9 @@ public class User extends BaseEntity {
 
     @TableField(exist = false)
     private List<Menu> menuList;
+
+    @TableField(exist = false)
+    private String jwtToken;
     /**
      * 归属公司
      */

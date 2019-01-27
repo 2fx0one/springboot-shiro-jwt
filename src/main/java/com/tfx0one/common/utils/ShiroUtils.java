@@ -55,7 +55,7 @@ public class ShiroUtils {
     private static ShiroAuthRealm shiroAuthRealm = SpringContextHolder.getBean(ShiroAuthRealm.class);
 
     //清除全部缓存 直接在清空authz授权的缓存 和 身份认证authc的缓存
-    public static void clearAllUserAuth() {
+    public static void clearAllUserAuthCache() {
         cacheManager.getCache(ShiroConfig.AUTHENTICATION_CACHE_NAME).clear();
         cacheManager.getCache(ShiroConfig.AUTHORIZATION_CACHE_NAME).clear();
     }

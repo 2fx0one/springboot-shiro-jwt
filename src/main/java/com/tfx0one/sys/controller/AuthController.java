@@ -57,6 +57,7 @@ public class AuthController extends BaseController {
     @PostMapping("/logout")
     @RequiresAuthentication
     public R logout() {
+        //jwtToken 并未失效 要等过期之后了。故而前端逻辑需要把jwtToken删除
         ShiroUtils.getSubject().logout();
         return R.ok("logout success");
     }

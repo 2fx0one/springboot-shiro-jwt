@@ -53,13 +53,13 @@ public class ShiroAuthRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        log.info("认证信息(身份验证) ===> MyShiroRealm.doGetAuthenticationInfo()");
+        log.info("AUTH_C 认证信息(身份验证) ===> MyShiroRealm.doGetAuthenticationInfo()");
 //        authenticationToken 实际是 JWTToken对象包装 在 executeLogin 中  getSubject(request, response).login(token); 传入
-        System.out.println(authenticationToken.getPrincipal());
+//        System.out.println(authenticationToken.getPrincipal());
 //        String token = (String) authenticationToken.getPrincipal();
-        String token = (String) authenticationToken.getCredentials();
+        String jwtToken = (String) authenticationToken.getCredentials();
         // 解密获得username，用于和数据库进行对比
-        String username = JWTUtils.getUsername(token);
+        String username = JWTUtils.getUsername(jwtToken);
         if (username == null) {
             throw new AuthenticationException("[用户不存在] token invalid");
         }
@@ -69,11 +69,11 @@ public class ShiroAuthRealm extends AuthorizingRealm {
             throw new AuthenticationException("[用户不存在] User didn't existed!");
         }
 
-        if (!JWTUtils.verify(token, username, user.getPassword())) {
+        if (!JWTUtils.verify(jwtToken, username, user.getPassword())) {
             //产生 JWTVerificationException 抛出异常
             throw new AuthenticationException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
         }
-        //角色也准备好！给authz 使用
+        //角色 菜单 也准备好！留给后面的 给authz 使用
         List<Role> roleList = roleService.listByUserId(user);
         user.setRoleList(roleList);
 
@@ -81,7 +81,10 @@ public class ShiroAuthRealm extends AuthorizingRealm {
                 .map(Role::getMenuList).flatMap(Collection::stream).collect(Collectors.toList());
         user.setMenuList(menuList);
 
-        return new SimpleAuthenticationInfo(user, token, getName());
+        //token 也放缓存
+        user.setJwtToken(jwtToken);
+
+        return new SimpleAuthenticationInfo(user, jwtToken, getName());
     }
 
 
@@ -111,7 +114,7 @@ public class ShiroAuthRealm extends AuthorizingRealm {
          * 当放到缓存中时，这样的话，doGetAuthorizationInfo 就只会执行一次了，
          * 缓存过期之后会再次执行。
          */
-        log.info("权限信息.(授权) ===> MyShiroRealm.doGetAuthorizationInfo()");
+        log.info("AUTH_Z 权限信息.(授权) ===> MyShiroRealm.doGetAuthorizationInfo()");
         User user = (User) principals.getPrimaryPrincipal();
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
@@ -135,10 +138,17 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         return simpleAuthorizationInfo;
     }
 
-    // 权限缓存 key
+    // AUTH_C 权限缓存 key 使用jwtToken 在logout时，需要 doClearCache 清除身份认证的缓存。但是默认的Key是principal 但是登录的时候缓存的Key是 jwtToken
+    @Override
+    protected Object getAuthenticationCacheKey(PrincipalCollection principals) {
+        return ((User) principals.getPrimaryPrincipal()).getJwtToken();
+//        return getAvailablePrincipal(principals);
+    }
+
+    // AUTH_Z 权限缓存 key 使用jwtToken
     @Override
     protected Object getAuthorizationCacheKey(PrincipalCollection principals) {
-        return ((User) principals.getPrimaryPrincipal()).getId();
+        return ((User) principals.getPrimaryPrincipal()).getJwtToken();
     }
 
     //方便外部调用 获取该用户的权限
