@@ -35,10 +35,6 @@ public class AuthController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RoleService roleService;
-
-
     @PostMapping("/login")
     public R login(@RequestBody ApiRequestLoginUser login) {
         User user = userService.getByLoginName(login.getUsername());
@@ -66,12 +62,13 @@ public class AuthController extends BaseController {
     @RequiresAuthentication
     public R<ApiResponseUserInfo> userInfo() {
         //用户角色信息 菜单 权限
+        List<Role> roleList = ShiroUtils.getCurrentUser().getRoleList();
         List<Menu> menuList = ShiroUtils.getCurrentUser().getMenuList();
-//        List<Role> roleList = ShiroUtils.getCurrentUser().getRoleList();
         AuthorizationInfo info = ShiroUtils.getAuthorizationInfo();
 
         return R.ok("success",
                 ApiResponseUserInfo.create(
+                        roleList,
                         menuList,
                         info.getStringPermissions()));
     }
