@@ -22,8 +22,8 @@ public class R<T> implements Serializable {
 
     private static final Logger log = LoggerFactory.getLogger(R.class);
 
-    @ApiModelProperty(value = "状态码，200 表示成功", required = true, position = -3)
-    private Integer code = 200;
+    @ApiModelProperty(value = "状态码，20000 表示成功", required = true, position = -3)
+    private Integer code = 20000;
 
     @ApiModelProperty(value = "提示信息", position = -2)
     private String msg;
@@ -78,7 +78,7 @@ public class R<T> implements Serializable {
 
 
     public static <T> R<T> error() {
-        return commonFunc(HttpStatus.INTERNAL_SERVER_ERROR.value(), "系统错误，请联系管理员", null);
+        return commonFunc(50000, "系统错误，请联系管理员", null);
     }
 
     public static <T> R<T> error(String msg) {

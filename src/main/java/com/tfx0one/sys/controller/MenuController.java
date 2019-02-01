@@ -15,7 +15,7 @@ import com.tfx0one.common.base.BaseController;
  * @since 2019-01-24
  */
 @RestController
-@RequestMapping("/sys/menu")
+@RequestMapping("/api/sys/menu")
 public class MenuController extends BaseController {
 
 }

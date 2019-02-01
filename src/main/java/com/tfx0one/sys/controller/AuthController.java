@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  */
 
 @RestController
-@RequestMapping("/sys/auth")
+@RequestMapping("/api/sys/auth")
 public class AuthController extends BaseController {
 
     @Autowired
@@ -46,7 +46,7 @@ public class AuthController extends BaseController {
         if (user.getPassword().equals(simpleHashPassword)) {
             return R.ok("login success!", JWTUtils.sign(user));
         } else {
-            throw new AuthenticationException("账号或密码错误！");
+            return R.error(401, "账号或密码错误！");
         }
     }
 

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiresAuthentication
-@RequestMapping("/sys/test")
+@RequestMapping("/api/sys/test")
 public class TestController {
 
 //    @Resource

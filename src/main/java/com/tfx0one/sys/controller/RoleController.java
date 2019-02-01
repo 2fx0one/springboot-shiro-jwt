@@ -15,7 +15,7 @@ import com.tfx0one.common.base.BaseController;
  * @since 2019-01-24
  */
 @RestController
-@RequestMapping("/sys/role")
+@RequestMapping("/api/sys/role")
 public class RoleController extends BaseController {
 
 }
