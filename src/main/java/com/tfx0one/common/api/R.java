@@ -64,25 +64,29 @@ public class R<T> implements Serializable {
         return r;
     }
 
+    private static Integer SUCCESS_CODE = 20000;
+    private static Integer ERROR_CODE = 50000;
+
+
     public static <T> R<T> ok() {
-        return commonFunc(HttpStatus.OK.value(), null, null);
+        return commonFunc(SUCCESS_CODE, null, null);
     }
 
     public static <T> R<T> ok(String msg) {
-        return commonFunc(HttpStatus.OK.value(), msg, null);
+        return commonFunc(SUCCESS_CODE, msg, null);
     }
 
     public static <T> R<T> ok(String msg, T data) {
-        return commonFunc(HttpStatus.OK.value(), msg, data);
+        return commonFunc(SUCCESS_CODE, msg, data);
     }
 
 
     public static <T> R<T> error() {
-        return commonFunc(50000, "系统错误，请联系管理员", null);
+        return commonFunc(ERROR_CODE, "系统错误，请联系管理员", null);
     }
 
     public static <T> R<T> error(String msg) {
-        return commonFunc(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg, null);
+        return commonFunc(ERROR_CODE, msg, null);
     }
 
     public static <T> R<T> error(Integer code, String msg) {
