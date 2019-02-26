@@ -1,10 +1,8 @@
-package com.tfx0one.sys.vo;
+package com.tfx0one.sys.vo.response;
 
 import com.tfx0one.sys.entity.Menu;
 import com.tfx0one.sys.entity.Role;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -20,18 +18,18 @@ import java.util.stream.Collectors;
 //@Builder
 @Accessors(chain = true)
 @Data
-public class ApiResponseUserInfo {
+public class ApiUserInfo {
 
     private List<String> roleList;
 //    @ApiModelProperty
-    private List<Menu> menuList;
+    private List<ApiMenu> menuList;
 //    @ApiModelProperty
     private Collection<String> permissionList;
 
-    public static ApiResponseUserInfo create(List<Role> roleList, List<Menu> menuList, Collection<String> stringPermissions) {
-        return new ApiResponseUserInfo()
+    public static ApiUserInfo create(List<Role> roleList, List<Menu> menuList, Collection<String> stringPermissions) {
+        return new ApiUserInfo()
                 .setRoleList(roleList.stream().map(Role::getEnname).collect(Collectors.toList()))
-                .setMenuList(menuList)
+                .setMenuList(menuList.stream().map(ApiMenu::create).collect(Collectors.toList()))
                 .setPermissionList(stringPermissions);
     }
 }

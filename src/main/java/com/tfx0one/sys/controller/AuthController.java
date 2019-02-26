@@ -7,19 +7,15 @@ import com.tfx0one.common.utils.ShiroUtils;
 import com.tfx0one.sys.entity.Menu;
 import com.tfx0one.sys.entity.Role;
 import com.tfx0one.sys.entity.User;
-import com.tfx0one.sys.service.RoleService;
 import com.tfx0one.sys.service.UserService;
-import com.tfx0one.sys.vo.ApiRequestLoginUser;
-import com.tfx0one.sys.vo.ApiResponseUserInfo;
-import org.apache.shiro.authc.AuthenticationException;
+import com.tfx0one.sys.vo.request.ApiLoginUser;
+import com.tfx0one.sys.vo.response.ApiUserInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @projectName: base-web
@@ -36,7 +32,7 @@ public class AuthController extends BaseController {
     private UserService userService;
 
     @PostMapping("/login")
-    public R login(@RequestBody ApiRequestLoginUser login) {
+    public R login(@RequestBody ApiLoginUser login) {
         User user = userService.getByLoginName(login.getUsername());
         if (user == null) {
             return R.error(401, "用户不存在");
@@ -60,14 +56,14 @@ public class AuthController extends BaseController {
 
     @GetMapping("/user/info")
     @RequiresAuthentication
-    public R<ApiResponseUserInfo> userInfo() {
+    public R<ApiUserInfo> userInfo() {
         //用户角色信息 菜单 权限
         List<Role> roleList = ShiroUtils.getCurrentUser().getRoleList();
         List<Menu> menuList = ShiroUtils.getCurrentUser().getMenuList();
         AuthorizationInfo info = ShiroUtils.getAuthorizationInfo();
 
         return R.ok("success",
-                ApiResponseUserInfo.create(
+                ApiUserInfo.create(
                         roleList,
                         menuList,
                         info.getStringPermissions()));
