@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * @Auth 2fx0one
  * 2019/2/26 20:18
  */
-@ApiModel("登录信息")
+@ApiModel("菜单")
 @Data
 @Accessors(chain = true)
 public class ApiMenu {

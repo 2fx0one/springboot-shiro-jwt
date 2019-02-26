@@ -1,5 +1,6 @@
 package com.tfx0one.sys.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.tfx0one.sys.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -14,4 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface UserService extends IService<User> {
 
     User getByLoginName(String username);
+
+    IPage<User> listBySearch();
 }
