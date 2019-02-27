@@ -27,7 +27,7 @@ public class ApiUserInfo {
 
     private List<String> roles;
 //    @ApiModelProperty
-    private List<ApiMenu> menuList;
+    private List<String> pathList;
 //    @ApiModelProperty
     private Collection<String> permissionList;
 
@@ -35,7 +35,7 @@ public class ApiUserInfo {
         return new ApiUserInfo()
                 .setName(user.getLoginName())
                 .setRoles(user.getRoleList().stream().map(Role::getEnname).collect(Collectors.toList()))
-                .setMenuList(user.getMenuList().stream().map(ApiMenu::create).collect(Collectors.toList()))
+                .setPathList(user.getMenuList().stream().map(Menu::getPath).collect(Collectors.toList()))
                 .setPermissionList(stringPermissions);
     }
 }

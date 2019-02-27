@@ -64,6 +64,11 @@ public class Menu extends BaseEntity {
     private String isShow;
 
     /**
+     * 路径
+     */
+    private String path;
+
+    /**
      * 权限标识
      */
     private String permission;
