@@ -35,14 +35,14 @@ public class AuthController extends BaseController {
     public R login(@RequestBody ApiLoginUser login) {
         User user = userService.getByLoginName(login.getUsername());
         if (user == null) {
-            return R.error(401, "用户不存在");
+            return R.error("用户不存在");
         }
         String salt = user.getId();
         String simpleHashPassword = ShiroUtils.md5(login.getPassword(), salt);
         if (user.getPassword().equals(simpleHashPassword)) {
             return R.ok("login success!", JWTUtils.sign(user));
         } else {
-            return R.error(401, "账号或密码错误！");
+            return R.error("账号或密码错误！");
         }
     }
 
@@ -58,15 +58,11 @@ public class AuthController extends BaseController {
     @RequiresAuthentication
     public R<ApiUserInfo> userInfo() {
         //用户角色信息 菜单 权限
-        List<Role> roleList = ShiroUtils.getCurrentUser().getRoleList();
-        List<Menu> menuList = ShiroUtils.getCurrentUser().getMenuList();
+
+        User user = ShiroUtils.getCurrentUser();
         AuthorizationInfo info = ShiroUtils.getAuthorizationInfo();
 
-        return R.ok("success",
-                ApiUserInfo.create(
-                        roleList,
-                        menuList,
-                        info.getStringPermissions()));
+        return R.ok("success", ApiUserInfo.create(user, info.getStringPermissions()));
     }
 
 

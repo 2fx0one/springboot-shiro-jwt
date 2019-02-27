@@ -24,6 +24,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
 
     //执行流程preHandle->isAccessAllowed->isLoginAttempt->executeLogin
 
+    private static String TOEKN_HEADER = "Authorization";
     /**
      * 判断用户是否想要登入。
      * 检测header里面是否包含Authorization字段即可
@@ -31,14 +32,14 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
         HttpServletRequest req = (HttpServletRequest) request;
-        String authorization = req.getHeader("Authorization");
+        String authorization = req.getHeader(TOEKN_HEADER);
         return authorization != null && !authorization.equals("");
     }
 
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String authorization = httpServletRequest.getHeader("Authorization");
+        String authorization = httpServletRequest.getHeader(TOEKN_HEADER);
 
         JWTToken token = new JWTToken(authorization);
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获
@@ -86,7 +87,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         try {
             return super.preHandle(request, response);
         } catch (Exception e) {
-            errorStrWriteToResponse(httpServletResponse, 401, e.getMessage());
+            errorStrWriteToResponse(httpServletResponse, R.ERROR_CODE_TOKEN_INVALID, e.getMessage());
             return false;
         }
     }

@@ -2,6 +2,7 @@ package com.tfx0one.sys.vo.response;
 
 import com.tfx0one.sys.entity.Menu;
 import com.tfx0one.sys.entity.Role;
+import com.tfx0one.sys.entity.User;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -20,16 +21,21 @@ import java.util.stream.Collectors;
 @Data
 public class ApiUserInfo {
 
-    private List<String> roleList;
+    private String name;
+    private String avatar;
+    private String introduction;
+
+    private List<String> roles;
 //    @ApiModelProperty
     private List<ApiMenu> menuList;
 //    @ApiModelProperty
     private Collection<String> permissionList;
 
-    public static ApiUserInfo create(List<Role> roleList, List<Menu> menuList, Collection<String> stringPermissions) {
+    public static ApiUserInfo create(User user, Collection<String> stringPermissions) {
         return new ApiUserInfo()
-                .setRoleList(roleList.stream().map(Role::getEnname).collect(Collectors.toList()))
-                .setMenuList(menuList.stream().map(ApiMenu::create).collect(Collectors.toList()))
+                .setName(user.getLoginName())
+                .setRoles(user.getRoleList().stream().map(Role::getEnname).collect(Collectors.toList()))
+                .setMenuList(user.getMenuList().stream().map(ApiMenu::create).collect(Collectors.toList()))
                 .setPermissionList(stringPermissions);
     }
 }

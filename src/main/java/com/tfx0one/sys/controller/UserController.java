@@ -32,7 +32,22 @@ public class UserController extends BaseController {
     public R<List<User>> userList(@RequestBody ApiUser search, @RequestParam long pageNo, @RequestParam long pageSize) {
         User u = new User().setOfficeId(search.getOfficeId());
         IPage<User> page = userService.pageBy(u, pageNo, pageSize);
+        return R.ok("ok", page);
+    }
 
-        return R.ok("ok", page.getRecords(), page);
+    @PostMapping("/add")
+    public R addUser(@RequestBody ApiUser addUser) {
+        return R.ok();
+    }
+
+    @PostMapping("/modify")
+    public R modifyUser(@RequestBody ApiUser modifyUser) {
+        return R.ok();
+    }
+
+    @DeleteMapping("/delete")
+    public R deleteUser(@RequestParam String id) {
+        userService.removeById(id);
+        return R.ok();
     }
 }
