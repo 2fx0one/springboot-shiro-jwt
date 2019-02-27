@@ -16,5 +16,5 @@ public interface UserService extends IService<User> {
 
     User getByLoginName(String username);
 
-    IPage<User> listBySearch();
+    IPage<User> pageBy(User search, long pageNo, long pageSize);
 }

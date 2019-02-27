@@ -1,20 +1,23 @@
 package com.tfx0one.common.api;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by 2fx0one on 2018/6/30.
  */
 @Data
 @ApiModel("返回结果模型")
+@Accessors(chain = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class R<T> implements Serializable {
 
@@ -33,23 +36,16 @@ public class R<T> implements Serializable {
 
     //总记录数
     @ApiModelProperty(value = "总记录数", position = 1)
-    protected Long  total;
+    protected Long total;
 
-    //当前页
-    @ApiModelProperty(value = "当前页", position = 5)
-    private Integer pageNum;
+    @ApiModelProperty(value = "总页数", position = 3)
+    private Long pages;
 
-    //每页的数量
-    @ApiModelProperty(value = "每页的数量", position = 7)
-    private Integer pageSize;
+    @ApiModelProperty(value = "当前是第几页", position = 5)
+    private Long current;
 
-    //当前页的数量
-    @ApiModelProperty(value = "当前页的数量", position = 9)
-    private Integer size;
-
-    //总页数
-    @ApiModelProperty(value = "总页数", position = 11)
-    private Integer pages;
+    @ApiModelProperty(value = "当前页记录的条数", position = 7)
+    private Long size;
 
     private R() {
     }
@@ -80,6 +76,23 @@ public class R<T> implements Serializable {
         return commonFunc(SUCCESS_CODE, msg, data);
     }
 
+    public static <T> R<T> ok(String msg, T data, IPage page) {
+//        return commonFunc(SUCCESS_CODE, msg, data);
+        return ok(msg, data)
+                .setTotal(page.getTotal())
+                .setPages(page.getPages())
+                .setCurrent(page.getCurrent())
+                .setSize(page.getSize());
+    }
+
+    //如果直接传 分页对象 特殊处理 需要把数据提取放到R对象的格式中
+    public static <T> R<List<T>> ok(String msg, IPage<T> data) {
+        return ok(msg, data.getRecords())
+                .setTotal(data.getTotal())
+                .setPages(data.getPages())
+                .setCurrent(data.getCurrent())
+                .setSize(data.getSize());
+    }
 
     public static <T> R<T> error() {
         return commonFunc(ERROR_CODE, "系统错误，请联系管理员", null);
