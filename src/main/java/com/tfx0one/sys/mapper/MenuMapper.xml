@@ -19,6 +19,7 @@
         <result column="target" property="target"/>
         <result column="icon" property="icon"/>
         <result column="is_show" property="isShow"/>
+        <result column="path" property="path"/>
         <result column="permission" property="permission"/>
     </resultMap>
 
@@ -31,7 +32,7 @@
         update_date,
         remarks,
         del_flag,
-        parent_id, parent_ids, name, sort, href, target, icon, is_show, permission
+        parent_id, parent_ids, name, sort, href, target, icon, is_show, permission, path
     </sql>
 
 </mapper>

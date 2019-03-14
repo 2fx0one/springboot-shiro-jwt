@@ -34,6 +34,7 @@
             <result column="menu_target" property="target"/>
             <result column="menu_icon" property="icon"/>
             <result column="menu_is_show" property="isShow"/>
+            <result column="menu_path" property="path"/>
             <result column="menu_permission" property="permission"/>
         </collection>
     </resultMap>
@@ -71,6 +72,7 @@
         menu.target AS menu_target,
         menu.icon AS menu_icon,
         menu.is_show AS menu_is_show,
+        menu.path AS menu_path,
         menu.permission AS menu_permission
       FROM
         sys_role role
