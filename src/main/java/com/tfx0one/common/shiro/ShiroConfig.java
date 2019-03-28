@@ -1,12 +1,13 @@
 package com.tfx0one.common.shiro;
 
-import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,7 @@ public class ShiroConfig {
 
     //权限验证缓存
     public static final String AUTHORIZATION_CACHE_NAME = "AUTH_Z";
+
     /**
      * shiro缓存管理器;
      * 需要注入对应的其它的实体类中：
@@ -36,19 +38,26 @@ public class ShiroConfig {
      *
      * @return
      */
-    @Bean
-    public EhCacheManager ehCacheManager() {
-        EhCacheManager cacheManager = new EhCacheManager();
-        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
-        return cacheManager;
+//    @Bean
+//    public EhCacheManager ehCacheManager() {
+//        EhCacheManager cacheManager = new EhCacheManager();
+//        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
+//        return cacheManager;
+//    }
+    @Bean("redisCacheManager")
+    public RedisCacheManager redisCacheManager() {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(new RedisManager());
+        return redisCacheManager;
     }
 
+
     @Bean("securityManager")
-    public DefaultWebSecurityManager getManager(ShiroAuthRealm shiroAuthRealm, EhCacheManager cacheManager) {
+    public DefaultWebSecurityManager manger(ShiroAuthRealm shiroAuthRealm, RedisCacheManager redisCacheManager) {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 
         //缓存
-        manager.setCacheManager(cacheManager);
+        manager.setCacheManager(redisCacheManager);
 
         //自己的 customShiroRealm
         shiroAuthRealm.setAuthenticationCacheName(AUTHENTICATION_CACHE_NAME);
