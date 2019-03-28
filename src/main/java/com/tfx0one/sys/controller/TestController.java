@@ -1,9 +1,14 @@
 package com.tfx0one.sys.controller;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.tfx0one.common.api.R;
+import com.tfx0one.common.base.BaseController;
 import com.tfx0one.common.utils.ShiroUtils;
+import com.tfx0one.sys.entity.Menu;
+import com.tfx0one.sys.service.MenuService;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,14 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiresAuthentication
 @RequestMapping("/api/sys/test")
-public class TestController {
+public class TestController extends BaseController {
 
 //    @Resource
 //    private CacheManager cacheManager;
 //    private EhCacheManager ehCacheManager;
 
+    @Autowired
+    private MenuService menuService;
     @GetMapping("/a")
     public R a() {
+//        menuService.updateById(new Menu().setId("15").setDelFlag("1"));
+        menuService.update(new LambdaUpdateWrapper<Menu>().set(Menu::getDelFlag, "0").eq(Menu::getId, "15"));
         return R.ok("aaa");
     }
 

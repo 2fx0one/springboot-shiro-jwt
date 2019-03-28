@@ -110,10 +110,11 @@ public class CodeGenerator {
         strategy.setSuperEntityClass(packageRoot + ".common.base.BaseEntity");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
+//        strategy.setLogicDeleteFieldName("del_flag");
         strategy.setSuperControllerClass(packageRoot + ".common.base.BaseController");
 //        strategy.setInclude(scanner("表名"));
         strategy.setInclude(tables);
-        strategy.setSuperEntityColumns("id", "create_by", "create_date", "update_by", "update_date", "remarks", "del_flag");
+//        strategy.setSuperEntityColumns("id", "create_by", "create_date", "update_by", "update_date", "remarks", "del_flag");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(packageConfig.getModuleName() + "_");
         mpg.setStrategy(strategy);

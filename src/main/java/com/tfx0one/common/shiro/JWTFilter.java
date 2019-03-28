@@ -87,7 +87,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         try {
             return super.preHandle(request, response);
         } catch (Exception e) {
-            errorStrWriteToResponse(httpServletResponse, R.ERROR_CODE_TOKEN_INVALID, e.getMessage());
+                errorStrWriteToResponse(httpServletResponse, R.ERROR_CODE_TOKEN_INVALID, e.getMessage());
             return false;
         }
     }
@@ -98,6 +98,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
 //        new ObjectMapper().writeValueAsString(R.error(code, msg));
 //        String errStr = "{\"code\":" + code + ",\"msg\":\"" + errorCode + "\"}";
         response.setCharacterEncoding("UTF-8");
+        response.setStatus(code);
         response.setContentType("application/json; charset=utf-8");
         response.getWriter().println(JSONObject.toJSON(R.error(code, msg)));
     }

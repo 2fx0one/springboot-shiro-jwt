@@ -1,6 +1,7 @@
 package com.tfx0one.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.time.LocalDateTime;
 import com.tfx0one.common.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,7 +13,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 2fx0one
- * @since 2019-01-24
+ * @since 2019-03-28
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -23,6 +24,11 @@ public class Log extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 编号
+     */
+    private String id;
+
+    /**
      * 日志类型
      */
     private String type;
@@ -31,6 +37,16 @@ public class Log extends BaseEntity {
      * 日志标题
      */
     private String title;
+
+    /**
+     * 创建者
+     */
+    private String createBy;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createDate;
 
     /**
      * 操作IP地址

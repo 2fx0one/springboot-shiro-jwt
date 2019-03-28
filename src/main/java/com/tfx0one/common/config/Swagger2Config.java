@@ -1,6 +1,7 @@
 package com.tfx0one.common.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -26,33 +27,21 @@ public class Swagger2Config {
 
     //   访问可以查看api http://localhost:8080/swagger-ui.html
 
-    @Value("${swagger2.ui.enable}")
-    private boolean isEnable = false;
-
     @Bean
+    @ConditionalOnProperty(name = "swagger2.ui.enable", havingValue = "true")
     public Docket createRestApi() {
         ParameterBuilder tokenPar = new ParameterBuilder();
 
-        if (isEnable) {
-            List<Parameter> pars = new ArrayList<>();
-            tokenPar.name("Authorization").description("token!").modelRef(new ModelRef("string")).parameterType("header").required(false).defaultValue("").build();
-            pars.add(tokenPar.build());
-            return new Docket(DocumentationType.SWAGGER_2)
-                    .apiInfo(apiInfo())
-                    .select()
-                    .apis(RequestHandlerSelectors.basePackage("com.tfx0one"))
-                    .paths(PathSelectors.any())
-                    .build()
-                    .globalOperationParameters(pars);
-        } else {
-            return new Docket(DocumentationType.SWAGGER_2)
-                    .apiInfo(apiInfo())
-                    .select()
-                    .apis(RequestHandlerSelectors.none())
-                    .paths(PathSelectors.any())
-                    .build()
-                    ;
-        }
+        List<Parameter> pars = new ArrayList<>();
+        tokenPar.name("Authorization").description("token!").modelRef(new ModelRef("string")).parameterType("header").required(false).defaultValue("").build();
+        pars.add(tokenPar.build());
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.tfx0one"))
+                .paths(PathSelectors.any())
+                .build()
+                .globalOperationParameters(pars);
     }
 
     private ApiInfo apiInfo() {

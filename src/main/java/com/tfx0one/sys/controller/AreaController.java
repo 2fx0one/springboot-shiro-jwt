@@ -12,10 +12,10 @@ import com.tfx0one.common.base.BaseController;
  * </p>
  *
  * @author 2fx0one
- * @since 2019-01-24
+ * @since 2019-03-28
  */
 @RestController
-@RequestMapping("/api/sys/area")
+@RequestMapping("/sys/area")
 public class AreaController extends BaseController {
 
 }

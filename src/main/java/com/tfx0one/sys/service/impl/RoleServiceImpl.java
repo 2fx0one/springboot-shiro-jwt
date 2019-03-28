@@ -15,12 +15,12 @@ import java.util.List;
  * </p>
  *
  * @author 2fx0one
- * @since 2019-01-24
+ * @since 2019-03-28
  */
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
     @Override
     public List<Role> listByUserId(User user) {
-        return baseMapper.listByUserId(user);
+        return this.baseMapper.listByUserId(user);
     }
 }

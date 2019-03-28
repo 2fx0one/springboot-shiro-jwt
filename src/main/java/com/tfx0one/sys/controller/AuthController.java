@@ -1,5 +1,6 @@
 package com.tfx0one.sys.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tfx0one.common.api.R;
 import com.tfx0one.common.base.BaseController;
 import com.tfx0one.common.utils.JWTUtils;
@@ -26,14 +27,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/sys/auth")
-public class AuthController extends BaseController {
+public class AuthController {
 
     @Autowired
     private UserService userService;
 
     @PostMapping("/login")
     public R login(@RequestBody ApiLoginUser login) {
-        User user = userService.getByLoginName(login.getUsername());
+        User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getLoginName, login.getUsername()));
         if (user == null) {
             return R.error("用户不存在");
         }

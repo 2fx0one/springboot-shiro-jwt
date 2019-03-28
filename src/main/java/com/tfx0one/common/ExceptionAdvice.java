@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ExceptionAdvice {
     //401 和 403 区别 https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
     // 捕捉shiro的异常 authc 401 身份未认证
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler({UnauthenticatedException.class})
     public R handleUnauthenticatedException(ShiroException e) {
         return R.error(401, "身份未认证" + e.getMessage());
@@ -23,21 +23,21 @@ public class ExceptionAdvice {
 //    UnauthenticatedException
 
     // 捕捉shiro的异常 authz 403 已认证身份，但权限不足
-    @ResponseStatus(HttpStatus.FORBIDDEN)
+//    @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler({UnauthorizedException.class})
     public R handleUnauthorizedException(UnauthorizedException e) {
         return R.error(403, "权限不足" + e.getMessage());
     }
 
     // 捕捉其他的 shiro 的异常
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({ShiroException.class})
     public R handleShiroException(ShiroException e) {
         return R.error(400, e.getMessage());
     }
 
     // 捕捉其他所有异常
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({Exception.class})
     public R globalException(HttpServletRequest request, Throwable ex) {
         ex.printStackTrace();

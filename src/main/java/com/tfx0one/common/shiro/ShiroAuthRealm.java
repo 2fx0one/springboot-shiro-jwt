@@ -1,5 +1,6 @@
 package com.tfx0one.common.shiro;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.sys.entity.Menu;
@@ -21,8 +22,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.temporal.JulianFields;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -43,7 +45,7 @@ public class ShiroAuthRealm extends AuthorizingRealm {
     /**
      * 认证信息(身份验证)
      * Authentication 是用来验证用户身份
-     *
+     * <p>
      * 缓存KEY 使用的是 token.getPrincipal() == jwt_token。
      * AuthenticatingRealm::getAuthenticationCacheKey() -> return token != null ? token.getPrincipal() : null;
      *
@@ -64,7 +66,7 @@ public class ShiroAuthRealm extends AuthorizingRealm {
             throw new AuthenticationException("[用户不存在] token invalid");
         }
 
-        User user = userService.getByLoginName(username);
+        User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getLoginName, username));
         if (user == null) {
             throw new AuthenticationException("[用户不存在] User didn't existed!");
         }
@@ -99,7 +101,7 @@ public class ShiroAuthRealm extends AuthorizingRealm {
      * 在权限修改后调用realm中的方法，realm已经由spring管理，所以从spring中获取realm实例，调用clearCached方法；
      * :Authorization 是授权访问控制，用于对用户进行的操作授权，证明该用户是否允许进行当前操作，如访问某个链接，某个资源文件等。
      * <p>
-     *
+     * <p>
      * 缓存KEY 使用的是 PrincipalCollection principals。
      * AuthorizingRealm::getAuthorizationCacheKey(PrincipalCollection principals) -> reuturn principals
      *

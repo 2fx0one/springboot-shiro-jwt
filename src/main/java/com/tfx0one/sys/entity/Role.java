@@ -1,12 +1,14 @@
 package com.tfx0one.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.tfx0one.common.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -15,7 +17,7 @@ import java.util.List;
  * </p>
  *
  * @author 2fx0one
- * @since 2019-01-24
+ * @since 2019-03-28
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -27,6 +29,11 @@ public class Role extends BaseEntity {
 
     @TableField(exist = false)
     List<Menu> menuList;
+
+    /**
+     * 编号
+     */
+    private String id;
 
     /**
      * 归属机构
@@ -62,6 +69,36 @@ public class Role extends BaseEntity {
      * 是否可用
      */
     private String useable;
+
+    /**
+     * 创建者
+     */
+    private String createBy;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createDate;
+
+    /**
+     * 更新者
+     */
+    private String updateBy;
+
+    /**
+     * 更新时间
+     */
+    private LocalDateTime updateDate;
+
+    /**
+     * 备注信息
+     */
+    private String remarks;
+
+    /**
+     * 删除标记
+     */
+    private String delFlag;
 
 
 }

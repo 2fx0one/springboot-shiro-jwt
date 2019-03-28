@@ -4,11 +4,13 @@ import com.tfx0one.sys.entity.Menu;
 import com.tfx0one.sys.entity.Role;
 import com.tfx0one.sys.entity.User;
 import io.swagger.annotations.ApiModel;
+import jdk.nashorn.internal.objects.annotations.Function;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /*
@@ -35,7 +37,7 @@ public class ApiUserInfo {
         return new ApiUserInfo()
                 .setName(user.getLoginName())
                 .setRoles(user.getRoleList().stream().map(Role::getEnname).collect(Collectors.toList()))
-                .setPathList(user.getMenuList().stream().map(Menu::getPath).collect(Collectors.toList()))
+                .setPathList(user.getMenuList().stream().map(Menu::getPath).filter(Objects::nonNull).collect(Collectors.toList()))
                 .setPermissionList(stringPermissions);
     }
 }

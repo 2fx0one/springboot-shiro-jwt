@@ -1,16 +1,10 @@
 package com.tfx0one.sys.controller;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.tfx0one.common.api.R;
-import com.tfx0one.common.base.BaseController;
-import com.tfx0one.sys.entity.User;
-import com.tfx0one.sys.service.UserService;
-import com.tfx0one.sys.vo.ApiUser;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
-import java.util.List;
+import org.springframework.web.bind.annotation.RestController;
+import com.tfx0one.common.base.BaseController;
 
 /**
  * <p>
@@ -18,36 +12,10 @@ import java.util.List;
  * </p>
  *
  * @author 2fx0one
- * @since 2019-01-24
+ * @since 2019-03-28
  */
 @RestController
-@RequestMapping("/api/sys/user")
+@RequestMapping("/sys/user")
 public class UserController extends BaseController {
 
-
-    @Resource
-    private UserService userService;
-
-    @PostMapping("/list" )
-    public R<List<User>> userList(@RequestBody ApiUser search, @RequestParam long pageNo, @RequestParam long pageSize) {
-        User u = new User().setOfficeId(search.getOfficeId());
-        IPage<User> page = userService.pageBy(u, pageNo, pageSize);
-        return R.ok("ok", page);
-    }
-
-    @PostMapping("/add")
-    public R addUser(@RequestBody ApiUser addUser) {
-        return R.ok();
-    }
-
-    @PostMapping("/modify")
-    public R modifyUser(@RequestBody ApiUser modifyUser) {
-        return R.ok();
-    }
-
-    @DeleteMapping("/delete")
-    public R deleteUser(@RequestParam String id) {
-        userService.removeById(id);
-        return R.ok();
-    }
 }

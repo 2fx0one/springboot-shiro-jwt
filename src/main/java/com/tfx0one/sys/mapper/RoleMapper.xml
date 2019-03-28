@@ -4,40 +4,46 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.tfx0one.sys.entity.Role">
-        <id column="role_id" property="id"/>
-        <result column="role_create_by" property="createBy"/>
-        <result column="role_create_date" property="createDate"/>
-        <result column="role_update_by" property="updateBy"/>
-        <result column="role_update_date" property="updateDate"/>
-        <result column="role_remarks" property="remarks"/>
-        <result column="role_del_flag" property="delFlag"/>
-        <result column="role_office_id" property="officeId"/>
-        <result column="role_name" property="name"/>
-        <result column="role_enname" property="enname"/>
-        <result column="role_role_type" property="roleType"/>
-        <result column="role_data_scope" property="dataScope"/>
-        <result column="role_is_sys" property="isSys"/>
-        <result column="role_useable" property="useable"/>
+        <id column="role_id" property="id" />
+        <result column="role_office_id" property="officeId" />
+        <result column="role_name" property="name" />
+        <result column="role_enname" property="enname" />
+        <result column="role_role_type" property="roleType" />
+        <result column="role_data_scope" property="dataScope" />
+        <result column="role_is_sys" property="isSys" />
+        <result column="role_useable" property="useable" />
+        <result column="role_create_by" property="createBy" />
+        <result column="role_create_date" property="createDate" />
+        <result column="role_update_by" property="updateBy" />
+        <result column="role_update_date" property="updateDate" />
+        <result column="role_remarks" property="remarks" />
+        <result column="role_del_flag" property="delFlag" />
         <collection property="menuList" ofType="com.tfx0one.sys.entity.Menu">
-            <id column="menu_id" property="id"/>
-            <result column="menu_create_by" property="createBy"/>
-            <result column="menu_create_date" property="createDate"/>
-            <result column="menu_update_by" property="updateBy"/>
-            <result column="menu_update_date" property="updateDate"/>
-            <result column="menu_remarks" property="remarks"/>
-            <result column="menu_del_flag" property="delFlag"/>
-            <result column="menu_parent_id" property="parentId"/>
-            <result column="menu_parent_ids" property="parentIds"/>
-            <result column="menu_name" property="name"/>
-            <result column="menu_sort" property="sort"/>
-            <result column="menu_href" property="href"/>
-            <result column="menu_target" property="target"/>
-            <result column="menu_icon" property="icon"/>
-            <result column="menu_is_show" property="isShow"/>
-            <result column="menu_path" property="path"/>
-            <result column="menu_permission" property="permission"/>
+            <id column="menu_id" property="id" />
+            <result column="menu_parent_id" property="parentId" />
+            <result column="menu_parent_ids" property="parentIds" />
+            <result column="menu_name" property="name" />
+            <result column="menu_sort" property="sort" />
+            <result column="menu_href" property="href" />
+            <result column="menu_path" property="path" />
+            <result column="menu_component" property="component" />
+            <result column="menu_icon" property="icon" />
+            <result column="menu_hidden" property="hidden" />
+            <result column="menu_permission" property="permission" />
+            <result column="menu_create_by" property="createBy" />
+            <result column="menu_create_date" property="createDate" />
+            <result column="menu_update_by" property="updateBy" />
+            <result column="menu_update_date" property="updateDate" />
+            <result column="menu_remarks" property="remarks" />
+            <result column="menu_del_flag" property="delFlag" />
         </collection>
+
     </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, office_id, name, enname, role_type, data_scope, is_sys, useable, create_by, create_date, update_by, update_date, remarks, del_flag
+    </sql>
 
     <!-- 通用查询结果列 -->
     <sql id="baseSql">
@@ -58,24 +64,25 @@
         role.useable AS role_useable,
 
         menu.id AS menu_id,
-        menu.create_by AS menu_create_by,
-        menu.create_date AS menu_create_date,
-        menu.update_by AS menu_update_by,
-        menu.update_date AS menu_update_date,
-        menu.remarks AS menu_remarks,
-        menu.del_flag AS menu_del_flag,
         menu.parent_id AS menu_parent_id,
         menu.parent_ids AS menu_parent_ids,
         menu.name AS menu_name,
         menu.sort AS menu_sort,
         menu.href AS menu_href,
-        menu.target AS menu_target,
-        menu.icon AS menu_icon,
-        menu.is_show AS menu_is_show,
         menu.path AS menu_path,
-        menu.permission AS menu_permission
+        menu.component AS menu_component,
+        menu.icon AS menu_icon,
+        menu.hidden AS menu_hidden,
+        menu.permission AS menu_permission,
+        menu.create_by AS menu_create_by,
+        menu.create_date AS menu_create_date,
+        menu.update_by AS menu_update_by,
+        menu.update_date AS menu_update_date,
+        menu.remarks AS menu_remarks,
+        menu.del_flag AS menu_del_flag
       FROM
         sys_role role
+        INNER JOIN sys_user_role ur ON ur.role_id = role.id
         LEFT JOIN sys_role_menu rm ON role.id = rm.role_id
         LEFT JOIN sys_menu menu ON rm.menu_id = menu.id
     </sql>
@@ -83,11 +90,12 @@
 
 
     <select id="listByUserId" resultMap="BaseResultMap">
-      <include refid="baseSql"/>
-      WHERE
-        role.id = #{id}
+        <include refid="baseSql"/>
+        WHERE
+        ur.user_id = #{id}
         AND role.del_flag = #{DEL_FLAG_NORMAL}
         AND menu.del_flag = #{DEL_FLAG_NORMAL}
     </select>
+
 
 </mapper>

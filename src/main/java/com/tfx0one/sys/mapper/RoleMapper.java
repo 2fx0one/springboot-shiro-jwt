@@ -3,6 +3,7 @@ package com.tfx0one.sys.mapper;
 import com.tfx0one.sys.entity.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.tfx0one.sys.entity.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * </p>
  *
  * @author 2fx0one
- * @since 2019-01-24
+ * @since 2019-03-28
  */
 public interface RoleMapper extends BaseMapper<Role> {
 
