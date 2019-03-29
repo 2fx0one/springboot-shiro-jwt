@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.math.BigDecimal;
+
 /**
  * @projectName: springboot-shiro-jwt
  * @author: wangk
@@ -22,6 +24,7 @@ public class ApiRoute {
     private String path;
     private String component;
     private String name;
+    private BigDecimal sort;
     private APIRouteMeta meta;
     private Boolean hidden;
 //    private List<ApiRoute> children = new ArrayList<>();
@@ -33,6 +36,7 @@ public class ApiRoute {
                 .setPath(menu.getPath())
                 .setComponent(menu.getComponent())
                 .setName(menu.getName())
+                .setSort(menu.getSort())
                 .setMeta(new APIRouteMeta().setIcon(menu.getIcon()).setTitle(menu.getName()))
                 .setHidden("1".equals(menu.getHidden()))
                 ;

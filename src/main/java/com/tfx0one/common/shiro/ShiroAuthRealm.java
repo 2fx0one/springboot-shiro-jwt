@@ -2,6 +2,7 @@ package com.tfx0one.common.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tfx0one.common.constant.GlobalConstant;
+import com.tfx0one.common.exception.CommonException;
 import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.sys.entity.Menu;
 import com.tfx0one.sys.entity.Role;
@@ -26,6 +27,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.tfx0one.common.exception.ExceptionEnum.LOGIN_USER_NOT_FOUND;
+import static com.tfx0one.common.exception.ExceptionEnum.TOKEN_INVALID;
 
 @Component
 public class ShiroAuthRealm extends AuthorizingRealm {
@@ -63,18 +67,31 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtils.getUsername(jwtToken);
         if (username == null) {
-            throw new AuthenticationException("[用户不存在] token invalid");
+            throw new CommonException(TOKEN_INVALID);
+//            throw new AuthenticationException("[用户不存在] token invalid");
         }
 
         User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getLoginName, username));
         if (user == null) {
-            throw new AuthenticationException("[用户不存在] User didn't existed!");
+            throw new CommonException(TOKEN_INVALID);
+//            throw new AuthenticationException("[用户不存在] User didn't existed!");
         }
 
         if (!JWTUtils.verify(jwtToken, username, user.getPassword())) {
             //产生 JWTVerificationException 抛出异常
-            throw new AuthenticationException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
+            throw new CommonException(TOKEN_INVALID);
+//            throw new AuthenticationException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
         }
+
+
+        //角色 菜单 也准备好 留给 接下来的 AUTHZ 阶段使用
+        List<Role> roleList = roleService.listByUserId(user);
+        List<Menu> userAllMenuList = roleList.stream()
+                .map(Role::getMenuList).flatMap(Collection::stream).distinct().collect(Collectors.toList());
+
+        //都绑定到角色上
+        user.setRoleList(roleList);
+        user.setMenuList(userAllMenuList);
 
 
         //token 也放缓存
@@ -116,17 +133,10 @@ public class ShiroAuthRealm extends AuthorizingRealm {
 
         log.info("AUTH_Z 权限信息.(授权) ===> MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+
+
         User user = (User) principals.getPrimaryPrincipal();
-
-        //角色 菜单 也准备好
-        List<Role> roleList = roleService.listByUserId(user);
-        List<Menu> userAllMenuList = roleList.stream()
-                .map(Role::getMenuList).flatMap(Collection::stream).distinct().collect(Collectors.toList());
-
-        //都绑定到角色上
-        user.setRoleList(roleList);
-        user.setMenuList(userAllMenuList);
-
+        List<Role> roleList = user.getRoleList();
 
         //角色字符串
         List<String> roles = roleList.stream().map(Role::getRoleType).collect(Collectors.toList());

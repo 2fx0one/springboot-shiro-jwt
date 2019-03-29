@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CommonExceptionHandler {
 
     @ExceptionHandler(CommonException.class)
-    public ResponseEntity<ExceptionResult> handleException(CommonException e) {
+    public ResponseEntity<ExceptionResult> handleCommonException(CommonException e) {
         return R.status(e.getExceptionEnum().getCode(), new ExceptionResult(e.getExceptionEnum()));
     }
 

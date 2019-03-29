@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.tfx0one.common.exception.ExceptionEnum.NOT_FOUND;
+import static com.tfx0one.common.exception.ExceptionEnum.LOGIN_USER_NOT_FOUND;
 
 
 /**
@@ -36,12 +36,12 @@ public class AuthController {
     public ResponseEntity login(@RequestBody ApiLoginUser login) {
         User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getLoginName, login.getUsername()));
         if (user == null) {
-            throw new CommonException(NOT_FOUND);
+            throw new CommonException(LOGIN_USER_NOT_FOUND);
         }
         String salt = user.getId();
         String simpleHashPassword = ShiroUtils.md5(login.getPassword(), salt);
         if (!user.getPassword().equals(simpleHashPassword)) {
-            throw new CommonException(NOT_FOUND);
+            throw new CommonException(LOGIN_USER_NOT_FOUND);
         }
         return R.ok(JWTUtils.sign(user));
     }

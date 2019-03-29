@@ -93,8 +93,6 @@
         <include refid="baseSql"/>
         WHERE
         ur.user_id = #{id}
-        AND role.del_flag = #{DEL_FLAG_NORMAL}
-        AND menu.del_flag = #{DEL_FLAG_NORMAL}
     </select>
 
 

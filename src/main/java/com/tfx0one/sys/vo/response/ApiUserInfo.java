@@ -2,6 +2,7 @@ package com.tfx0one.sys.vo.response;
 
 import com.tfx0one.sys.entity.User;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
@@ -24,8 +25,11 @@ public class ApiUserInfo {
     private String avatar;
     private String introduction;
 
-    private List<ApiRoute> routers;
-    private Collection<String> roles;
+    @ApiModelProperty(name = "路由列表", position = 1)
+    private List<ApiRoute> routerList;
+    @ApiModelProperty(name = "角色列表", position = 3)
+    private Collection<String> roleList;
+    @ApiModelProperty(name = "权限列表", position = 5)
     private Collection<String> permissionList;
 
     public static ApiUserInfo create(User user, AuthorizationInfo info) {
@@ -35,10 +39,12 @@ public class ApiUserInfo {
                 .map(ApiRoute::create)
                 .filter(e -> StringUtils.isNotBlank(e.getComponent()))
                 .collect(Collectors.toList());
+
         return new ApiUserInfo()
+                .setAvatar(user.getPhoto())
                 .setName(user.getLoginName())
-                .setRouters(routers)
-                .setRoles(info.getRoles())
+                .setRouterList(routers)
+                .setRoleList(info.getRoles())
                 .setPermissionList(info.getStringPermissions());
     }
 }

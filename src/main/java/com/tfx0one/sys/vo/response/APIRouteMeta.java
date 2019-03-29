@@ -16,4 +16,5 @@ import lombok.experimental.Accessors;
 public class APIRouteMeta {
     private String title;
     private String icon;
+    private Boolean noCache = true;
 }
