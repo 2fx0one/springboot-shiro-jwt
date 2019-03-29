@@ -1,6 +1,7 @@
 package com.tfx0one.common.shiro;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tfx0one.common.api.ExceptionResult;
 import com.tfx0one.common.api.R;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     //执行流程preHandle->isAccessAllowed->isLoginAttempt->executeLogin
 
     private static String TOEKN_HEADER = "Authorization";
+
     /**
      * 判断用户是否想要登入。
      * 检测header里面是否包含Authorization字段即可
@@ -60,13 +62,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         if (isLoginAttempt(request, response)) {
-//            try {
             return executeLogin(request, response);
-//            } catch (Exception e) {
-//                response401(request, response);
-//            }
-//        } else {
-//            return false;
         }
         return true;
     }
@@ -87,19 +83,19 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         try {
             return super.preHandle(request, response);
         } catch (Exception e) {
-                errorStrWriteToResponse(httpServletResponse, R.ERROR_CODE_TOKEN_INVALID, e.getMessage());
+            errorStrWriteToResponse(httpServletResponse, HttpStatus.NOT_FOUND.value(), e.getMessage());
             return false;
         }
     }
 
 
-    private void errorStrWriteToResponse(HttpServletResponse response, int code, String msg) throws IOException {
+    private void errorStrWriteToResponse(HttpServletResponse response, int status, String msg) throws IOException {
 //        R r = R.error(code, msg);
 //        new ObjectMapper().writeValueAsString(R.error(code, msg));
 //        String errStr = "{\"code\":" + code + ",\"msg\":\"" + errorCode + "\"}";
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(code);
+        response.setStatus(status);
         response.setContentType("application/json; charset=utf-8");
-        response.getWriter().println(JSONObject.toJSON(R.error(code, msg)));
+        response.getWriter().println(JSONObject.toJSON(R.status(status, new ExceptionResult().setMessage(msg).setStatus(status))));
     }
 }

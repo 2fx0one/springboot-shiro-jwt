@@ -51,7 +51,7 @@ public class ApiMenu {
     }
 
     public Menu entity() {
-        Menu r = new Menu()
+        Menu self = new Menu()
                 .setParentId(this.parentId)
                 .setSort(this.sort)
                 .setHidden(this.isShow)
@@ -61,7 +61,7 @@ public class ApiMenu {
                 .setPath(this.path)
                 .setPermission(this.permission)
                 ;
-        r.setId(this.id);
-        return r;
+        self.setId(this.id);
+        return self;
     }
 }

@@ -9,6 +9,7 @@ import com.tfx0one.sys.service.MenuService;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,21 +32,22 @@ public class TestController extends BaseController {
 
     @Autowired
     private MenuService menuService;
+
     @GetMapping("/a")
-    public R a() {
+    public ResponseEntity a() {
 //        menuService.updateById(new Menu().setId("15").setDelFlag("1"));
         menuService.update(new LambdaUpdateWrapper<Menu>().set(Menu::getDelFlag, "0").eq(Menu::getId, "15"));
         return R.ok("aaa");
     }
 
     @GetMapping("/b")
-    public R b() {
+    public ResponseEntity b() {
         return R.ok("bbb");
     }
 
     @GetMapping("/c")
     @RequiresPermissions({"sys:dict:view"})
-    public R c() {
+    public ResponseEntity c() {
         ShiroUtils.clearCurrentUserAuthorization();
 //        ShiroUtils.clearAllUserAuthorization();
 //        Subject s = ShiroUtils.getSubject();
@@ -61,13 +63,13 @@ public class TestController extends BaseController {
 
     @GetMapping("/d")
     @RequiresPermissions({"sys:dict:view"})
-    public R d() {
+    public ResponseEntity d() {
         return R.ok("ddd");
     }
 
     @GetMapping("/z")
     @RequiresPermissions({"zzzz"})
-    public R z() {
+    public ResponseEntity z() {
         return R.ok("zzz");
     }
 

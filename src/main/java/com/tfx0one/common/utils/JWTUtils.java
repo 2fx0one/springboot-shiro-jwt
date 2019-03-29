@@ -11,8 +11,8 @@ import com.tfx0one.sys.entity.User;
 import java.util.Date;
 
 public class JWTUtils {
-    // 过期时间 24 小时
-    private static final long EXPIRE_TIME = 24 * 60 * 60 * 1000;
+    // 过期时间 1 小时
+    public static final int EXPIRE_TIME_SECOND = 60 * 60;
 
     /**
      * 校验token是否正确
@@ -64,7 +64,7 @@ public class JWTUtils {
      * @return 加密的token
      */
     public static String sign(User user) {
-        Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
+        Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME_SECOND*1000);
         Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
         // 附带username信息
         return JWT.create()

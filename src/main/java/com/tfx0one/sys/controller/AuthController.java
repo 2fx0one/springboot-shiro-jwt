@@ -2,11 +2,9 @@ package com.tfx0one.sys.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tfx0one.common.api.R;
-import com.tfx0one.common.base.BaseController;
+import com.tfx0one.common.exception.CommonException;
 import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.common.utils.ShiroUtils;
-import com.tfx0one.sys.entity.Menu;
-import com.tfx0one.sys.entity.Role;
 import com.tfx0one.sys.entity.User;
 import com.tfx0one.sys.service.UserService;
 import com.tfx0one.sys.vo.request.ApiLoginUser;
@@ -14,9 +12,11 @@ import com.tfx0one.sys.vo.response.ApiUserInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import static com.tfx0one.common.exception.ExceptionEnum.NOT_FOUND;
+
 
 /**
  * @projectName: base-web
@@ -33,37 +33,36 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping("/login")
-    public R login(@RequestBody ApiLoginUser login) {
+    public ResponseEntity login(@RequestBody ApiLoginUser login) {
         User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getLoginName, login.getUsername()));
         if (user == null) {
-            return R.error("用户不存在");
+            throw new CommonException(NOT_FOUND);
         }
         String salt = user.getId();
         String simpleHashPassword = ShiroUtils.md5(login.getPassword(), salt);
-        if (user.getPassword().equals(simpleHashPassword)) {
-            return R.ok("login success!", JWTUtils.sign(user));
-        } else {
-            return R.error("账号或密码错误！");
+        if (!user.getPassword().equals(simpleHashPassword)) {
+            throw new CommonException(NOT_FOUND);
         }
+        return R.ok(JWTUtils.sign(user));
     }
 
     @PostMapping("/logout")
     @RequiresAuthentication
-    public R logout() {
-        //jwtToken 并未失效 要等过期之后了。故而前端逻辑需要把jwtToken删除
+    public ResponseEntity logout() {
+        //jwtToken 并未失效 要等过期之后了。故而前端逻辑需要配合把jwtToken删除
         ShiroUtils.getSubject().logout();
         return R.ok("logout success");
     }
 
     @GetMapping("/user/info")
     @RequiresAuthentication
-    public R<ApiUserInfo> userInfo() {
+    public ResponseEntity<ApiUserInfo> userInfo() {
         //用户角色信息 菜单 权限
 
         User user = ShiroUtils.getCurrentUser();
         AuthorizationInfo info = ShiroUtils.getAuthorizationInfo();
 
-        return R.ok("success", ApiUserInfo.create(user, info.getStringPermissions()));
+        return R.ok(ApiUserInfo.create(user, info));
     }
 
 

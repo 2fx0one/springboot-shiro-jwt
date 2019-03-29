@@ -75,13 +75,7 @@ public class ShiroAuthRealm extends AuthorizingRealm {
             //产生 JWTVerificationException 抛出异常
             throw new AuthenticationException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
         }
-        //角色 菜单 也准备好！留给后面的 给authz 使用
-        List<Role> roleList = roleService.listByUserId(user);
-        user.setRoleList(roleList);
 
-        List<Menu> menuList = roleList.stream()
-                .map(Role::getMenuList).flatMap(Collection::stream).collect(Collectors.toList());
-        user.setMenuList(menuList);
 
         //token 也放缓存
         user.setJwtToken(jwtToken);
@@ -115,21 +109,31 @@ public class ShiroAuthRealm extends AuthorizingRealm {
          * 当其实没有必要每次都重新设置权限信息，所以我们需要放到缓存中进行管理；
          * 当放到缓存中时，这样的话，doGetAuthorizationInfo 就只会执行一次了，
          * 缓存过期之后会再次执行。
+         *
+         * ！！ 主动调用 ShiroUtils.getAuthorizationInfo 也能触发权限并放入缓存
          */
+
+
         log.info("AUTH_Z 权限信息.(授权) ===> MyShiroRealm.doGetAuthorizationInfo()");
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         User user = (User) principals.getPrimaryPrincipal();
 
-        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        //角色 菜单 也准备好
+        List<Role> roleList = roleService.listByUserId(user);
+        List<Menu> userAllMenuList = roleList.stream()
+                .map(Role::getMenuList).flatMap(Collection::stream).distinct().collect(Collectors.toList());
 
-        List<Role> roleList = user.getRoleList();
+        //都绑定到角色上
+        user.setRoleList(roleList);
+        user.setMenuList(userAllMenuList);
 
-        //角色
-        List<String> roles = roleList.stream().map(Role::getEnname).collect(Collectors.toList());
+
+        //角色字符串
+        List<String> roles = roleList.stream().map(Role::getRoleType).collect(Collectors.toList());
         simpleAuthorizationInfo.addRoles(roles);
 
-        List<Menu> menuList = user.getMenuList();
-        //权限
-        List<String> permissions = menuList.stream()
+        //权限字符串
+        List<String> permissions = user.getMenuList().stream()
 //                .map(Role::getMenuList).flatMap(Collection::stream)
                 .map(Menu::getPermission).filter(StringUtils::isNotEmpty) //过滤空
                 .flatMap(s -> Arrays.stream(s.split(GlobalConstant.SPLIT_DELIMETER)))

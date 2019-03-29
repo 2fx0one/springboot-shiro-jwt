@@ -1,16 +1,14 @@
 package com.tfx0one.sys.vo.response;
 
-import com.tfx0one.sys.entity.Menu;
-import com.tfx0one.sys.entity.Role;
 import com.tfx0one.sys.entity.User;
 import io.swagger.annotations.ApiModel;
-import jdk.nashorn.internal.objects.annotations.Function;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.AuthorizationInfo;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /*
@@ -18,7 +16,6 @@ import java.util.stream.Collectors;
  * 25/1/2019 00:28
  */
 @ApiModel("用户信息")
-//@Builder
 @Accessors(chain = true)
 @Data
 public class ApiUserInfo {
@@ -27,17 +24,21 @@ public class ApiUserInfo {
     private String avatar;
     private String introduction;
 
-    private List<String> roles;
-//    @ApiModelProperty
-    private List<String> pathList;
-//    @ApiModelProperty
+    private List<ApiRoute> routers;
+    private Collection<String> roles;
     private Collection<String> permissionList;
 
-    public static ApiUserInfo create(User user, Collection<String> stringPermissions) {
+    public static ApiUserInfo create(User user, AuthorizationInfo info) {
+
+        //路由数据
+        List<ApiRoute> routers = user.getMenuList().stream()
+                .map(ApiRoute::create)
+                .filter(e -> StringUtils.isNotBlank(e.getComponent()))
+                .collect(Collectors.toList());
         return new ApiUserInfo()
                 .setName(user.getLoginName())
-                .setRoles(user.getRoleList().stream().map(Role::getEnname).collect(Collectors.toList()))
-                .setPathList(user.getMenuList().stream().map(Menu::getPath).filter(Objects::nonNull).collect(Collectors.toList()))
-                .setPermissionList(stringPermissions);
+                .setRouters(routers)
+                .setRoles(info.getRoles())
+                .setPermissionList(info.getStringPermissions());
     }
 }
