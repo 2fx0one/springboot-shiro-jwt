@@ -100,6 +100,6 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         response.setCharacterEncoding("UTF-8");
         response.setStatus(TOKEN_INVALID.getCode());
         response.setContentType("application/json; charset=utf-8");
-        response.getWriter().println(JSONObject.toJSON(R.status(TOKEN_INVALID.getCode(), e.getMessage())));
+        response.getWriter().println(JSONObject.toJSON(new ExceptionResult(TOKEN_INVALID)));
     }
 }
