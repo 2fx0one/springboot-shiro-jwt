@@ -143,12 +143,12 @@ CREATE TABLE `sys_menu` (
   `path` varchar(255) DEFAULT NULL COMMENT '路径',
   `component` varchar(20) DEFAULT NULL COMMENT '组件',
   `icon` varchar(100) DEFAULT NULL COMMENT '图标',
-  `hidden` char(1) DEFAULT NULL COMMENT '是否在菜单中显示',
+  `hidden` char(1) NOT NULL DEFAULT '0' COMMENT '是否在菜单中显示',
   `permission` varchar(200) DEFAULT NULL COMMENT '权限标识',
-  `create_by` varchar(64) NOT NULL COMMENT '创建者',
-  `create_date` datetime NOT NULL COMMENT '创建时间',
+  `create_by` varchar(64) NOT NULL DEFAULT '' COMMENT '创建者',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) NOT NULL COMMENT '更新者',
-  `update_date` datetime NOT NULL COMMENT '更新时间',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   `remarks` varchar(255) DEFAULT NULL COMMENT '备注信息',
   `del_flag` char(1) NOT NULL DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`),
@@ -163,7 +163,7 @@ CREATE TABLE `sys_menu` (
 
 LOCK TABLES `sys_menu` WRITE;
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
-INSERT INTO `sys_menu` VALUES ('100','0','','系统管理',0,NULL,'/sys','Layout','example',NULL,NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('110','100','','菜单管理',0,NULL,'/sys/menu','MenuPanel','example','0',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('111','110','','菜单管理',11,NULL,'/sys/menu/view','menuView','example','0','sys:menu:view','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('112','110','','菜单新增',12,NULL,'/sys/menu/add','menuAdd','example','1','sys:menu:add','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('113','110','','菜单修改',13,NULL,'/sys/menu/modify','menuModify','example','1','sys:menu:modify','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('114','110','','菜单删除',14,NULL,'','','','1','sys:menu:delete','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('120','100','','角色管理',0,NULL,'/sys/role','MenuPanel','example','0',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('121','120','','角色管理',21,NULL,'/sys/role/view','roleView','example','0','sys:role:view','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('122','120','','角色新增',22,NULL,'/sys/role/add','roleAdd','example','1','sys:role:add','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('123','120','','角色修改',23,NULL,'/sys/role/modify','roleModify','example','1','sys:role:modify','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('124','120','','角色删除',24,NULL,'','','','1','sys:role:delete','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0');
+INSERT INTO `sys_menu` VALUES ('100','0','','系统管理',0,NULL,'/sys','Layout','example','0',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('110','100','','菜单管理',3,NULL,'/sys/menu','CommonMenuPanel','example','0',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('111','110','','菜单管理',11,NULL,'/sys/menu/view','menuView','example','0','sys:menu:view','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('112','110','','菜单新增',12,NULL,'/sys/menu/add','menuAdd','example','1','sys:menu:add','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('113','110','','菜单修改',13,NULL,'/sys/menu/modify','menuModify','example','1','sys:menu:modify','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('114','110','','菜单删除',14,NULL,'','','','1','sys:menu:delete','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('120','100','','角色管理',2,NULL,'/sys/role','CommonMenuPanel','example','0',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('121','120','','角色管理',21,NULL,'/sys/role/view','roleView','example','0','sys:role:view','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('122','120','','角色新增',22,NULL,'/sys/role/add','roleAdd','example','1','sys:role:add','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('123','120','','角色修改',23,NULL,'/sys/role/modify','roleModify','example','1','sys:role:modify','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('124','120','','角色删除',24,NULL,'','','','1','sys:role:delete','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('130','100','','用户管理',1,NULL,'/sys/user','CommonMenuPanel','example','0',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('131','130','','用户管理',31,NULL,'/sys/user/view','userView','example','0','sys:user:view','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('132','130','','用户新增',32,NULL,'/sys/user/add','userAdd','example','1','sys:user:add','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('133','130','','用户修改',33,NULL,'/sys/user/modify','userModify','example','1','sys:user:modify','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('134','130','','用户删除',34,NULL,'',NULL,NULL,'1','sys:user:delete','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0');
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +274,7 @@ CREATE TABLE `sys_role_menu` (
 
 LOCK TABLES `sys_role_menu` WRITE;
 /*!40000 ALTER TABLE `sys_role_menu` DISABLE KEYS */;
-INSERT INTO `sys_role_menu` VALUES ('1','100'),('1','110'),('1','111'),('1','112'),('1','113'),('1','114'),('2','120'),('2','121'),('2','122'),('2','123'),('2','124');
+INSERT INTO `sys_role_menu` VALUES ('1','100'),('1','110'),('1','111'),('1','112'),('1','113'),('1','114'),('1','130'),('1','131'),('1','132'),('1','133'),('1','134'),('2','120'),('2','121'),('2','122'),('2','123'),('2','124');
 /*!40000 ALTER TABLE `sys_role_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -383,4 +383,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-04 11:34:57
+-- Dump completed on 2019-04-04 13:43:06
