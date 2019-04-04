@@ -47,7 +47,7 @@ public class Menu extends BaseEntity {
     /**
      * 排序
      */
-    private BigDecimal sort;
+    private Integer sort;
 
     /**
      * 链接
@@ -73,11 +73,6 @@ public class Menu extends BaseEntity {
      * 是否在菜单中显示
      */
     private String hidden;
-
-    /**
-     * 0表示菜单 1表示权限
-     */
-    private String type;
 
     /**
      * 权限标识

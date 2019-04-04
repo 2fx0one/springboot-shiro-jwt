@@ -42,6 +42,7 @@ public class TestController extends BaseController {
 
     @GetMapping("/b")
     public ResponseEntity b() {
+        menuService.save(new Menu().setComponent("a").setParentId("0").setParentIds("1").setName("a").setSort(1));
         return R.ok("bbb");
     }
 

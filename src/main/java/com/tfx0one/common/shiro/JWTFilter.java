@@ -83,7 +83,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         try {
             return super.preHandle(request, response);
         } catch (Exception e) {
-            errorStrWriteToResponse(httpServletResponse, HttpStatus.NOT_FOUND.value(), e.getMessage());
+            errorStrWriteToResponse(httpServletResponse, HttpStatus.UNAUTHORIZED.value(), e.getMessage());
             return false;
         }
     }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.tfx0one.sys.entity.Menu;
 import io.swagger.annotations.ApiModel;
+import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -24,7 +25,7 @@ public class ApiRoute {
     private String path;
     private String component;
     private String name;
-    private BigDecimal sort;
+    private Integer sort;
     private APIRouteMeta meta;
     private Boolean hidden;
 //    private List<ApiRoute> children = new ArrayList<>();

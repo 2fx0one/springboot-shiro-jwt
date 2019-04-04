@@ -22,7 +22,7 @@ public enum ExceptionEnum {
 //    AUTHZ_NOT_ALLOW(HttpStatus.UNAUTHORIZED.value(), "身份未认证"),
 //    AUTHC_NOT_ALLOW(HttpStatus.FORBIDDEN.value(), "权限不足"), //已认证身份，但权限不足
 
-    LOGIN_USER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "用户名或密码错误！"),
+    LOGIN_USER_NOT_FOUND(HttpStatus.UNAUTHORIZED.value(), "用户名或密码错误！"),
     ;
     private int code;
     private String msg;
