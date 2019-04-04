@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 import com.tfx0one.common.base.BaseEntity;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -15,7 +14,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 2fx0one
- * @since 2019-03-28
+ * @since 2019-04-04
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -55,10 +54,13 @@ public class Menu extends BaseEntity {
      */
     private String href;
 
+    /**
+     * 路径
+     */
     private String path;
 
     /**
-     * 目标
+     * 组件
      */
     private String component;
 
@@ -71,6 +73,11 @@ public class Menu extends BaseEntity {
      * 是否在菜单中显示
      */
     private String hidden;
+
+    /**
+     * 0表示菜单 1表示权限
+     */
+    private String type;
 
     /**
      * 权限标识

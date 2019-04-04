@@ -140,10 +140,10 @@ CREATE TABLE `sys_menu` (
   `name` varchar(100) NOT NULL COMMENT '名称',
   `sort` decimal(10,0) NOT NULL COMMENT '排序',
   `href` varchar(2000) DEFAULT NULL COMMENT '链接',
-  `path` varchar(255) DEFAULT NULL,
-  `component` varchar(20) DEFAULT NULL COMMENT '目标',
+  `path` varchar(255) DEFAULT NULL COMMENT '路径',
+  `component` varchar(20) DEFAULT NULL COMMENT '组件',
   `icon` varchar(100) DEFAULT NULL COMMENT '图标',
-  `hidden` char(1) NOT NULL DEFAULT '' COMMENT '是否在菜单中显示',
+  `hidden` char(1) DEFAULT NULL COMMENT '是否在菜单中显示',
   `permission` varchar(200) DEFAULT NULL COMMENT '权限标识',
   `create_by` varchar(64) NOT NULL COMMENT '创建者',
   `create_date` datetime NOT NULL COMMENT '创建时间',
@@ -163,7 +163,7 @@ CREATE TABLE `sys_menu` (
 
 LOCK TABLES `sys_menu` WRITE;
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
-INSERT INTO `sys_menu` VALUES ('1','0','','系统菜单',0,NULL,NULL,NULL,NULL,'',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('110','1','','菜单管理',0,NULL,'/sys','Layout','example','0',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('111','110','','菜单新增',12,NULL,'/sys/menu/add','menuAdd','example','0','sys:menu:add','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('112','110','','菜单修改',13,NULL,'/sys/menu/modify','menuModify','example','1','sys:menu:modify','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('113','110','','菜单查看',11,NULL,'/sys/menu/view','menuView','example','1','sys:menu:view','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('114','110','','菜单删除',14,NULL,'','','example','1','sys:menu:delete','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('2','','','',0,NULL,NULL,NULL,NULL,'',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('3','','','',0,NULL,NULL,NULL,NULL,'',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('4','','','',0,NULL,NULL,NULL,NULL,'',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0');
+INSERT INTO `sys_menu` VALUES ('100','0','','系统管理',0,NULL,'/sys','Layout','example','0',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('110','100','','菜单管理',0,NULL,'/sys/menu','','example','0',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('111','110','','菜单管理',11,NULL,'/sys/menu/view','menuView','example','0','sys:menu:view','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('112','110','','菜单新增',12,NULL,'/sys/menu/add','menuAdd','example','1','sys:menu:add','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('113','110','','菜单修改',13,NULL,'/sys/menu/modify','menuModify','example','1','sys:menu:modify','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('114','110','','菜单删除',14,NULL,'','','','1','sys:menu:delete','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('120','100','','角色管理',0,NULL,'/sys/role','','example','0',NULL,'','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('121','120','','角色管理',21,NULL,'/sys/role/view','roleView','example','0','sys:role:view','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('122','120','','角色新增',22,NULL,'/sys/role/add','roleAdd','example','1','sys:role:add','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('123','120','','角色修改',23,NULL,'/sys/role/modify','roleModify','example','1','sys:role:modify','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0'),('124','120','','角色删除',24,NULL,'','','','1','sys:role:delete','','2019-01-01 00:00:00','','2019-01-01 00:00:00',NULL,'0');
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +274,7 @@ CREATE TABLE `sys_role_menu` (
 
 LOCK TABLES `sys_role_menu` WRITE;
 /*!40000 ALTER TABLE `sys_role_menu` DISABLE KEYS */;
-INSERT INTO `sys_role_menu` VALUES ('1','110'),('1','111'),('1','112'),('1','113'),('1','114');
+INSERT INTO `sys_role_menu` VALUES ('1','100'),('1','110'),('1','111'),('1','112'),('1','113'),('1','114'),('2','120'),('2','121'),('2','122'),('2','123'),('2','124');
 /*!40000 ALTER TABLE `sys_role_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -383,4 +383,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-29 17:34:13
+-- Dump completed on 2019-04-04 11:08:21

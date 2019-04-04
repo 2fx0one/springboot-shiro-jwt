@@ -37,7 +37,6 @@ public class ApiUserInfo {
         //路由数据
         List<ApiRoute> routers = user.getMenuList().stream()
                 .map(ApiRoute::create)
-                .filter(e -> StringUtils.isNotBlank(e.getComponent()))
                 .collect(Collectors.toList());
 
         return new ApiUserInfo()
