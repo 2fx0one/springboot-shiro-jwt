@@ -67,20 +67,21 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtils.getUsername(jwtToken);
         if (username == null) {
-            throw new CommonException(TOKEN_INVALID);
-//            throw new AuthenticationException("[用户不存在] token invalid");
+//            只能抛出 AuthenticationException
+//            throw new CommonException(TOKEN_INVALID);
+            throw new AuthenticationException("[用户不存在] token invalid");
         }
 
         User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getLoginName, username));
         if (user == null) {
-            throw new CommonException(TOKEN_INVALID);
-//            throw new AuthenticationException("[用户不存在] User didn't existed!");
+//            throw new CommonException(TOKEN_INVALID);
+            throw new AuthenticationException("[用户不存在] User didn't existed!");
         }
 
         if (!JWTUtils.verify(jwtToken, username, user.getPassword())) {
             //产生 JWTVerificationException 抛出异常
-            throw new CommonException(TOKEN_INVALID);
-//            throw new AuthenticationException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
+//            throw new CommonException(TOKEN_INVALID);
+            throw new AuthenticationException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
         }
 
 

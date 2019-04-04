@@ -3,6 +3,8 @@ package com.tfx0one.common.shiro;
 import com.alibaba.fastjson.JSONObject;
 import com.tfx0one.common.api.ExceptionResult;
 import com.tfx0one.common.api.R;
+import com.tfx0one.common.exception.CommonException;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static com.tfx0one.common.exception.ExceptionEnum.TOKEN_INVALID;
 
 /*
  * @Auth 2fx0one
@@ -35,7 +39,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
         HttpServletRequest req = (HttpServletRequest) request;
         String authorization = req.getHeader(TOEKN_HEADER);
-        return authorization != null && !authorization.equals("");
+        return authorization != null && !authorization.trim().equals("");
     }
 
     @Override
@@ -82,20 +86,20 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         }
         try {
             return super.preHandle(request, response);
-        } catch (Exception e) {
-            errorStrWriteToResponse(httpServletResponse, HttpStatus.UNAUTHORIZED.value(), e.getMessage());
+        } catch (AuthenticationException e) {
+            errorStrWriteToResponse(httpServletResponse, e);
             return false;
         }
     }
 
 
-    private void errorStrWriteToResponse(HttpServletResponse response, int status, String msg) throws IOException {
+    private void errorStrWriteToResponse(HttpServletResponse response, AuthenticationException e) throws IOException {
 //        R r = R.error(code, msg);
 //        new ObjectMapper().writeValueAsString(R.error(code, msg));
 //        String errStr = "{\"code\":" + code + ",\"msg\":\"" + errorCode + "\"}";
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(status);
+        response.setStatus(TOKEN_INVALID.getCode());
         response.setContentType("application/json; charset=utf-8");
-        response.getWriter().println(JSONObject.toJSON(R.status(status, new ExceptionResult().setMessage(msg).setStatus(status))));
+        response.getWriter().println(JSONObject.toJSON(R.status(TOKEN_INVALID.getCode(), e.getMessage())));
     }
 }
