@@ -26,7 +26,7 @@ import java.util.Map;
  * 22/1/2019 21:21
  */
 @Configuration
-public class ShiroConfig {
+public class ShiroConf {
 
     //身份验证缓存
     public static final String AUTHENTICATION_CACHE_NAME = "AUTH_C";
@@ -70,7 +70,7 @@ public class ShiroConfig {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         RedisManager redisManager = new RedisManager();
         redisCacheManager.setRedisManager(redisManager);
-        redisCacheManager.setExpire(JWTUtils.EXPIRE_TIME_SECOND); //一小时
+        redisCacheManager.setExpire(JWTUtils.EXPIRE_TIME_IN_SECOND);
         return redisCacheManager;
     }
 

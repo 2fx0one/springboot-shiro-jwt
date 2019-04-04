@@ -17,7 +17,7 @@ package com.tfx0one.common.utils;
 
 import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.shiro.ShiroAuthRealm;
-import com.tfx0one.common.shiro.ShiroConfig;
+import com.tfx0one.common.shiro.ShiroConf;
 import com.tfx0one.sys.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -56,8 +56,8 @@ public class ShiroUtils {
 
     //清除全部缓存 直接在清空authz授权的缓存 和 身份认证authc的缓存
     public static void clearAllUserAuthCache() {
-        cacheManager.getCache(ShiroConfig.AUTHENTICATION_CACHE_NAME).clear();
-        cacheManager.getCache(ShiroConfig.AUTHORIZATION_CACHE_NAME).clear();
+        cacheManager.getCache(ShiroConf.AUTHENTICATION_CACHE_NAME).clear();
+        cacheManager.getCache(ShiroConf.AUTHORIZATION_CACHE_NAME).clear();
     }
 
     //清空某个用户的身份认证和授权信息。可以用在修改了密码的情况。

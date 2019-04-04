@@ -93,7 +93,6 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         user.setRoleList(roleList);
         user.setMenuList(userAllMenuList);
 
-
         //token 也放缓存
         user.setJwtToken(jwtToken);
 

@@ -20,7 +20,7 @@ import java.io.Serializable;
 @ApiModel("返回结果模型")
 @Accessors(chain = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class R<T> implements Serializable {
+public class R implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,14 +34,6 @@ public class R<T> implements Serializable {
         log.info("===ResponseEntity=== status:" + status + "  data:" + data);
         return ResponseEntity.status(status).body(data);
     }
-
-//    private static Integer SUCCESS_CODE = 20000;
-//    private static Integer ERROR_CODE = 50000;
-//    public static Integer ERROR_CODE_TOKEN_INVALID = 50008; //非法的token
-//
-//    public static Integer ERROR_CODE_USER_NOT_EXIST = 50001; //用户不存在
-//    public static Integer ERROR_CODE_USER_PASSWORD = 50002; //账号或密码错误
-
 
     public static <T> ResponseEntity<T> ok(T data) {
         return commonFunc(HttpStatus.OK.value(), data);
