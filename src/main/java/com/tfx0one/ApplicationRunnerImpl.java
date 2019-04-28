@@ -21,7 +21,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        System.out.println("======= !!!!!!!!!! 程序启动成功, 该函数只会执行一次 !!!!!!!!!! [ ApplicationRunnerImpl ]  class will be execute when the project was started! !!!!!!!!!!!! ======= ");
+        System.out.println("======= !!!!!!!!!! 程序启动成功! !!!!!!!!!! [ ApplicationRunnerImpl ]  class will be execute ONLY ONCE when the project was started! !!!!!!!!!!!! ======= ");
     }
 
 }

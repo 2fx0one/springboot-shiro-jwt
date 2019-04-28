@@ -54,16 +54,4 @@ public class AuthController {
         return R.ok("logout success");
     }
 
-    @GetMapping("/user/info")
-    @RequiresAuthentication
-    public ResponseEntity<ApiUserInfo> userInfo() {
-        //用户角色信息 菜单 权限
-
-        User user = ShiroUtils.getCurrentUser();
-        AuthorizationInfo info = ShiroUtils.getAuthorizationInfo();
-
-        return R.ok(ApiUserInfo.create(user, info));
-    }
-
-
 }
