@@ -26,6 +26,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.tfx0one.common.exception.ExceptionEnum.LOGIN_USER_NOT_FOUND;
@@ -143,13 +144,13 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         simpleAuthorizationInfo.addRoles(roles);
 
         //权限字符串
-        List<String> permissions = user.getMenuList().stream()
+        Set<String> permissions = user.getMenuList().stream()
 //                .map(Role::getMenuList).flatMap(Collection::stream)
                 .map(Menu::getPermission).filter(StringUtils::isNotEmpty) //过滤空
                 .flatMap(s -> Arrays.stream(s.split(GlobalConstant.SPLIT_DELIMETER)))
-                .sorted()
-                .collect(Collectors.toList());
-        simpleAuthorizationInfo.addStringPermissions(permissions);
+//                .sorted()
+                .collect(Collectors.toSet());
+        simpleAuthorizationInfo.setStringPermissions(permissions);
 
         return simpleAuthorizationInfo;
     }
