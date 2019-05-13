@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * Created by 2fx0one on 2018/6/30.
@@ -20,12 +21,13 @@ import java.io.Serializable;
 @ApiModel("返回结果模型")
 @Accessors(chain = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class R implements Serializable {
+public class R extends HashMap<String, Object> {
 
     private static final long serialVersionUID = 1L;
 
     private static final Logger log = LoggerFactory.getLogger(R.class);
 
+    //    私有构造
     private R() {
     }
 
