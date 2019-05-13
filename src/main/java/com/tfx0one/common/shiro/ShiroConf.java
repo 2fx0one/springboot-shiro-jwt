@@ -13,6 +13,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -67,19 +68,26 @@ public class ShiroConf {
 //    }
 
     //shiro-redis-spring-boot-starter
-//    @Bean("redisCacheManager")
-//    @Primary
-//    public RedisCacheManager redisCacheManager() {
-//        RedisCacheManager redisCacheManager = new RedisCacheManager();
-//        RedisManager redisManager = new RedisManager();
-//        redisCacheManager.setRedisManager(redisManager);
-//        redisCacheManager.setExpire(JWTUtils.EXPIRE_TIME_IN_SECOND);
-//        return redisCacheManager;
+
+//    @Bean("redisManager")
+//    @ConfigurationProperties(prefix = "spring.redis")
+//    RedisManager redisManager() {
+//        return new RedisManager();
 //    }
+
+    @Primary
+    @Bean("redisCacheManager")
+    public RedisCacheManager redisCacheManager() {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        RedisManager redisManager = new RedisManager();
+        redisCacheManager.setRedisManager(redisManager);
+        redisCacheManager.setExpire(JWTUtils.EXPIRE_TIME_IN_SECOND);
+        return redisCacheManager;
+    }
 
 
     @Bean("securityManager")
-    public DefaultWebSecurityManager manger(ShiroAuthRealm shiroAuthRealm, CacheManager cacheManager) {
+    public DefaultWebSecurityManager manger(ShiroAuthRealm shiroAuthRealm, RedisCacheManager cacheManager) {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 
         //缓存
