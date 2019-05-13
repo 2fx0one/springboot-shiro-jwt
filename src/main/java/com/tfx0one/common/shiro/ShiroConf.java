@@ -1,6 +1,7 @@
 package com.tfx0one.common.shiro;
 
 import com.tfx0one.common.utils.JWTUtils;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -64,19 +65,21 @@ public class ShiroConf {
 //        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
 //        return cacheManager;
 //    }
-    @Bean("redisCacheManager")
-    @Primary
-    public RedisCacheManager redisCacheManager() {
-        RedisCacheManager redisCacheManager = new RedisCacheManager();
-        RedisManager redisManager = new RedisManager();
-        redisCacheManager.setRedisManager(redisManager);
-        redisCacheManager.setExpire(JWTUtils.EXPIRE_TIME_IN_SECOND);
-        return redisCacheManager;
-    }
+
+    //shiro-redis-spring-boot-starter
+//    @Bean("redisCacheManager")
+//    @Primary
+//    public RedisCacheManager redisCacheManager() {
+//        RedisCacheManager redisCacheManager = new RedisCacheManager();
+//        RedisManager redisManager = new RedisManager();
+//        redisCacheManager.setRedisManager(redisManager);
+//        redisCacheManager.setExpire(JWTUtils.EXPIRE_TIME_IN_SECOND);
+//        return redisCacheManager;
+//    }
 
 
     @Bean("securityManager")
-    public DefaultWebSecurityManager manger(ShiroAuthRealm shiroAuthRealm, RedisCacheManager cacheManager) {
+    public DefaultWebSecurityManager manger(ShiroAuthRealm shiroAuthRealm, CacheManager cacheManager) {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 
         //缓存
