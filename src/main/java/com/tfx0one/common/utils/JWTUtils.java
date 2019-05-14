@@ -6,13 +6,14 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.sys.entity.User;
 
 import java.util.Date;
 
 public class JWTUtils {
-    // 过期时间 秒为单位
-    public static final int EXPIRE_TIME_IN_SECOND = 60 * 60 * 24;
+    // 过期时间 秒为单位 暂定为 1 天
+    public static final int EXPIRE_TIME_IN_SECOND = GlobalConstant.EXPIRE_TIME_IN_SECOND;
 
     /**
      * 校验token是否正确

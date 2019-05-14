@@ -54,31 +54,6 @@ public class ShiroConfig {
         return chainDefinition;
     }
 
-    //    @Bean
-//    public EhCacheManager ehCacheManager() {
-//        EhCacheManager cacheManager = new EhCacheManager();
-//        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
-//        return cacheManager;
-//    }
-
-    //shiro-redis-spring-boot-starter
-
-//    @Bean("redisManager")
-//    @ConfigurationProperties(prefix = "spring.redis")
-//    RedisManager redisManager() {
-//        return new RedisManager();
-//    }
-
-//    @Primary
-//    @Bean("redisCacheManager")
-//    public RedisCacheManager redisCacheManager() {
-//        RedisCacheManager redisCacheManager = new RedisCacheManager();
-//        RedisManager redisManager = new RedisManager();
-//        redisCacheManager.setRedisManager(redisManager);
-//        redisCacheManager.setExpire(JWTUtils.EXPIRE_TIME_IN_SECOND);
-//        return redisCacheManager;
-//    }
-
 
     @Bean("securityManager")
     public DefaultWebSecurityManager manger(ShiroAuthRealm shiroAuthRealm, ShiroRedisCacheManager cacheManager) {

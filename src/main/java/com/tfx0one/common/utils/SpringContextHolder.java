@@ -65,6 +65,21 @@ public class SpringContextHolder implements ApplicationContextAware {
         return applicationContext.getBean(clazz);
     }
 
+    public static <T> T getBean(String name, Class<T> requiredType) {
+        return applicationContext.getBean(name, requiredType);
+    }
+
+    public static boolean containsBean(String name) {
+        return applicationContext.containsBean(name);
+    }
+
+    public static boolean isSingleton(String name) {
+        return applicationContext.isSingleton(name);
+    }
+
+    public static Class<? extends Object> getType(String name) {
+        return applicationContext.getType(name);
+    }
 
     private static void checkApplicationContext() {
         if (applicationContext == null) {
