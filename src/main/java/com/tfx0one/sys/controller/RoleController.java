@@ -31,24 +31,24 @@ public class RoleController extends BaseController {
     private RoleService roleService;
 
     @GetMapping("view")
-    public ResponseEntity sysMenuView() {
+    public R sysMenuView() {
         return R.ok(roleService.list());
     }
 
     @PostMapping("add")
-    public ResponseEntity sysMenuAdd(@RequestBody Role role) {
+    public R sysMenuAdd(@RequestBody Role role) {
         roleService.save(role);
         return R.ok("添加成功！");
     }
 
     @PutMapping("modify")
-    public ResponseEntity sysMenuModify(@RequestBody Role role) {
+    public R sysMenuModify(@RequestBody Role role) {
         roleService.updateById(role);
         return R.ok("修改成功！");
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity sysMenuDelete(@PathVariable String id) {
+    public R sysMenuDelete(@PathVariable String id) {
         roleService.removeById(id);
         return R.ok("删除成功！");
     }

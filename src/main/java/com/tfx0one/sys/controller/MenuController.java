@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 菜单表 前端控制器
@@ -31,24 +33,24 @@ public class MenuController extends BaseController {
     private MenuService menuService;
 
     @GetMapping("view")
-    public ResponseEntity sysMenuView() {
+    public R<List<Menu>> sysMenuView() {
         return R.ok(menuService.list());
     }
 
     @PostMapping("add")
-    public ResponseEntity sysMenuAdd(@RequestBody Menu menu) {
+    public R sysMenuAdd(@RequestBody Menu menu) {
         menuService.save(menu);
         return R.ok("添加成功！");
     }
 
     @PutMapping("modify")
-    public ResponseEntity sysMenuModify(@RequestBody Menu menu) {
+    public R sysMenuModify(@RequestBody Menu menu) {
         menuService.updateById(menu);
         return R.ok("修改成功！");
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity sysMenuDelete(@PathVariable String id) {
+    public R sysMenuDelete(@PathVariable String id) {
         menuService.removeById(id);
         return R.ok("删除成功！");
     }

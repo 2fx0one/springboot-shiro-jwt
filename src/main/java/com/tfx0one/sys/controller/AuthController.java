@@ -33,7 +33,7 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody ApiLoginUser login) {
+    public R login(@RequestBody ApiLoginUser login) {
         User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getLoginName, login.getUsername()));
         if (user == null) {
             throw new CommonException(LOGIN_USER_NOT_FOUND);
@@ -43,12 +43,12 @@ public class AuthController {
         if (!user.getPassword().equals(simpleHashPassword)) {
             throw new CommonException(LOGIN_USER_NOT_FOUND);
         }
-        return R.ok(JWTUtils.sign(user));
+        return R.ok(JWTUtils.sign(user),"sucess");
     }
 
     @PostMapping("/logout")
     @RequiresAuthentication
-    public ResponseEntity logout() {
+    public R logout() {
         //jwtToken 并未失效 要等过期之后了。故而前端逻辑需要配合把jwtToken删除
         ShiroUtils.getSubject().logout();
         return R.ok("logout success");

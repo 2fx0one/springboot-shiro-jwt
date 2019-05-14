@@ -27,7 +27,7 @@ public class UserController extends BaseController {
 
     @GetMapping("/info")
     @RequiresAuthentication
-    public ResponseEntity<ApiUserInfo> userInfo() {
+    public R<ApiUserInfo> userInfo() {
         //用户角色信息 菜单 权限
 
         User user = ShiroUtils.getCurrentUser();

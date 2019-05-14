@@ -34,21 +34,21 @@ public class TestController extends BaseController {
     private MenuService menuService;
 
     @GetMapping("/a")
-    public ResponseEntity a() {
+    public R a() {
 //        menuService.updateById(new Menu().setId("15").setDelFlag("1"));
         menuService.update(new LambdaUpdateWrapper<Menu>().set(Menu::getDelFlag, "0").eq(Menu::getId, "15"));
         return R.ok("aaa");
     }
 
     @GetMapping("/b")
-    public ResponseEntity b() {
+    public R b() {
         menuService.save(new Menu().setComponent("a").setParentId("0").setParentIds("1").setName("a").setSort(1));
         return R.ok("bbb");
     }
 
     @GetMapping("/c")
     @RequiresPermissions({"sys:dict:view"})
-    public ResponseEntity c() {
+    public R c() {
         ShiroUtils.clearCurrentUserAuthorization();
 //        ShiroUtils.clearAllUserAuthorization();
 //        Subject s = ShiroUtils.getSubject();
@@ -64,13 +64,13 @@ public class TestController extends BaseController {
 
     @GetMapping("/d")
     @RequiresPermissions({"sys:dict:view"})
-    public ResponseEntity d() {
+    public R d() {
         return R.ok("ddd");
     }
 
     @GetMapping("/z")
     @RequiresPermissions({"zzzz"})
-    public ResponseEntity z() {
+    public R z() {
         return R.ok("zzz");
     }
 
