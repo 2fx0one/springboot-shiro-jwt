@@ -1,7 +1,5 @@
 package com.tfx0one.common.shiro;
 
-import com.tfx0one.common.utils.JWTUtils;
-import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -10,14 +8,10 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.crazycake.shiro.RedisCacheManager;
-import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Primary;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
@@ -28,7 +22,7 @@ import java.util.Map;
  * 22/1/2019 21:21
  */
 @Configuration
-public class ShiroConf {
+public class ShiroConfig {
 
     //身份验证缓存
     public static final String AUTHENTICATION_CACHE_NAME = "AUTH_C";
@@ -75,19 +69,19 @@ public class ShiroConf {
 //        return new RedisManager();
 //    }
 
-    @Primary
-    @Bean("redisCacheManager")
-    public RedisCacheManager redisCacheManager() {
-        RedisCacheManager redisCacheManager = new RedisCacheManager();
-        RedisManager redisManager = new RedisManager();
-        redisCacheManager.setRedisManager(redisManager);
-        redisCacheManager.setExpire(JWTUtils.EXPIRE_TIME_IN_SECOND);
-        return redisCacheManager;
-    }
+//    @Primary
+//    @Bean("redisCacheManager")
+//    public RedisCacheManager redisCacheManager() {
+//        RedisCacheManager redisCacheManager = new RedisCacheManager();
+//        RedisManager redisManager = new RedisManager();
+//        redisCacheManager.setRedisManager(redisManager);
+//        redisCacheManager.setExpire(JWTUtils.EXPIRE_TIME_IN_SECOND);
+//        return redisCacheManager;
+//    }
 
 
     @Bean("securityManager")
-    public DefaultWebSecurityManager manger(ShiroAuthRealm shiroAuthRealm, RedisCacheManager cacheManager) {
+    public DefaultWebSecurityManager manger(ShiroAuthRealm shiroAuthRealm, ShiroRedisCacheManager cacheManager) {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 
         //缓存

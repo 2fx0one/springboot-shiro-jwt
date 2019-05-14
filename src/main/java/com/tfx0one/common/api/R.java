@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import java.util.HashMap;
  * Created by 2fx0one on 2018/6/30.
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 @ApiModel("返回结果模型")
 @Accessors(chain = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -29,6 +31,7 @@ public class R extends HashMap<String, Object> {
 
     //    私有构造
     private R() {
+        super();
     }
 
     //公共方法
@@ -46,7 +49,7 @@ public class R extends HashMap<String, Object> {
         return commonFunc(HttpStatus.OK.value(), new Pagination<>(page));
     }
 
-    public static <T> ResponseEntity<T> status(int status, T data) {
+    public static <T> ResponseEntity<T> status(Integer status, T data) {
         return commonFunc(status, data);
     }
 
