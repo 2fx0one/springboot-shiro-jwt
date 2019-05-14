@@ -87,27 +87,23 @@ public class ShiroConfig {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
 
         Map<String, Filter> filterMap = new HashMap<>();
-        filterMap.put("jwt", new JWTFilter());
+        filterMap.put("AuthFilter", new AuthFilter());
         factoryBean.setFilters(filterMap);
 
         factoryBean.setSecurityManager(securityManager);
-//        factoryBean.setUnauthorizedUrl("/403");
-//        factoryBean.setLoginUrl("/login");
         //自定义URL
         Map<String, String> rule = new HashMap<>();
-//        rule.put("/logout", "logout");
-//        rule.put("/sys/auth/login", "anon");
-
-        //所有请求都要过jwt
-        //swagger ui
-//        rule.put("/swagger-ui.html", "anon");
-//        rule.put("/swagger-resources", "anon");
-//        rule.put("/v2/api-docs", "anon");
-//        rule.put("/webjars/springfox-swagger-ui/**", "anon");
-        //401 页面不需要
-//        rule.put("/401", "anon");
-//        rule.put("/404", "anon");
-        rule.put("/**", "jwt");
+        rule.put("/webjars/**", "anon");
+        rule.put("/druid/**", "anon");
+        rule.put("/app/**", "anon");
+        rule.put("/api/sys/auth/login", "anon");
+        rule.put("/swagger/**", "anon");
+        rule.put("/v2/api-docs", "anon");
+        rule.put("/swagger-ui.html", "anon");
+        rule.put("/swagger-resources/**", "anon");
+        rule.put("/captcha.jpg", "anon");
+        rule.put("/aaa.txt", "anon");
+        rule.put("/**", "AuthFilter");
 
 
         factoryBean.setFilterChainDefinitionMap(rule);

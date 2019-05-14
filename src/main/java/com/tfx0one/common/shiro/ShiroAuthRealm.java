@@ -2,7 +2,6 @@ package com.tfx0one.common.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tfx0one.common.constant.GlobalConstant;
-import com.tfx0one.common.exception.CommonException;
 import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.sys.entity.Menu;
 import com.tfx0one.sys.entity.Role;
@@ -10,7 +9,6 @@ import com.tfx0one.sys.entity.User;
 import com.tfx0one.sys.service.RoleService;
 import com.tfx0one.sys.service.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -21,9 +19,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -31,9 +27,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static com.tfx0one.common.exception.ExceptionEnum.LOGIN_USER_NOT_FOUND;
-import static com.tfx0one.common.exception.ExceptionEnum.TOKEN_INVALID;
 
 @Component
 public class ShiroAuthRealm extends AuthorizingRealm {
@@ -47,7 +40,7 @@ public class ShiroAuthRealm extends AuthorizingRealm {
 
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token instanceof JWTToken;
+        return token instanceof AuthToken;
     }
 
     /**

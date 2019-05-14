@@ -8,14 +8,12 @@ import com.tfx0one.common.utils.ShiroUtils;
 import com.tfx0one.sys.entity.User;
 import com.tfx0one.sys.service.UserService;
 import com.tfx0one.sys.vo.request.ApiLoginUser;
-import com.tfx0one.sys.vo.response.ApiUserInfo;
-import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import static com.tfx0one.common.exception.ExceptionEnum.LOGIN_USER_NOT_FOUND;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 /**
@@ -36,14 +34,14 @@ public class AuthController {
     public R login(@RequestBody ApiLoginUser login) {
         User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getLoginName, login.getUsername()));
         if (user == null) {
-            throw new CommonException(LOGIN_USER_NOT_FOUND);
+            throw new CommonException("用户不存在！");
         }
         String salt = user.getId();
         String simpleHashPassword = ShiroUtils.md5(login.getPassword(), salt);
         if (!user.getPassword().equals(simpleHashPassword)) {
-            throw new CommonException(LOGIN_USER_NOT_FOUND);
+            throw new CommonException("密码不正确！");
         }
-        return R.ok(JWTUtils.sign(user),"sucess");
+        return R.ok(JWTUtils.sign(user));
     }
 
     @PostMapping("/logout")

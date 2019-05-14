@@ -28,7 +28,7 @@ public class ValidatorUtils {
                 msg.append(constraint.getMessage()).append("<br>");
             }
 //            TODO
-            throw new CommonException();
+            throw new CommonException(msg.toString());
         }
     }
 }

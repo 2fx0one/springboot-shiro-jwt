@@ -3,6 +3,7 @@ package com.tfx0one.common.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -26,14 +27,17 @@ public class R<T> implements Serializable {
 
     private static final Logger log = LoggerFactory.getLogger(R.class);
 
+    @ApiModelProperty(value = "数据")
     private T data;
+    @ApiModelProperty(value = "状态")
     private int status;
+    @ApiModelProperty(value = "提示")
     private String msg;
+    @ApiModelProperty(value = "时间戳")
     private Long timestamp;
 
     //    私有构造
     private R() {
-        super();
     }
 
     //    @Override

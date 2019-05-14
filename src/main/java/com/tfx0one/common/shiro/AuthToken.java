@@ -2,10 +2,10 @@ package com.tfx0one.common.shiro;
 
 import org.apache.shiro.authc.AuthenticationToken;
 
-public class JWTToken implements AuthenticationToken {
+public class AuthToken implements AuthenticationToken {
     private String token;
 
-    public JWTToken(String token) {
+    public AuthToken(String token) {
         this.token = token;
     }
 
