@@ -40,7 +40,9 @@ public class CodeGenerator {
 
         String packageRoot = "com.tfx0one";
         String moduleName = "sys";
-        String[] tables = {"sys_user", "sys_role", "sys_dict", "sys_area","sys_office", "sys_menu", "sys_log"};
+        String tablePrefix = "sysx_";
+//        String[] tables = {"sys_user", "sys_role", "sys_dict", "sys_area","sys_office", "sys_menu", "sys_log"};
+        String[] tables = {"sys_log"};
 
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
@@ -116,7 +118,8 @@ public class CodeGenerator {
         strategy.setInclude(tables);
 //        strategy.setSuperEntityColumns("id", "create_by", "create_date", "update_by", "update_date", "remarks", "del_flag");
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(packageConfig.getModuleName() + "_");
+//        strategy.setTablePrefix(packageConfig.getModuleName() + "_");
+        strategy.setTablePrefix(tablePrefix);
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
