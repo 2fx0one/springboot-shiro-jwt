@@ -38,6 +38,12 @@ public class ShiroConfig {
      *
      * @return
      */
+//    @Bean
+//    public EhCacheManager ehCacheManager() {
+//        EhCacheManager cacheManager = new EhCacheManager();
+//        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
+//        return cacheManager;
+//    }
 
     @Bean
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
@@ -68,7 +74,6 @@ public class ShiroConfig {
 
         //关闭 shiro session
         // http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
-
         DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
         DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
         defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
@@ -115,6 +120,7 @@ public class ShiroConfig {
         return new LifecycleBeanPostProcessor();
     }
 
+    // 自动代理所有的advisor: 由Advisor决定对哪些类的方法进行AOP代理。
     @Bean
     @DependsOn("lifecycleBeanPostProcessor")
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
