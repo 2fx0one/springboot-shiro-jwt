@@ -30,7 +30,7 @@ public class R<T> implements Serializable {
     @ApiModelProperty(value = "数据")
     private T data;
     @ApiModelProperty(value = "状态")
-    private int status;
+    private int code;
     @ApiModelProperty(value = "提示")
     private String msg;
     @ApiModelProperty(value = "时间戳")
@@ -47,7 +47,8 @@ public class R<T> implements Serializable {
 //    }
 //
     public R<T> status(int status) {
-        return this.setStatus(status);
+        this.code = status;
+        return this;
     }
 
 //    public R status(HttpStatus status) {

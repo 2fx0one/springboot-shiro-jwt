@@ -3,6 +3,7 @@ package com.tfx0one.sys.controller;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.tfx0one.common.api.R;
 import com.tfx0one.common.base.BaseController;
+import com.tfx0one.common.exception.CommonException;
 import com.tfx0one.common.utils.ShiroUtils;
 import com.tfx0one.sys.entity.Menu;
 import com.tfx0one.sys.service.MenuService;
@@ -32,6 +33,13 @@ public class TestController extends BaseController {
 
     @Autowired
     private MenuService menuService;
+
+
+    @GetMapping("/cc")
+    public R cc() {
+        throw new CommonException("abc");
+//        return R.ok("aaa");
+    }
 
     @GetMapping("/a")
     public R a() {

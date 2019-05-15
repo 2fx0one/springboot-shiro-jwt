@@ -51,8 +51,8 @@ public class ShiroUtils {
      */
     public final static int HASH_ITERATIONS = 1;
 
-    private static CacheManager cacheManager = SpringContextHolder.getBean(ShiroRedisCacheManager.class);
-    private static ShiroAuthRealm shiroAuthRealm = SpringContextHolder.getBean(ShiroAuthRealm.class);
+    private static CacheManager cacheManager = SpringContextUtils.getBean(ShiroRedisCacheManager.class);
+    private static ShiroAuthRealm shiroAuthRealm = SpringContextUtils.getBean(ShiroAuthRealm.class);
 
     //清除全部缓存 直接在清空authz授权的缓存 和 身份认证authc的缓存
     public static void clearAllUserAuthCache() {

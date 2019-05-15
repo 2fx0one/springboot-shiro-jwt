@@ -14,32 +14,35 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 
 
-@ControllerAdvice
+@RestControllerAdvice
 public class CommonExceptionHandler {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @ExceptionHandler(CommonException.class)
+    @ResponseStatus
     public R handleCommonException(CommonException e) {
         return R.error(e.getCode(), e.getMsg());
     }
 
     //身份未认证
     @ExceptionHandler(UnauthenticatedException.class)
-    public R handleUnauthenticatedException(HttpServletRequest request, UnauthenticatedException e) {
-//        e.printStackTrace();
+    public R handleUnauthenticatedException(UnauthenticatedException e) {
+        logger.error(e.getMessage(), e);
         return R.error(HttpStatus.FORBIDDEN.value(), "身份未认证");
     }
 
     //用户权限不足
     @ExceptionHandler(AuthorizationException.class)
-    public R handleUnauthorizedException(HttpServletRequest request, AuthorizationException e) {
-//        e.printStackTrace();
-        return R.error(HttpStatus.UNAUTHORIZED.value(), "用户名或密码错误！");
+    public R handleUnauthorizedException(AuthorizationException e) {
+        logger.error(e.getMessage(), e);
+        return R.error(HttpStatus.UNAUTHORIZED.value(), "没有权限，请联系管理员授权");
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
@@ -49,7 +52,7 @@ public class CommonExceptionHandler {
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
-    public R handleDuplicateKeyException(DuplicateKeyException e){
+    public R handleDuplicateKeyException(DuplicateKeyException e) {
         logger.error(e.getMessage(), e);
         return R.error("数据库中已存在该记录");
     }

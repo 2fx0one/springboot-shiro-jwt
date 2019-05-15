@@ -10,21 +10,14 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
-import java.io.IOException;
-import java.lang.reflect.Field;
 
 
 @Component
 @Lazy(false)
-public class SpringContextHolder implements ApplicationContextAware {
+public class SpringContextUtils implements ApplicationContextAware {
 
-    private static Logger logger = LoggerFactory.getLogger(SpringContextHolder.class);
+    private static Logger logger = LoggerFactory.getLogger(SpringContextUtils.class);
 
     private static ApplicationContext applicationContext = null;
 
@@ -34,7 +27,7 @@ public class SpringContextHolder implements ApplicationContextAware {
      */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
-        SpringContextHolder.applicationContext = applicationContext;
+        SpringContextUtils.applicationContext = applicationContext;
     }
 
     /**
