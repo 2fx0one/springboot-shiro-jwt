@@ -70,7 +70,7 @@ public class R<T> implements Serializable {
 
     private static <T> R<T> commonFunc(int status, String msg, T data) {
         R<T> r = new R<>();
-        r.status(status).data(data);
+        r.status(status).msg(msg).data(data).setTimestamp(System.currentTimeMillis());
         log.info("return R  status = " + status + "  msg = " + msg);
         return r;
     }

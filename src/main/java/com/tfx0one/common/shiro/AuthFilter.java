@@ -51,7 +51,7 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
         String authorization = req.getHeader(AUTHORIZATION_HEADER);
         return authorization != null && !authorization.trim().equals("");
     }
-//
+
 //    @Override
 //    protected boolean executeLogin(ServletRequest request, ServletResponse response) {
 //        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
@@ -85,7 +85,6 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
         }
         return true;
     }
-
 //    @Override
 //    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
 //        if (((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())) {

@@ -34,13 +34,6 @@ public class TestController extends BaseController {
     @Autowired
     private MenuService menuService;
 
-
-    @GetMapping("/cc")
-    public R cc() {
-        throw new CommonException("abc");
-//        return R.ok("aaa");
-    }
-
     @GetMapping("/a")
     public R a() {
 //        menuService.updateById(new Menu().setId("15").setDelFlag("1"));

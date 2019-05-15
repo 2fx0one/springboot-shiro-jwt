@@ -34,14 +34,14 @@ public class CommonExceptionHandler {
     //身份未认证
     @ExceptionHandler(UnauthenticatedException.class)
     public R handleUnauthenticatedException(UnauthenticatedException e) {
-        logger.error(e.getMessage(), e);
+//        logger.error(e.getMessage(), e);
         return R.error(HttpStatus.FORBIDDEN.value(), "身份未认证");
     }
 
     //用户权限不足
     @ExceptionHandler(AuthorizationException.class)
     public R handleUnauthorizedException(AuthorizationException e) {
-        logger.error(e.getMessage(), e);
+//        logger.error(e.getMessage(), e);
         return R.error(HttpStatus.UNAUTHORIZED.value(), "没有权限，请联系管理员授权");
     }
 
