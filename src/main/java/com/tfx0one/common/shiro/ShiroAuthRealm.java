@@ -15,6 +15,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
@@ -66,19 +67,19 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         if (username == null) {
 //            只能抛出 AuthenticationException
 //            throw new CommonException(TOKEN_INVALID);
-            throw new AuthenticationException("[用户不存在] token invalid");
+            throw new UnauthenticatedException("[用户不存在] token invalid");
         }
 
         User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getLoginName, username));
         if (user == null) {
 //            throw new CommonException(TOKEN_INVALID);
-            throw new AuthenticationException("[用户不存在] User didn't existed!");
+            throw new UnauthenticatedException("[用户不存在] User didn't existed!");
         }
 
         if (!JWTUtils.verify(jwtToken, username, user.getPassword())) {
             //产生 JWTVerificationException 抛出异常
 //            throw new CommonException(TOKEN_INVALID);
-            throw new AuthenticationException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
+            throw new UnauthenticatedException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
         }
 
 

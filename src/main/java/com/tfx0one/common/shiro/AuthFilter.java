@@ -28,6 +28,22 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+
+    /**
+     * 获取请求的token
+     */
+    private String getRequestToken(HttpServletRequest httpRequest) {
+        //从header中获取token
+        String token = httpRequest.getHeader(AUTHORIZATION_HEADER);
+
+        //如果header中不存在token，则从参数中获取token
+        if (StringUtils.isBlank(token)) {
+            token = httpRequest.getParameter(AUTHORIZATION_HEADER);
+        }
+
+        return token;
+    }
+
     @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
         //获取请求token
@@ -52,17 +68,17 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
         return authorization != null && !authorization.trim().equals("");
     }
 
-//    @Override
-//    protected boolean executeLogin(ServletRequest request, ServletResponse response) {
-//        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-//        String authorization = httpServletRequest.getHeader(AUTHORIZATION_HEADER);
-//
-//        AuthToken token = new AuthToken(authorization);
-//        // 提交给realm进行登入，如果错误他会抛出异常并被捕获
-//        getSubject(request, response).login(token);
-//        // 如果没有抛出异常则代表登入成功，返回true
-//        return true;
-//    }
+    @Override
+    protected boolean executeLogin(ServletRequest request, ServletResponse response) {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        String authorization = httpServletRequest.getHeader(AUTHORIZATION_HEADER);
+
+        AuthToken token = new AuthToken(authorization);
+        // 提交给realm进行登入，如果错误他会抛出异常并被捕获
+        getSubject(request, response).login(token); //触发 Realm 的 doGetAuthenticationInfo
+        // 如果没有抛出异常则代表登入成功，返回true
+        return true;
+    }
 
 
     /**
@@ -76,7 +92,7 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        if (isLoginAttempt(request, response)) {
+        if (isLoginAttempt(request, response)) { //判断用户是否想要登入。 检测header里面是否包含Authorization字段即可
             try {
                 return executeLogin(request, response);
             } catch (Exception e) {
@@ -94,46 +110,45 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
 //        return true;
 //    }
 
-    @Override
-    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        //获取请求token，如果token不存在，直接返回401
-        String token = getRequestToken((HttpServletRequest) request);
-        if (StringUtils.isBlank(token)) {
-            HttpServletResponse httpResponse = (HttpServletResponse) response;
-            httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-            httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
+//    @Override
+//    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+//        //获取请求token，如果token不存在，直接返回401
+//        String token = getRequestToken((HttpServletRequest) request);
+//        if (StringUtils.isBlank(token)) {
+//            HttpServletResponse httpResponse = (HttpServletResponse) response;
+//            httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
+//            httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
+//
+//            String json = JSONObject.toJSONString(R.error(HttpStatus.UNAUTHORIZED.value(), "invalid token, Access Denied"));
+//
+//            httpResponse.getWriter().print(json);
+//
+//            return true;
+//        }
+//
+//        return executeLogin(request, response);
+//    }
 
-            System.out.println(HttpContextUtils.getDomain());
-            String json = JSONObject.toJSONString(R.error(HttpStatus.UNAUTHORIZED.value(), "invalid token, Access Denied"));
-
-            httpResponse.getWriter().print(json);
-
-            return true;
-        }
-
-        return executeLogin(request, response);
-    }
-
-    @Override
-    protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        httpResponse.setContentType("application/json;charset=utf-8");
-        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-        httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
-        try {
-            //处理登录失败的异常
-            Throwable throwable = e.getCause() == null ? e : e.getCause();
-            R r = R.error(HttpStatus.UNAUTHORIZED.value(), throwable.getMessage());
-
-            String json = JSONObject.toJSONString(r);
-            httpResponse.getWriter().print(json);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-
-        }
-
-        return false;
-    }
+//    @Override
+//    protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
+//        HttpServletResponse httpResponse = (HttpServletResponse) response;
+//        httpResponse.setContentType("application/json;charset=utf-8");
+//        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
+//        httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
+//        try {
+//            //处理登录失败的异常
+//            Throwable throwable = e.getCause() == null ? e : e.getCause();
+//            R r = R.error(HttpStatus.UNAUTHORIZED.value(), "LoginFailure" + throwable.getMessage());
+//
+//            String json = JSONObject.toJSONString(r);
+//            httpResponse.getWriter().print(json);
+//        } catch (IOException e1) {
+//            e1.printStackTrace();
+//
+//        }
+//
+//        return false;
+//    }
 
     //执行流程preHandle->isAccessAllowed->isLoginAttempt->executeLogin
     @Override
@@ -151,32 +166,15 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
         try {
             return super.preHandle(request, response);
         } catch (AuthenticationException e) {
-            errorStrWriteToResponse(httpServletResponse, e);
+            logger.error(e.getMessage(), e);
             return false;
         }
     }
 
-    private void errorStrWriteToResponse(HttpServletResponse response, AuthenticationException e) throws IOException {
-//        R r = R.error(code, msg);
-//        new ObjectMapper().writeValueAsString(R.error(code, msg));
-//        String errStr = "{\"code\":" + code + ",\"msg\":\"" + errorCode + "\"}";
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        response.getWriter().println(JSONObject.toJSONString(R.error(50000, "error"+e.getMessage())));
-    }
+//    private void errorStrWriteToResponse(HttpServletResponse response, AuthenticationException e) throws IOException {
+//        response.setCharacterEncoding("UTF-8");
+//        response.setContentType("application/json; charset=utf-8");
+//        response.getWriter().println(JSONObject.toJSONString(R.error(50000, "error"+e.getMessage())));
+//    }
 
-    /**
-     * 获取请求的token
-     */
-    private String getRequestToken(HttpServletRequest httpRequest) {
-        //从header中获取token
-        String token = httpRequest.getHeader(AUTHORIZATION_HEADER);
-
-        //如果header中不存在token，则从参数中获取token
-        if (StringUtils.isBlank(token)) {
-            token = httpRequest.getParameter(AUTHORIZATION_HEADER);
-        }
-
-        return token;
-    }
 }
