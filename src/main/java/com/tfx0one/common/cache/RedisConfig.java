@@ -19,14 +19,14 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig extends CachingConfigurerSupport {
 
 
-    @Autowired
-    RedisConnectionFactory redisConnectionFactory;
+//    @Autowired
+//    RedisConnectionFactory redisConnectionFactory;
 
     @Bean(name = "redisTemplate")
     @ConditionalOnMissingBean(name = "redisTemplate")
 //setValueSerializer setHashValueSerializer的序列化 使用默认的jdk， 否则报错
 
-    RedisTemplate<String, Object> objRedisTemplate() {
+    RedisTemplate<String, Object> objRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 
 //        Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);

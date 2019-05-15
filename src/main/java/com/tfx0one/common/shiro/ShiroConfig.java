@@ -39,24 +39,24 @@ public class ShiroConfig {
      * @return
      */
 
-    @Bean
-    public ShiroFilterChainDefinition shiroFilterChainDefinition() {
-        DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
-
-//        // logged in users with the 'admin' role
-//        chainDefinition.addPathDefinition("/admin/**", "authc, roles[admin]");
+//    @Bean
+//    public ShiroFilterChainDefinition shiroFilterChainDefinition() {
+//        DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
 //
-//        // logged in users with the 'document:read' permission
-//        chainDefinition.addPathDefinition("/docs/**", "authc, perms[document:read]");
-
-        // all other paths require a logged in user
-        chainDefinition.addPathDefinition("/**", "anon");
-        return chainDefinition;
-    }
+////        // logged in users with the 'admin' role
+////        chainDefinition.addPathDefinition("/admin/**", "authc, roles[admin]");
+////
+////        // logged in users with the 'document:read' permission
+////        chainDefinition.addPathDefinition("/docs/**", "authc, perms[document:read]");
+//
+//        // all other paths require a logged in user
+//        chainDefinition.addPathDefinition("/**", "anon");
+//        return chainDefinition;
+//    }
 
 
     @Bean("securityManager")
-    public DefaultWebSecurityManager manger(ShiroAuthRealm shiroAuthRealm, ShiroRedisCacheManager cacheManager) {
+    public DefaultWebSecurityManager securityManager(ShiroAuthRealm shiroAuthRealm, ShiroRedisCacheManager cacheManager) {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 
         //缓存
@@ -83,7 +83,7 @@ public class ShiroConfig {
     }
 
     @Bean("shiroFilter")
-    public ShiroFilterFactoryBean factory(DefaultWebSecurityManager securityManager) {
+    public ShiroFilterFactoryBean shirFilter(DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
 
         Map<String, Filter> filterMap = new HashMap<>();
@@ -93,17 +93,19 @@ public class ShiroConfig {
         factoryBean.setSecurityManager(securityManager);
         //自定义URL
         Map<String, String> rule = new HashMap<>();
-        rule.put("/webjars/**", "anon");
-        rule.put("/druid/**", "anon");
-        rule.put("/app/**", "anon");
-        rule.put("/api/sys/auth/login", "anon");
-        rule.put("/swagger/**", "anon");
-        rule.put("/v2/api-docs", "anon");
-        rule.put("/swagger-ui.html", "anon");
-        rule.put("/swagger-resources/**", "anon");
-        rule.put("/captcha.jpg", "anon");
-        rule.put("/aaa.txt", "anon");
-        rule.put("/**", "AuthFilter");
+//        rule.put("/webjars/**", "anon");
+//        rule.put("/druid/**", "anon");
+//        rule.put("/app/**", "anon");
+//        rule.put("/sys/login", "anon");
+//        rule.put("/swagger/**", "anon");
+//        rule.put("/v2/api-docs", "anon");
+//        rule.put("/swagger-ui.html", "anon");
+//        rule.put("/swagger-resources/**", "anon");
+//        rule.put("/captcha.jpg", "anon");
+//        rule.put("/aaa.txt", "anon");
+        rule.put("/api/app/**", "anon");
+        rule.put("/api/sys/login", "anon");
+        rule.put("/api/sys/**", "AuthFilter");
 
 
         factoryBean.setFilterChainDefinitionMap(rule);
@@ -111,7 +113,6 @@ public class ShiroConfig {
         return factoryBean;
     }
 
-    @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }

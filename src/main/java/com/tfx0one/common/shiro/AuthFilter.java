@@ -57,7 +57,8 @@ public class AuthFilter extends AuthenticatingFilter {
             httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
             httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
 
-            String json = JSONObject.toJSONString(R.error(HttpStatus.UNAUTHORIZED.value(), "invalid token"));
+            System.out.println(HttpContextUtils.getDomain());
+            String json = JSONObject.toJSONString(R.error(HttpStatus.UNAUTHORIZED.value(), "invalid token, Access Denied"));
 
             httpResponse.getWriter().print(json);
 

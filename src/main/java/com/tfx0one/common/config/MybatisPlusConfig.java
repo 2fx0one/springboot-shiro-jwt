@@ -1,4 +1,4 @@
-package com.tfx0one.common.config.mybatisplus;
+package com.tfx0one.common.config;
 
 
 import com.baomidou.mybatisplus.core.injector.ISqlInjector;
