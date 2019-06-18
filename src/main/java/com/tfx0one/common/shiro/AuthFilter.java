@@ -24,10 +24,11 @@ import java.io.IOException;
  * @Auth 2fx0one
  * 22/1/2019 21:24
  */
-public class AuthFilter extends BasicHttpAuthenticationFilter {
+public class AuthFilter extends AuthenticatingFilter {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private static String AUTHORIZATION_HEADER = "token";
 
     /**
      * 获取请求的token
@@ -60,25 +61,25 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
      * 判断用户是否想要登入。
      * 检测header里面是否包含Authorization字段即可
      */
-
-    @Override
-    protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        HttpServletRequest req = (HttpServletRequest) request;
-        String authorization = req.getHeader(AUTHORIZATION_HEADER);
-        return authorization != null && !authorization.trim().equals("");
-    }
-
-    @Override
-    protected boolean executeLogin(ServletRequest request, ServletResponse response) {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String authorization = httpServletRequest.getHeader(AUTHORIZATION_HEADER);
-
-        AuthToken token = new AuthToken(authorization);
-        // 提交给realm进行登入，如果错误他会抛出异常并被捕获
-        getSubject(request, response).login(token); //触发 Realm 的 doGetAuthenticationInfo
-        // 如果没有抛出异常则代表登入成功，返回true
-        return true;
-    }
+//
+//    @Override
+//    protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
+//        HttpServletRequest req = (HttpServletRequest) request;
+//        String authorization = req.getHeader(AUTHORIZATION_HEADER);
+//        return authorization != null && !authorization.trim().equals("");
+//    }
+//
+//    @Override
+//    protected boolean executeLogin(ServletRequest request, ServletResponse response) {
+//        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+//        String authorization = httpServletRequest.getHeader(AUTHORIZATION_HEADER);
+//
+//        AuthToken token = new AuthToken(authorization);
+//        // 提交给realm进行登入，如果错误他会抛出异常并被捕获
+//        getSubject(request, response).login(token); //触发 Realm 的 doGetAuthenticationInfo
+//        // 如果没有抛出异常则代表登入成功，返回true
+//        return true;
+//    }
 
 
     /**
@@ -90,86 +91,86 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
      * 如果有些资源只有登入用户才能访问，我们只需要在方法上面加上 @RequiresAuthentication 注解即可
      * 但是这样做有一个缺点，就是不能够对GET,POST等请求进行分别过滤鉴权(因为我们重写了官方的方法)，但实际上对应用影响不大
      */
-    @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        if (isLoginAttempt(request, response)) { //判断用户是否想要登入。 检测header里面是否包含Authorization字段即可
-            try {
-                return executeLogin(request, response);
-            } catch (Exception e) {
-                logger.error(e.getMessage(), e);
-            }
-        }
-        return true;
-    }
 //    @Override
 //    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-//        if (((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())) {
-//            return true;
+//        if (isLoginAttempt(request, response)) { //判断用户是否想要登入。 检测header里面是否包含Authorization字段即可
+//            try {
+//                return executeLogin(request, response);
+//            } catch (Exception e) {
+//                logger.error(e.getMessage(), e);
+//            }
 //        }
-//
 //        return true;
 //    }
+    @Override
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        if (((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())) {
+            return true;
+        }
 
-//    @Override
-//    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-//        //获取请求token，如果token不存在，直接返回401
-//        String token = getRequestToken((HttpServletRequest) request);
-//        if (StringUtils.isBlank(token)) {
-//            HttpServletResponse httpResponse = (HttpServletResponse) response;
-//            httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-//            httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
-//
-//            String json = JSONObject.toJSONString(R.error(HttpStatus.UNAUTHORIZED.value(), "invalid token, Access Denied"));
-//
-//            httpResponse.getWriter().print(json);
-//
-//            return true;
-//        }
-//
-//        return executeLogin(request, response);
-//    }
+        return true;
+    }
 
-//    @Override
-//    protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
-//        HttpServletResponse httpResponse = (HttpServletResponse) response;
-//        httpResponse.setContentType("application/json;charset=utf-8");
-//        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-//        httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
-//        try {
-//            //处理登录失败的异常
-//            Throwable throwable = e.getCause() == null ? e : e.getCause();
-//            R r = R.error(HttpStatus.UNAUTHORIZED.value(), "LoginFailure" + throwable.getMessage());
-//
-//            String json = JSONObject.toJSONString(r);
-//            httpResponse.getWriter().print(json);
-//        } catch (IOException e1) {
-//            e1.printStackTrace();
-//
-//        }
-//
-//        return false;
-//    }
+    @Override
+    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+        //获取请求token，如果token不存在，直接返回401
+        String token = getRequestToken((HttpServletRequest) request);
+        if (StringUtils.isBlank(token)) {
+            HttpServletResponse httpResponse = (HttpServletResponse) response;
+            httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
+            httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
+
+            String json = JSONObject.toJSONString(R.error(HttpStatus.UNAUTHORIZED.value(), "invalid token, Access Denied"));
+
+            httpResponse.getWriter().print(json);
+
+            return true;
+        }
+
+        return executeLogin(request, response);
+    }
+
+    @Override
+    protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        httpResponse.setContentType("application/json;charset=utf-8");
+        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
+        httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
+        try {
+            //处理登录失败的异常
+            Throwable throwable = e.getCause() == null ? e : e.getCause();
+            R r = R.error(HttpStatus.UNAUTHORIZED.value(), "LoginFailure" + throwable.getMessage());
+
+            String json = JSONObject.toJSONString(r);
+            httpResponse.getWriter().print(json);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+
+        }
+
+        return false;
+    }
 
     //执行流程preHandle->isAccessAllowed->isLoginAttempt->executeLogin
-    @Override
-    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
-        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
-        // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
-        if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
-            httpServletResponse.setStatus(HttpStatus.OK.value());
-            return false;
-        }
-        try {
-            return super.preHandle(request, response);
-        } catch (AuthenticationException e) {
-            logger.error(e.getMessage(), e);
-            return false;
-        }
-    }
+//    @Override
+//    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+//        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+//        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+//        httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
+//        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
+//        httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
+//        // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
+//        if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
+//            httpServletResponse.setStatus(HttpStatus.OK.value());
+//            return false;
+//        }
+//        try {
+//            return super.preHandle(request, response);
+//        } catch (AuthenticationException e) {
+//            logger.error(e.getMessage(), e);
+//            return false;
+//        }
+//    }
 
 //    private void errorStrWriteToResponse(HttpServletResponse response, AuthenticationException e) throws IOException {
 //        response.setCharacterEncoding("UTF-8");

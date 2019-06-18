@@ -96,16 +96,16 @@ public class ShiroConfig {
         factoryBean.setSecurityManager(securityManager);
         //自定义URL
         Map<String, String> rule = new HashMap<>();
-//        rule.put("/webjars/**", "anon");
-//        rule.put("/druid/**", "anon");
-//        rule.put("/app/**", "anon");
-//        rule.put("/sys/login", "anon");
-//        rule.put("/swagger/**", "anon");
-//        rule.put("/v2/api-docs", "anon");
-//        rule.put("/swagger-ui.html", "anon");
-//        rule.put("/swagger-resources/**", "anon");
-//        rule.put("/captcha.jpg", "anon");
-//        rule.put("/aaa.txt", "anon");
+        rule.put("/webjars/**", "anon");
+        rule.put("/druid/**", "anon");
+        rule.put("/app/**", "anon");
+        rule.put("/sys/login", "anon");
+        rule.put("/swagger/**", "anon");
+        rule.put("/v2/api-docs", "anon");
+        rule.put("/swagger-ui.html", "anon");
+        rule.put("/swagger-resources/**", "anon");
+        rule.put("/captcha.jpg", "anon");
+        rule.put("/aaa.txt", "anon");
         rule.put("/api/app/**", "anon");
         rule.put("/api/sys/login", "anon");
         rule.put("/**", "AuthFilter");
