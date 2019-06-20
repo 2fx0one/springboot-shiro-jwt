@@ -45,20 +45,6 @@ public class ShiroConfig {
 //        return cacheManager;
 //    }
 
-    @Bean
-    public ShiroFilterChainDefinition shiroFilterChainDefinition() {
-        DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
-
-//        // logged in users with the 'admin' role
-//        chainDefinition.addPathDefinition("/admin/**", "authc, roles[admin]");
-//
-//        // logged in users with the 'document:read' permission
-//        chainDefinition.addPathDefinition("/docs/**", "authc, perms[document:read]");
-
-        // all other paths require a logged in user
-        chainDefinition.addPathDefinition("/**", "anon");
-        return chainDefinition;
-    }
     @Bean("securityManager")
     public DefaultWebSecurityManager securityManager(ShiroAuthRealm shiroAuthRealm, ShiroRedisCacheManager cacheManager) {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
@@ -106,8 +92,8 @@ public class ShiroConfig {
 //        rule.put("/swagger-resources/**", "anon");
 //        rule.put("/captcha.jpg", "anon");
 //        rule.put("/aaa.txt", "anon");
-        rule.put("/api/app/**", "anon");
-        rule.put("/api/sys/login", "anon");
+//        rule.put("/api/app/**", "anon");
+//        rule.put("/api/sys/login", "anon");
         rule.put("/**", "AuthFilter");
 
 

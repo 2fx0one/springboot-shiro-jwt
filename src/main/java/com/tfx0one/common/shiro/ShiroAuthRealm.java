@@ -45,6 +45,7 @@ public class ShiroAuthRealm extends AuthorizingRealm {
     }
 
     /**
+     * https://www.xncoding.com/2017/07/09/spring/sb-jwt.html
      * 认证信息(身份验证)
      * Authentication 是用来验证用户身份
      * <p>

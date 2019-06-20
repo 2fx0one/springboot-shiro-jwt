@@ -57,6 +57,9 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
     }
 
     //执行流程preHandle->isAccessAllowed->isLoginAttempt->executeLogin
+    /**
+     * 1. preHandle
+     **/
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
@@ -78,6 +81,7 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
     }
 
     /**
+     * 2. isAccessAllowed
      * 这里我们详细说明下为什么最终返回的都是true，即允许访问
      * 例如我们提供一个地址 GET /article
      * 登入用户和游客看到的内容是不同的
@@ -86,6 +90,8 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
      * 如果有些资源只有登入用户才能访问，我们只需要在方法上面加上 @RequiresAuthentication 注解即可
      * 但是这样做有一个缺点，就是不能够对GET,POST等请求进行分别过滤鉴权(因为我们重写了官方的方法)，但实际上对应用影响不大
      * 这里需要注意一点就是 RequiresAuthentication 必须放在方法上面注解。实际使用中使用 RequiresPermissions 也是可以的。
+     *
+     * 注意 RequiresAuthentication 必须放在方法注解上。不要放在类上。类上无效！
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
@@ -100,6 +106,7 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
     }
 
     /**
+     * 3. isLoginAttempt
      * 判断用户是否想要登入 shiro。
      * 检测header里面是否包含Authorization字段即可
      */
@@ -107,9 +114,13 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String authorization = this.getRequestToken(httpServletRequest);
-        return authorization != null && !authorization.trim().equals("");
+        return StringUtils.isNotBlank(authorization);
     }
 
+    /**
+     * 4. isLoginAttempt
+     * 重写登录。不希望触发 onLoginSuccess onLoginFailure 统一由 Realm 的 doGetAuthenticationInfo 来触发异常
+     **/
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
@@ -171,6 +182,7 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
 //
 //        return false;
 //    }
+
 
 
 

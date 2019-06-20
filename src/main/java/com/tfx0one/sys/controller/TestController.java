@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequiresAuthentication
 @RequestMapping("/api/sys/test")
 public class TestController extends BaseController {
 
@@ -38,13 +37,14 @@ public class TestController extends BaseController {
     @GetMapping("/a")
     public R a() {
 //        menuService.updateById(new Menu().setId("15").setDelFlag("1"));
-        menuService.update(new LambdaUpdateWrapper<Menu>().set(Menu::getDelFlag, "0").eq(Menu::getId, "15"));
+//        menuService.update(new LambdaUpdateWrapper<Menu>().set(Menu::getDelFlag, "0").eq(Menu::getId, "15"));
         return R.ok("aaa");
     }
 
     @GetMapping("/b")
+    @RequiresAuthentication
     public R b() {
-        menuService.save(new Menu().setComponent("a").setParentId("0").setParentIds("1").setName("a").setSort(1));
+//        menuService.save(new Menu().setComponent("a").setParentId("0").setParentIds("1").setName("a").setSort(1));
         return R.ok("bbb");
     }
 
