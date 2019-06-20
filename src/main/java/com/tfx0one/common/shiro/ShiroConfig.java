@@ -92,7 +92,7 @@ public class ShiroConfig {
 //        rule.put("/swagger-resources/**", "anon");
 //        rule.put("/captcha.jpg", "anon");
 //        rule.put("/aaa.txt", "anon");
-//        rule.put("/api/app/**", "anon");
+        rule.put("/api/app/**", "anon");
 //        rule.put("/api/sys/login", "anon");
         rule.put("/**", "AuthFilter");
 

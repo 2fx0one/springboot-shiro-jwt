@@ -1,14 +1,9 @@
 package com.tfx0one.sys.vo.response;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import com.tfx0one.sys.entity.Menu;
+import com.tfx0one.sys.entity.SysMenu;
 import io.swagger.annotations.ApiModel;
-import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import java.math.BigDecimal;
 
 /**
  * @projectName: springboot-shiro-jwt
@@ -30,7 +25,7 @@ public class ApiRoute {
     private Boolean hidden;
 //    private List<ApiRoute> children = new ArrayList<>();
 
-    public static ApiRoute create(Menu menu) {
+    public static ApiRoute create(SysMenu menu) {
         return new ApiRoute()
                 .setId(menu.getId())
                 .setParentId(menu.getParentId())

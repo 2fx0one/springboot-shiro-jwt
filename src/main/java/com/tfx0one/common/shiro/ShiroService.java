@@ -1,9 +1,7 @@
 package com.tfx0one.common.shiro;
 
 import com.tfx0one.common.constant.GlobalConstant;
-import com.tfx0one.sys.entity.Menu;
-import com.tfx0one.sys.entity.Role;
-import com.tfx0one.sys.entity.User;
+import com.tfx0one.sys.entity.SysUser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +38,7 @@ public class ShiroService {
      * 根据用户ID，查询用户
      * @param userId
      */
-    User queryUser(Long userId){
+    SysUser getUserByLoginName(String username){
         return null;
     }
 }

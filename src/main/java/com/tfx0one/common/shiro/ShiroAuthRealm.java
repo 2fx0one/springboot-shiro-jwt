@@ -3,11 +3,11 @@ package com.tfx0one.common.shiro;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.utils.JWTUtils;
-import com.tfx0one.sys.entity.Menu;
-import com.tfx0one.sys.entity.Role;
-import com.tfx0one.sys.entity.User;
-import com.tfx0one.sys.service.RoleService;
-import com.tfx0one.sys.service.UserService;
+import com.tfx0one.sys.entity.SysMenu;
+import com.tfx0one.sys.entity.SysRole;
+import com.tfx0one.sys.entity.SysUser;
+import com.tfx0one.sys.service.SysRoleService;
+import com.tfx0one.sys.service.SysUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -35,9 +35,9 @@ public class ShiroAuthRealm extends AuthorizingRealm {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private UserService userService;
+    private SysUserService userService;
     @Autowired
-    private RoleService roleService;
+    private SysRoleService roleService;
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -45,7 +45,9 @@ public class ShiroAuthRealm extends AuthorizingRealm {
     }
 
     /**
+     * 参考
      * https://www.xncoding.com/2017/07/09/spring/sb-jwt.html
+     * https://juejin.im/post/59f1b2766fb9a0450e755993
      * 认证信息(身份验证)
      * Authentication 是用来验证用户身份
      * <p>
@@ -65,13 +67,14 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         String jwtToken = (String) authenticationToken.getCredentials();
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtils.getUsername(jwtToken);
+        String userId = JWTUtils.getUserId(jwtToken);
         if (username == null) {
 //            只能抛出 AuthenticationException
 //            throw new CommonException(TOKEN_INVALID);
             throw new UnauthenticatedException("[用户不存在] token invalid");
         }
 
-        User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getLoginName, username));
+        SysUser user = userService.getOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getLoginName, username));
         if (user == null) {
 //            throw new CommonException(TOKEN_INVALID);
             throw new UnauthenticatedException("[用户不存在] User didn't existed!");
@@ -85,9 +88,9 @@ public class ShiroAuthRealm extends AuthorizingRealm {
 
 
         //角色 菜单 也准备好 留给 接下来的 AUTHZ 阶段使用
-        List<Role> roleList = roleService.listByUserId(user);
-        List<Menu> userAllMenuList = roleList.stream()
-                .map(Role::getMenuList).flatMap(Collection::stream).distinct().collect(Collectors.toList());
+        List<SysRole> roleList = roleService.listByUserId(user);
+        List<SysMenu> userAllMenuList = roleList.stream()
+                .map(SysRole::getMenuList).flatMap(Collection::stream).distinct().collect(Collectors.toList());
 
         //都绑定到角色上
         user.setRoleList(roleList);
@@ -134,17 +137,17 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 
 
-        User user = (User) principals.getPrimaryPrincipal();
-        List<Role> roleList = user.getRoleList();
+        SysUser user = (SysUser) principals.getPrimaryPrincipal();
+        List<SysRole> roleList = user.getRoleList();
 
         //角色字符串
-        List<String> roles = roleList.stream().map(Role::getRoleType).collect(Collectors.toList());
+        List<String> roles = roleList.stream().map(SysRole::getRoleType).collect(Collectors.toList());
         simpleAuthorizationInfo.addRoles(roles);
 
         //权限字符串
         Set<String> permissions = user.getMenuList().stream()
 //                .map(Role::getMenuList).flatMap(Collection::stream)
-                .map(Menu::getPermission).filter(StringUtils::isNotEmpty) //过滤空
+                .map(SysMenu::getPermission).filter(StringUtils::isNotEmpty) //过滤空
                 .flatMap(s -> Arrays.stream(s.split(GlobalConstant.SPLIT_DELIMETER)))
 //                .sorted()
                 .collect(Collectors.toSet());
@@ -156,14 +159,14 @@ public class ShiroAuthRealm extends AuthorizingRealm {
     // AUTH_C 权限缓存 key 使用jwtToken 在logout时，需要 doClearCache 清除身份认证的缓存。但是默认的Key是principal 但是登录的时候缓存的Key是 jwtToken
     @Override
     protected Object getAuthenticationCacheKey(PrincipalCollection principals) {
-        return ((User) principals.getPrimaryPrincipal()).getJwtToken();
+        return ((SysUser) principals.getPrimaryPrincipal()).getJwtToken();
 //        return getAvailablePrincipal(principals);
     }
 
     // AUTH_Z 权限缓存 key 使用jwtToken
     @Override
     protected Object getAuthorizationCacheKey(PrincipalCollection principals) {
-        return ((User) principals.getPrimaryPrincipal()).getJwtToken();
+        return ((SysUser) principals.getPrimaryPrincipal()).getJwtToken();
     }
 
     //方便外部调用 获取该用户的权限

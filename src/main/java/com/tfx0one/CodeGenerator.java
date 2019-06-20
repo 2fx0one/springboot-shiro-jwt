@@ -40,9 +40,9 @@ public class CodeGenerator {
 
         String packageRoot = "com.tfx0one";
         String moduleName = "sys";
-        String tablePrefix = "sysx_";
-//        String[] tables = {"sys_user", "sys_role", "sys_dict", "sys_area","sys_office", "sys_menu", "sys_log"};
-        String[] tables = {"sys_log"};
+        String tablePrefix = "";
+        String[] tables = {"sys_user", "sys_role", "sys_dict", "sys_area","sys_office", "sys_menu", "sys_log"};
+//        String[] tables = {"sys_log"};
 
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();

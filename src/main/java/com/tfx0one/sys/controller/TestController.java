@@ -1,17 +1,12 @@
 package com.tfx0one.sys.controller;
 
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.tfx0one.common.api.R;
 import com.tfx0one.common.base.BaseController;
-import com.tfx0one.common.exception.CommonException;
 import com.tfx0one.common.utils.ShiroUtils;
-import com.tfx0one.sys.entity.Menu;
-import com.tfx0one.sys.entity.User;
-import com.tfx0one.sys.service.MenuService;
+import com.tfx0one.sys.entity.SysUser;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,8 +26,8 @@ public class TestController extends BaseController {
 //    private CacheManager cacheManager;
 //    private EhCacheManager ehCacheManager;
 
-    @Autowired
-    private MenuService menuService;
+//    @Autowired
+//    private MenuService menuService;
 
     @GetMapping("/a")
     public R a() {
@@ -72,7 +67,7 @@ public class TestController extends BaseController {
 
     @GetMapping("/y")
     public R y() {
-        User currentUser = ShiroUtils.getCurrentUser();
+        SysUser currentUser = ShiroUtils.getCurrentSysUser();
         System.out.println("currentUser = " + currentUser);
         return R.ok("yyyy");
     }
@@ -82,6 +77,5 @@ public class TestController extends BaseController {
     public R z() {
         return R.ok("zzz");
     }
-
 
 }

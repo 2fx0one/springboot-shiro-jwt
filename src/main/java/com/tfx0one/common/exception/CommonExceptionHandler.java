@@ -35,33 +35,33 @@ public class CommonExceptionHandler {
     @ExceptionHandler(UnauthenticatedException.class)
     public R handleUnauthenticatedException(UnauthenticatedException e) {
 //        logger.error(e.getMessage(), e);
-        return R.error(HttpStatus.FORBIDDEN.value(), "身份未认证："+ e.getMessage());
+        return R.error(HttpStatus.FORBIDDEN.value(), "身份未认证：" + e.getMessage());
     }
 
     //用户权限不足
     @ExceptionHandler(AuthorizationException.class)
     public R handleUnauthorizedException(AuthorizationException e) {
 //        logger.error(e.getMessage(), e);
-        return R.error(HttpStatus.UNAUTHORIZED.value(), "没有权限，请联系管理员授权");
+        return R.error(HttpStatus.UNAUTHORIZED.value(), "没有权限，请联系管理员授权" + e.getMessage());
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public R handlerNoFoundException(Exception e) {
         logger.error(e.getMessage(), e);
-        return R.error(HttpStatus.NOT_FOUND.value(), "路径不存在，请检查路径是否正确");
+        return R.error(HttpStatus.NOT_FOUND.value(), "路径不存在，请检查路径是否正确" + e.getMessage());
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
     public R handleDuplicateKeyException(DuplicateKeyException e) {
         logger.error(e.getMessage(), e);
-        return R.error("数据库中已存在该记录");
+        return R.error("数据库中已存在该记录" + e.getMessage());
     }
 
     // 捕捉控制器的其他所有异常
     @ExceptionHandler({Exception.class})
     public R globalException(Exception e) {
         logger.error(e.getMessage(), e);
-        return R.error();
+        return R.error("系统错误！ " + e.getMessage());
     }
 
 }

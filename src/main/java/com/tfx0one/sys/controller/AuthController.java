@@ -5,8 +5,8 @@ import com.tfx0one.common.api.R;
 import com.tfx0one.common.exception.CommonException;
 import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.common.utils.ShiroUtils;
-import com.tfx0one.sys.entity.User;
-import com.tfx0one.sys.service.UserService;
+import com.tfx0one.sys.entity.SysUser;
+import com.tfx0one.sys.service.SysUserService;
 import com.tfx0one.sys.vo.request.ApiLoginUser;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @Autowired
-    private UserService userService;
+    private SysUserService userService;
 
     @PostMapping("/login")
     public R login(@RequestBody ApiLoginUser login) {
-        User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getLoginName, login.getUsername()));
+        SysUser user = userService.getOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getLoginName, login.getUsername()));
         if (user == null) {
             throw new CommonException("用户不存在！");
         }

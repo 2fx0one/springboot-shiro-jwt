@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfx0one.sys.mapper.SysRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tfx0one.sys.entity.SysRole">
+        <id column="id" property="id" />
+        <result column="office_id" property="officeId" />
+        <result column="name" property="name" />
+        <result column="enname" property="enname" />
+        <result column="role_type" property="roleType" />
+        <result column="data_scope" property="dataScope" />
+        <result column="is_sys" property="isSys" />
+        <result column="useable" property="useable" />
+        <result column="create_by" property="createBy" />
+        <result column="create_date" property="createDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="remarks" property="remarks" />
+        <result column="del_flag" property="delFlag" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, office_id, name, enname, role_type, data_scope, is_sys, useable, create_by, create_date, update_by, update_date, remarks, del_flag
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="baseSql">
+      SELECT
+        role.id AS role_id,
+        role.create_by AS role_create_by,
+        role.create_date AS role_create_date,
+        role.update_by AS role_update_by,
+        role.update_date AS role_update_date,
+        role.remarks AS role_remarks,
+        role.del_flag AS role_del_flag,
+        role.office_id AS role_office_id,
+        role.name AS role_name,
+        role.enname AS role_enname,
+        role.role_type AS role_role_type,
+        role.data_scope AS role_data_scope,
+        role.is_sys AS role_is_sys,
+        role.useable AS role_useable,
+
+        menu.id AS menu_id,
+        menu.parent_id AS menu_parent_id,
+        menu.parent_ids AS menu_parent_ids,
+        menu.name AS menu_name,
+        menu.sort AS menu_sort,
+        menu.href AS menu_href,
+        menu.path AS menu_path,
+        menu.component AS menu_component,
+        menu.icon AS menu_icon,
+        menu.hidden AS menu_hidden,
+        menu.permission AS menu_permission,
+        menu.create_by AS menu_create_by,
+        menu.create_date AS menu_create_date,
+        menu.update_by AS menu_update_by,
+        menu.update_date AS menu_update_date,
+        menu.remarks AS menu_remarks,
+        menu.del_flag AS menu_del_flag
+      FROM
+        sys_role role
+        INNER JOIN sys_user_role ur ON ur.role_id = role.id
+        LEFT JOIN sys_role_menu rm ON role.id = rm.role_id
+        LEFT JOIN sys_menu menu ON rm.menu_id = menu.id
+    </sql>
+
+
+
+    <select id="listByUserId" resultMap="BaseResultMap">
+        <include refid="baseSql"/>
+        WHERE
+        ur.user_id = #{id}
+    </select>
+
+</mapper>

@@ -1,11 +1,10 @@
 package com.tfx0one.sys.vo.response;
 
-import com.tfx0one.sys.entity.User;
+import com.tfx0one.sys.entity.SysUser;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.AuthorizationInfo;
 
 import java.util.Collection;
@@ -32,7 +31,7 @@ public class ApiUserInfo {
     @ApiModelProperty(name = "权限列表", position = 5)
     private Collection<String> permissionList;
 
-    public static ApiUserInfo create(User user, AuthorizationInfo info) {
+    public static ApiUserInfo create(SysUser user, AuthorizationInfo info) {
 
         //路由数据
         List<ApiRoute> routers = user.getMenuList().stream()
