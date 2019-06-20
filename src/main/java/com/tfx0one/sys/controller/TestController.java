@@ -6,6 +6,7 @@ import com.tfx0one.common.base.BaseController;
 import com.tfx0one.common.exception.CommonException;
 import com.tfx0one.common.utils.ShiroUtils;
 import com.tfx0one.sys.entity.Menu;
+import com.tfx0one.sys.entity.User;
 import com.tfx0one.sys.service.MenuService;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -67,6 +68,13 @@ public class TestController extends BaseController {
     @RequiresPermissions({"sys:dict:view"})
     public R d() {
         return R.ok("ddd");
+    }
+
+    @GetMapping("/y")
+    public R y() {
+        User currentUser = ShiroUtils.getCurrentUser();
+        System.out.println("currentUser = " + currentUser);
+        return R.ok("yyyy");
     }
 
     @GetMapping("/z")

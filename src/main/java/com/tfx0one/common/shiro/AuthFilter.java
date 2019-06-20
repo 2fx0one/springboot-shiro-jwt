@@ -56,30 +56,26 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
         return new AuthToken(token);
     }
 
-    /**
-     * 判断用户是否想要登入。
-     * 检测header里面是否包含Authorization字段即可
-     */
-
+    //执行流程preHandle->isAccessAllowed->isLoginAttempt->executeLogin
     @Override
-    protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        HttpServletRequest req = (HttpServletRequest) request;
-        String authorization = req.getHeader(AUTHORIZATION_HEADER);
-        return authorization != null && !authorization.trim().equals("");
-    }
-
-    @Override
-    protected boolean executeLogin(ServletRequest request, ServletResponse response) {
+    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String authorization = httpServletRequest.getHeader(AUTHORIZATION_HEADER);
-
-        AuthToken token = new AuthToken(authorization);
-        // 提交给realm进行登入，如果错误他会抛出异常并被捕获
-        getSubject(request, response).login(token); //触发 Realm 的 doGetAuthenticationInfo
-        // 如果没有抛出异常则代表登入成功，返回true
-        return true;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
+        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
+        // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
+        if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
+            httpServletResponse.setStatus(HttpStatus.OK.value());
+            return false;
+        }
+        try {
+            return super.preHandle(request, response);
+        } catch (AuthenticationException e) {
+            logger.error(e.getMessage(), e);
+            return false;
+        }
     }
-
 
     /**
      * 这里我们详细说明下为什么最终返回的都是true，即允许访问
@@ -89,6 +85,7 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
      * 所以我们在这里返回true，Controller中可以通过 subject.isAuthenticated() 来判断用户是否登入
      * 如果有些资源只有登入用户才能访问，我们只需要在方法上面加上 @RequiresAuthentication 注解即可
      * 但是这样做有一个缺点，就是不能够对GET,POST等请求进行分别过滤鉴权(因为我们重写了官方的方法)，但实际上对应用影响不大
+     * 这里需要注意一点就是 RequiresAuthentication 必须放在方法上面注解。实际使用中使用 RequiresPermissions 也是可以的。
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
@@ -99,8 +96,33 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
                 logger.error(e.getMessage(), e);
             }
         }
+        return true; //返回true， 让 controller 可以接收到。如果有些资源只有登入用户才能访问，我们只需要在方法上面加上 @RequiresAuthentication 注解即可
+    }
+
+    /**
+     * 判断用户是否想要登入 shiro。
+     * 检测header里面是否包含Authorization字段即可
+     */
+    @Override
+    protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        String authorization = this.getRequestToken(httpServletRequest);
+        return authorization != null && !authorization.trim().equals("");
+    }
+
+    @Override
+    protected boolean executeLogin(ServletRequest request, ServletResponse response) {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        String authorization = this.getRequestToken(httpServletRequest);
+        AuthToken token = new AuthToken(authorization);
+        // 提交给realm进行登入，如果错误他会抛出异常并被捕获
+        getSubject(request, response).login(token); //触发 Realm 的 doGetAuthenticationInfo
+        // 如果没有抛出异常则代表登入成功，返回true
         return true;
     }
+
+
+
 //    @Override
 //    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
 //        if (((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())) {
@@ -150,26 +172,7 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
 //        return false;
 //    }
 
-    //执行流程preHandle->isAccessAllowed->isLoginAttempt->executeLogin
-    @Override
-    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
-        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
-        // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
-        if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
-            httpServletResponse.setStatus(HttpStatus.OK.value());
-            return false;
-        }
-        try {
-            return super.preHandle(request, response);
-        } catch (AuthenticationException e) {
-            logger.error(e.getMessage(), e);
-            return false;
-        }
-    }
+
 
 //    private void errorStrWriteToResponse(HttpServletResponse response, AuthenticationException e) throws IOException {
 //        response.setCharacterEncoding("UTF-8");
