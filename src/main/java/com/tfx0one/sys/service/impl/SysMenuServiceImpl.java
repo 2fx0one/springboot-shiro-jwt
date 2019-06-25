@@ -93,7 +93,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
      * 递归
      */
     private List<SysMenuEntity> getMenuTreeList(List<SysMenuEntity> menuList, List<Long> menuIdList) {
-        List<SysMenuEntity> subMenuList = new ArrayList<SysMenuEntity>();
+        List<SysMenuEntity> subMenuList = new ArrayList<>();
 
         for (SysMenuEntity entity : menuList) {
             //目录

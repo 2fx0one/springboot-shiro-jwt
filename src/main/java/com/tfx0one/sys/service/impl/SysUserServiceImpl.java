@@ -8,6 +8,7 @@
 
 package com.tfx0one.sys.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -52,9 +53,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
 
         IPage<SysUserEntity> page = this.page(
                 new QueryPage<SysUserEntity>().getPage(params),
-                new QueryWrapper<SysUserEntity>()
-                        .like(StringUtils.isNotBlank(username), "username", username)
-                        .eq(createUserId != null, "create_user_id", createUserId)
+                new LambdaQueryWrapper<SysUserEntity>()
+                        .like(StringUtils.isNotBlank(username), SysUserEntity::getUsername, username)
+                        .eq(createUserId != null, SysUserEntity::getCreateUserId, createUserId)
         );
 
         return new Pagination(page);

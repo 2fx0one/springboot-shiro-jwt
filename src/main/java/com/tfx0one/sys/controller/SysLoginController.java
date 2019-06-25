@@ -63,6 +63,7 @@ public class SysLoginController extends AbstractController {
 	@PostMapping("/sys/login")
 	public R login(@RequestBody SysLoginForm form)  {
 		ValidatorUtils.validateEntity(form);
+
 		//暂时不要验证码
 //		boolean captcha = sysCaptchaService.validate(form.getUuid(), form.getCaptcha());
 //		if(!captcha){
