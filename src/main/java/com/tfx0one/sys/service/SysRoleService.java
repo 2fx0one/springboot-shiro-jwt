@@ -1,20 +1,39 @@
+/**
+ * Copyright (c) 2016-2019 人人开源 All rights reserved.
+ * <p>
+ * https://www.renren.io
+ * <p>
+ * 版权所有，侵权必究！
+ */
+
 package com.tfx0one.sys.service;
 
-import com.tfx0one.sys.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.tfx0one.sys.entity.SysUser;
+import com.tfx0one.common.utils.Pagination;
+import com.tfx0one.sys.entity.SysRoleEntity;
 
 import java.util.List;
+import java.util.Map;
+
 
 /**
- * <p>
- * 角色表 服务类
- * </p>
+ * 角色
  *
- * @author 2fx0one
- * @since 2019-06-20
+ * @author Mark sunlightcs@gmail.com
  */
-public interface SysRoleService extends IService<SysRole> {
+public interface SysRoleService extends IService<SysRoleEntity> {
 
-    List<SysRole> listByUserId(SysUser user);
+    Pagination queryPage(Map<String, Object> params);
+
+    void saveRole(SysRoleEntity role);
+
+    void update(SysRoleEntity role);
+
+    void deleteBatch(Long[] roleIds);
+
+
+    /**
+     * 查询用户创建的角色ID列表
+     */
+    List<Long> queryRoleIdList(Long createUserId);
 }

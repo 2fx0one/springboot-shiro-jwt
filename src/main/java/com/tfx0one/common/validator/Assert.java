@@ -14,14 +14,22 @@ import org.apache.commons.lang3.StringUtils;
 
 public abstract class Assert {
 
-    public static void isBlank(String str, String message) {
+    public static void isNotBlank(String str, String message) {
         if (StringUtils.isBlank(str)) {
             throw new CommonException(message);
         }
     }
 
-    public static void isNull(Object object, String message) {
+
+    public static void isNotNull(Object object, String message) {
         if (object == null) {
+            throw new CommonException(message);
+        }
+    }
+
+
+    public static void isFalse(boolean b, String message) {
+        if (b) {
             throw new CommonException(message);
         }
     }

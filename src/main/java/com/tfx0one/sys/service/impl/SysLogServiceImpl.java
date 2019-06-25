@@ -1,20 +1,31 @@
 package com.tfx0one.sys.service.impl;
 
-import com.tfx0one.sys.entity.SysLog;
-import com.tfx0one.sys.mapper.SysLogMapper;
-import com.tfx0one.sys.service.SysLogService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tfx0one.common.utils.Pagination;
+import com.tfx0one.common.utils.QueryPage;
+import com.tfx0one.sys.dao.SysLogDao;
+import com.tfx0one.sys.entity.SysLogEntity;
+import com.tfx0one.sys.service.SysLogService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-/**
- * <p>
- * 日志表 服务实现类
- * </p>
- *
- * @author 2fx0one
- * @since 2019-05-15
- */
-@Service
-public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements SysLogService {
+import java.util.Map;
 
+
+@Service("sysLogService")
+public class SysLogServiceImpl extends ServiceImpl<SysLogDao, SysLogEntity> implements SysLogService {
+
+    @Override
+    public Pagination queryPage(Map<String, Object> params) {
+        String key = (String)params.get("key");
+
+        IPage<SysLogEntity> page = this.page(
+            new QueryPage<SysLogEntity>().getPage(params),
+            new QueryWrapper<SysLogEntity>().like(StringUtils.isNotBlank(key),"username", key)
+        );
+
+        return new Pagination(page);
+    }
 }

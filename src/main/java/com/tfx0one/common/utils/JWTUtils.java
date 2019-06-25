@@ -7,7 +7,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.tfx0one.common.constant.GlobalConstant;
-import com.tfx0one.sys.entity.SysUser;
+import com.tfx0one.sys.entity.SysUserEntity;
 
 import java.util.Date;
 
@@ -63,13 +63,13 @@ public class JWTUtils {
      * @param user 用户
      * @return 加密的token
      */
-    public static String sign(SysUser user) {
+    public static String sign(SysUserEntity user) {
         Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME_IN_SECOND * 1000);
         Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
         // 附带username信息
         return JWT.create()
-                .withSubject(user.getId())
-                .withClaim("username", user.getLoginName())
+                .withSubject(user.getUserId().toString())
+                .withClaim("username", user.getUsername())
                 .withExpiresAt(date)
                 .sign(algorithm);
     }

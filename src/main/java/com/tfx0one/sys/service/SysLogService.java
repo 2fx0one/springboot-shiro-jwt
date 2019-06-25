@@ -1,16 +1,20 @@
 package com.tfx0one.sys.service;
 
-import com.tfx0one.sys.entity.SysLog;
+
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.tfx0one.common.utils.Pagination;
+import com.tfx0one.sys.entity.SysLogEntity;
+
+import java.util.Map;
+
 
 /**
- * <p>
- * 日志表 服务类
- * </p>
+ * 系统日志
  *
- * @author 2fx0one
- * @since 2019-05-15
+ * @author Mark sunlightcs@gmail.com
  */
-public interface SysLogService extends IService<SysLog> {
+public interface SysLogService extends IService<SysLogEntity> {
+
+    Pagination queryPage(Map<String, Object> params);
 
 }

@@ -1,8 +1,7 @@
 package com.tfx0one.common.base;
 
 import com.tfx0one.common.utils.ShiroUtils;
-import com.tfx0one.sys.entity.SysUser;
-import org.apache.shiro.SecurityUtils;
+import com.tfx0one.sys.entity.SysUserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,7 @@ public class BaseController {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected SysUser getUser() {
+    protected SysUserEntity getUser() {
         return ShiroUtils.getCurrentSysUser();
     }
 }

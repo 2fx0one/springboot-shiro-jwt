@@ -19,7 +19,7 @@ import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.shiro.ShiroAuthRealm;
 import com.tfx0one.common.shiro.ShiroConfig;
 import com.tfx0one.common.shiro.ShiroRedisCacheManager;
-import com.tfx0one.sys.entity.SysUser;
+import com.tfx0one.sys.entity.SysUserEntity;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -72,9 +72,9 @@ public class ShiroUtils {
         return shiroAuthRealm.getAuthorizationInfo(getSubject().getPrincipals());
     }
 
-    public static SysUser getCurrentSysUser() {
+    public static SysUserEntity getCurrentSysUser() {
         if (isUser()) {
-            return (SysUser) getSubject().getPrincipal();
+            return (SysUserEntity) getSubject().getPrincipal();
         } else {
             throw new AuthenticationException("不是认证用户！");
         }
@@ -230,4 +230,7 @@ public class ShiroUtils {
         return "";
     }
 
+    public static void logout() {
+        getSubject().logout();
+    }
 }

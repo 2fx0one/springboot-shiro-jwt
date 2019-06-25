@@ -18,7 +18,6 @@ import com.tfx0one.app.service.UserService;
 
 import com.tfx0one.common.validator.Assert;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 
 
 @Service("userService")
@@ -32,7 +31,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
     @Override
     public long login(LoginForm form) {
         UserEntity user = queryByMobile(form.getMobile());
-        Assert.isNull(user, "手机号或密码错误");
+        Assert.isNotNull(user, "手机号或密码错误");
 
         //密码错误
 //        if (!user.getPassword().equals(DigestUtils.sha256Hex(form.getPassword()))) {
