@@ -29,7 +29,7 @@ public class UserController extends BaseController {
     public R<ApiUserInfo> userInfo() {
         //用户角色信息 菜单 权限
 
-        SysUser user = ShiroUtils.getCurrentSysUser();
+        SysUser user = getUser();
         AuthorizationInfo info = ShiroUtils.getAuthorizationInfo();
 
         return R.ok(ApiUserInfo.create(user, info));

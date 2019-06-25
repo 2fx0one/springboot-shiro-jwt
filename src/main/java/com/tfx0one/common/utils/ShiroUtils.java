@@ -41,8 +41,8 @@ public class ShiroUtils {
         //[盐] 一般为用户名 或 随机数
         String salt = "1";
         //加密次数
-        System.out.println(md5(pwd, salt));
-        System.out.println(sha256(pwd, salt));
+//        System.out.println(md5(pwd, salt));
+//        System.out.println(sha256(pwd, salt));
     }
 
 

@@ -12,7 +12,7 @@ import java.util.List;
  * 2019/3/26 16:23
  */
 @Data
-@ApiModel("返回结果模型 保证IPage对象")
+@ApiModel("返回结果模型 包装IPage对象")
 public class Pagination<T> {
     private List<T> records;// 当前页数据
     //总记录数
