@@ -27,7 +27,6 @@ public class ValidatorUtils {
             for(ConstraintViolation<Object> constraint:  constraintViolations){
                 msg.append(constraint.getMessage()).append("<br>");
             }
-//            TODO
             throw new CommonException(msg.toString());
         }
     }

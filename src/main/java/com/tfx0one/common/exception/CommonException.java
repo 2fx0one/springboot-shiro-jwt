@@ -15,6 +15,10 @@ public class CommonException extends RuntimeException{
     private String msg;
     private int code = 500;
 
+    public CommonException() {
+        super();
+    }
+
     public CommonException(String msg) {
         super(msg);
         this.msg = msg;
@@ -23,6 +27,10 @@ public class CommonException extends RuntimeException{
     public CommonException(String msg, Throwable e) {
         super(msg, e);
         this.msg = msg;
+    }
+
+    public CommonException(Throwable e) {
+        super(e);
     }
 
     public CommonException(String msg, int code) {
