@@ -1,5 +1,6 @@
 package com.tfx0one.sys.controller;
 
+import com.tfx0one.common.utils.ShiroUtils;
 import com.tfx0one.sys.entity.SysUserEntity;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ public abstract class AbstractController {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	
 	protected SysUserEntity getUser() {
-		return (SysUserEntity) SecurityUtils.getSubject().getPrincipal();
+		return ShiroUtils.getCurrentSysUser();
 	}
 
 	protected Long getUserId() {

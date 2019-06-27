@@ -1,8 +1,8 @@
 /**
  * Copyright (c) 2016-2019 人人开源 All rights reserved.
- *
+ * <p>
  * https://www.renren.io
- *
+ * <p>
  * 版权所有，侵权必究！
  */
 
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,15 +36,15 @@ public class ShiroServiceImpl implements ShiroService {
         List<String> permsList;
 
         //系统管理员，拥有最高权限
-        if(userId == Constant.SUPER_ADMIN){
+        if (userId == Constant.SUPER_ADMIN) {
             List<SysMenuEntity> menuList = sysMenuService.list();
             permsList = menuList.stream().map(SysMenuEntity::getPerms).collect(Collectors.toList());
-        }else{
+        } else {
             permsList = sysUserService.queryAllPerms(userId);
         }
 
         //用户权限列表
-        return permsList.stream().flatMap(s->Arrays.stream(s.split(","))).collect(Collectors.toSet());
+        return permsList.stream().filter(Objects::nonNull).flatMap(s -> Arrays.stream(s.split(","))).collect(Collectors.toSet());
     }
 
 

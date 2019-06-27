@@ -9,7 +9,6 @@
 package com.tfx0one.sys.controller;
 
 import com.tfx0one.common.annotation.SysLog;
-import com.tfx0one.common.utils.Pagination;
 import com.tfx0one.common.utils.R;
 import com.tfx0one.common.utils.Constant;
 import com.tfx0one.common.validator.Assert;
@@ -17,9 +16,11 @@ import com.tfx0one.common.validator.ValidatorUtils;
 import com.tfx0one.common.validator.group.AddGroup;
 import com.tfx0one.common.validator.group.UpdateGroup;
 import com.tfx0one.sys.entity.SysUserEntity;
-import com.tfx0one.sys.form.PasswordForm;
+import com.tfx0one.sys.service.ShiroService;
+import com.tfx0one.sys.vo.RequestPassword;
 import com.tfx0one.sys.service.SysUserRoleService;
 import com.tfx0one.sys.service.SysUserService;
+import com.tfx0one.sys.vo.ResponseUserInfo;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/sys/user")
@@ -36,6 +38,8 @@ public class SysUserController extends AbstractController {
 	private SysUserService sysUserService;
 	@Autowired
 	private SysUserRoleService sysUserRoleService;
+	@Autowired
+	private ShiroService shiroService;
 
 
 	/**
@@ -56,7 +60,9 @@ public class SysUserController extends AbstractController {
 	 */
 	@GetMapping("/info")
 	public R info() {
-		return R.ok(getUser());
+		SysUserEntity user = getUser();
+		Set<String> permissions = shiroService.getUserPermissions(getUserId());
+		return R.ok(ResponseUserInfo.create(user, permissions));
 	}
 
 	/**
@@ -64,7 +70,7 @@ public class SysUserController extends AbstractController {
 	 */
 	@SysLog("修改密码")
 	@PostMapping("/password")
-	public R password(@RequestBody PasswordForm form){
+	public R password(@RequestBody RequestPassword form){
 		ValidatorUtils.validateEntity(form);
 		Assert.isNotBlank(form.getNewPassword(), "新密码不为能空");
 		

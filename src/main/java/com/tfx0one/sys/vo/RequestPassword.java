@@ -6,26 +6,28 @@
  * 版权所有，侵权必究！
  */
 
-package com.tfx0one.sys.form;
+package com.tfx0one.sys.vo;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
 /**
- * 登录表单
+ * 密码表单
  *
  * @author Mark sunlightcs@gmail.com
  */
 @Data
-public class SysLoginForm {
-
-    @NotBlank(message="用户名不能为空")
-    private String username;
-    @NotBlank(message="密码不能为空")
+public class RequestPassword {
+    /**
+     * 原密码
+     */
+    @NotBlank(message="原密码不能为空")
     private String password;
-    private String captcha;
-    private String uuid;
-
+    /**
+     * 新密码
+     */
+    @NotBlank(message="新密码不能为空")
+    private String newPassword;
 
 }

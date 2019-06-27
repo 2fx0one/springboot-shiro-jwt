@@ -25,9 +25,9 @@ import java.util.List;
  * @date:2018/12/4 13:54
  * @Version: 1.0
  */
-@EnableTransactionManagement(proxyTargetClass = true)
+//@EnableTransactionManagement(proxyTargetClass = true)
 @Configuration
-@MapperScan("com.tfx0one.**.mapper")//这个注解，作用相当于下面的@Bean MapperScannerConfigurer，2者配置1份即可
+//@MapperScan("com.tfx0one.**.dao")//这个注解，作用相当于下面的@Bean MapperScannerConfigurer，2者配置1份即可
 public class MybatisPlusConfig {
     /**
      * mybatis-plus分页插件<br>
@@ -35,8 +35,7 @@ public class MybatisPlusConfig {
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        return paginationInterceptor;
+        return new PaginationInterceptor();
     }
 
     /** 
@@ -46,10 +45,10 @@ public class MybatisPlusConfig {
     * @Author: wangk 
     * @CreateTime: 2019/3/28 15:37
     */ 
-//    @Bean
-//    public ISqlInjector sqlInjector() {
-//        return new LogicSqlInjector();
-//    }
+    @Bean
+    public ISqlInjector sqlInjector() {
+        return new LogicSqlInjector();
+    }
 
     /**
      * 相当于顶部的：
