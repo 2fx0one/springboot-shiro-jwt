@@ -4,7 +4,6 @@ import com.tfx0one.sys.entity.SysUserEntity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.util.List;
 import java.util.Set;
 
 @Data
