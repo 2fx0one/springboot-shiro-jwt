@@ -1,15 +1,13 @@
 package com.tfx0one.sys.controller;
 
 import com.tfx0one.common.annotation.SysLog;
-import com.tfx0one.common.utils.R;
-import com.tfx0one.common.exception.CommonException;
 import com.tfx0one.common.utils.Constant;
 import com.tfx0one.common.utils.MapUtils;
+import com.tfx0one.common.utils.R;
 import com.tfx0one.common.validator.Assert;
 import com.tfx0one.sys.entity.SysMenuEntity;
 import com.tfx0one.sys.service.ShiroService;
 import com.tfx0one.sys.service.SysMenuService;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -139,37 +137,36 @@ public class SysMenuController extends AbstractController {
      * 验证参数是否正确
      */
     private void verifyForm(SysMenuEntity menu) {
-        Assert.isNotBlank(menu.getName(), "菜单名称不能为空");
+        Assert.notBlank(menu.getName(), "菜单名称不能为空");
 
-        Assert.isNotNull(menu.getParentId(), "上级菜单不能为空");
+        Assert.notNull(menu.getParentId(), "上级菜单不能为空");
 
 
         //菜单
         if (menu.getType() == Constant.MenuType.MENU.getValue()) {
-            Assert.isNotBlank(menu.getUrl(), "菜单URL不能为空");
+            Assert.notBlank(menu.getUrl(), "菜单URL不能为空");
         }
-        //上级菜单类型
-        int parentType = Constant.MenuType.CATALOG.getValue();
+
+        //如果不是父节点不是根节点，找到其父节点。
         if (menu.getParentId() != 0) {
             SysMenuEntity parentMenu = sysMenuService.getById(menu.getParentId());
-            parentType = parentMenu.getType();
+            //上级菜单类型
+            int parentType = parentMenu.getType();
+
+            //当前操作的节点为 目录或菜单
+            if (menu.getType() == Constant.MenuType.CATALOG.getValue() ||
+                    menu.getType() == Constant.MenuType.MENU.getValue()) {
+
+                Assert.isTrue(parentType == Constant.MenuType.CATALOG.getValue(), "上级菜单只能为目录类型");
+                return;
+            }
+
+            //当前操作的节点为 按钮
+            if (menu.getType() == Constant.MenuType.BUTTON.getValue()) {
+                Assert.isTrue(parentType == Constant.MenuType.MENU.getValue(), "上级菜单只能为菜单类型");
+                return;
+            }
         }
 
-        //目录、菜单
-        if (menu.getType() == Constant.MenuType.CATALOG.getValue() ||
-                menu.getType() == Constant.MenuType.MENU.getValue()) {
-            if (parentType != Constant.MenuType.CATALOG.getValue()) {
-                throw new CommonException("上级菜单只能为目录类型");
-            }
-            return;
-        }
-
-        //按钮
-        if (menu.getType() == Constant.MenuType.BUTTON.getValue()) {
-            if (parentType != Constant.MenuType.MENU.getValue()) {
-                throw new CommonException("上级菜单只能为菜单类型");
-            }
-            return;
-        }
     }
 }

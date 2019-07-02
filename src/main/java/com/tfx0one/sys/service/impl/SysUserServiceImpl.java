@@ -139,6 +139,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
         List<Long> roleIdList = sysRoleService.queryRoleIdList(user.getCreateUserId());
 
         //判断是否越权
-        Assert.isFalse(!roleIdList.containsAll(user.getRoleIdList()), "新增用户所选角色，不是本人创建");
+        Assert.isTrue(roleIdList.containsAll(user.getRoleIdList()), "新增用户所选角色，不是本人创建");
     }
 }

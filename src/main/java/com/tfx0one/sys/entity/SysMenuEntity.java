@@ -11,6 +11,8 @@ package com.tfx0one.sys.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -23,6 +25,7 @@ import java.util.List;
  */
 @Data
 @TableName("sys_menu")
+@ApiModel(value = "菜单", description = "描述")
 public class SysMenuEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -66,6 +69,7 @@ public class SysMenuEntity implements Serializable {
 	/**
 	 * 菜单图标
 	 */
+	@ApiModelProperty(value = "菜单 icon 填写icon")
 	private String icon;
 
 	/**

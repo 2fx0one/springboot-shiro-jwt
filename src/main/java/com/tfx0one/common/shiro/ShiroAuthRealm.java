@@ -1,11 +1,9 @@
 package com.tfx0one.common.shiro;
 
-import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.common.validator.Assert;
 import com.tfx0one.sys.entity.SysUserEntity;
 import com.tfx0one.sys.service.ShiroService;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -17,11 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 public class ShiroAuthRealm extends AuthorizingRealm {
@@ -62,8 +56,8 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         String userId = JWTUtils.getUserId(jwtToken);
 
         //TODO 切换成 Assert
-        Assert.isNotNull(username, "[用户名不存在] token invalid");
-        Assert.isNotNull(userId, "[用户ID不存在] token invalid");
+        Assert.notNull(username, "[用户名不存在] token invalid");
+        Assert.notNull(userId, "[用户ID不存在] token invalid");
 //            只能抛出 AuthenticationException
 //        if (username == null) {
 //            throw new UnauthenticatedException("[用户名不存在] token invalid");

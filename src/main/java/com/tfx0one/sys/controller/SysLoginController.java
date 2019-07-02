@@ -75,7 +75,7 @@ public class SysLoginController extends AbstractController {
         SysUserEntity user = sysUserService.queryByUserName(form.getUsername());
 
         //账号不存在
-        Assert.isFalse(user == null, "用户不存在！");
+        Assert.isTrue(user != null, "用户不存在！");
 
         // 密码错误
         if (!user.getPassword().equals(new Sha256Hash(form.getPassword(), user.getSalt()).toHex())) {

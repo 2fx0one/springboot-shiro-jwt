@@ -72,7 +72,7 @@ public class SysUserController extends AbstractController {
 	@PostMapping("/password")
 	public R password(@RequestBody RequestPassword form){
 		ValidatorUtils.validateEntity(form);
-		Assert.isNotBlank(form.getNewPassword(), "新密码不为能空");
+		Assert.notBlank(form.getNewPassword(), "新密码不为能空");
 		
 		//sha256加密
 		String password = new Sha256Hash(form.getPassword(), getUser().getSalt()).toHex();

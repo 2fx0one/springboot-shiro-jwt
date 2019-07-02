@@ -113,6 +113,6 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
         List<Long> menuIdList = sysUserService.queryAllMenuId(role.getCreateUserId());
 
         //判断是否越权
-        Assert.isFalse(!menuIdList.containsAll(role.getMenuIdList()), "新增角色的权限，已超出你的权限范围");
+        Assert.isTrue(menuIdList.containsAll(role.getMenuIdList()), "新增角色的权限，已超出你的权限范围");
     }
 }
