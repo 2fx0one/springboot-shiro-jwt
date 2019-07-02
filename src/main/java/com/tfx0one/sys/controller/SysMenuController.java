@@ -29,10 +29,9 @@ public class SysMenuController extends AbstractController {
     @GetMapping("/nav")
     public R nav() {
         List<SysMenuEntity> menuList = sysMenuService.getUserMenuList(getUserId());
-
-//        Set<String> permissions = shiroService.getUserPermissions(getUserId());
-
-        return R.ok(MapUtils.create().put("menuList", menuList));
+        Set<String> permissions = shiroService.getUserPermissions(getUserId());
+        return R.ok(MapUtils.create().put("menuList", menuList).put("permissions", permissions));
+//        return R.ok(menuList.stream().map(ResponseSysMenu::create).collect(Collectors.toList()));
     }
 
     /**
