@@ -38,7 +38,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         fastJsonConfig.setSerializerFeatures();
 
         fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteNullStringAsEmpty);
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteNullListAsEmpty);
         fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteDateUseDateFormat);
         fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteNullListAsEmpty);
         fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteMapNullValue);

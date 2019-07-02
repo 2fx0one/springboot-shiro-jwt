@@ -31,7 +31,7 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 
     @Override
     public V get(K key) throws CacheException {
-        logger.debug("Shiro从缓存中获取数据KEY值["+getCacheKey(key)+"]");
+        logger.debug("Shiro从缓存中获取数据KEY值[ "+getCacheKey(key)+" ]");
         redisTemplate.boundValueOps(getCacheKey(key)).expire(expire, TimeUnit.SECONDS);
         return redisTemplate.boundValueOps(getCacheKey(key)).get();
     }
