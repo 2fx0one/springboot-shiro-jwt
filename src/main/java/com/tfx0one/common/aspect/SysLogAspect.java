@@ -51,23 +51,23 @@ public class SysLogAspect {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
 
-        SysLogEntity sysLog = new SysLogEntity();
+        SysLogEntity log = new SysLogEntity();
         SysLog syslog = method.getAnnotation(SysLog.class);
         if (syslog != null) {
             //注解上的描述
-            sysLog.setOperation(syslog.value());
+            log.setOperation(syslog.value());
         }
 
         //请求的方法名
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = signature.getName();
-        sysLog.setMethod(className + "." + methodName + "()");
+        log.setMethod(className + "." + methodName + "()");
 
         //请求的参数
         Object[] args = joinPoint.getArgs();
         try {
             String params = JSONObject.toJSONString(args); //new Gson().toJson(args);
-            sysLog.setParams(params);
+            log.setParams(params);
         } catch (Exception e) {
 
         }
@@ -75,15 +75,15 @@ public class SysLogAspect {
         //获取request
         HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
         //设置IP地址
-        sysLog.setIp(IPUtils.getIpAddr(request));
+        log.setIp(IPUtils.getIpAddr(request));
 
         //用户名
         String username = ((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername();
-        sysLog.setUsername(username);
+        log.setUsername(username);
 
-        sysLog.setTime(time);
-        sysLog.setCreateDate(new Date());
+        log.setTime(time);
+        log.setCreateDate(new Date());
         //保存系统日志
-        sysLogService.save(sysLog);
+        sysLogService.save(log);
     }
 }
