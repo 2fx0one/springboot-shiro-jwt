@@ -78,7 +78,7 @@ public class SysMenuController extends AbstractController {
     @RequiresPermissions("sys:menu:info")
     public R info(@PathVariable("menuId") Long menuId) {
         SysMenuEntity menu = sysMenuService.getById(menuId);
-        return R.ok(menu);//.put("menu", menu);
+        return R.ok(menu);
     }
 
     /**
