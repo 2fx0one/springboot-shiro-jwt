@@ -130,7 +130,7 @@ public class SysUserController extends AbstractController {
 		user.setCreateUserId(getUserId());
 		sysUserService.update(user);
 		
-		return R.ok();
+		return R.ok("修改用户成功");
 	}
 	
 	/**
