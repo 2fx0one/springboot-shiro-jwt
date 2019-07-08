@@ -1,9 +1,9 @@
 package com.tfx0one.modules.app.utils;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.interfaces.DecodedJWT;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,7 +13,7 @@ import java.util.Date;
 
 @ConfigurationProperties(prefix = "jwt")
 @Component
-public class JwtUtils {
+public class AppJWTUtils {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     private String secret;
@@ -23,34 +23,31 @@ public class JwtUtils {
     /**
      * 生成jwt token
      */
-    public String generateToken(Long userId) {
+    public String generateToken(long userId) {
+        Date nowDate = new Date();
         //过期时间
-        Date expireDate = new Date(System.currentTimeMillis() + expire * 1000);
-        return JWT.create()
-                .withSubject(String.valueOf(userId))
-                .withExpiresAt(expireDate)
-                .sign(Algorithm.HMAC512(secret));
+        Date expireDate = new Date(nowDate.getTime() + expire * 1000);
+
+        return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .setSubject(userId+"")
+                .setIssuedAt(nowDate)
+                .setExpiration(expireDate)
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
     }
 
-    public String getUserId(String token) {
+    public Claims getClaimByToken(String token) {
         try {
-            DecodedJWT jwt = JWT.decode(token);
-            return jwt.getSubject();
-        } catch (JWTDecodeException e) {
+            return Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(token)
+                    .getBody();
+        }catch (Exception e){
+            logger.debug("validate is token error ", e);
             return null;
         }
     }
-//    public Claims getClaimByToken(String token) {
-//        try {
-//            return Jwts.parser()
-//                    .setSigningKey(secret)
-//                    .parseClaimsJws(token)
-//                    .getBody();
-//        }catch (Exception e){
-//            logger.debug("validate is token error ", e);
-//            return null;
-//        }
-//    }
 
     /**
      * token是否过期

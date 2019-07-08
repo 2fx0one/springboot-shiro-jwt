@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.tfx0one.common.constant.GlobalConstant;
+import com.tfx0one.modules.app.entity.UserEntity;
 import com.tfx0one.modules.sys.entity.SysUserEntity;
 
 import java.util.Date;
@@ -16,7 +17,7 @@ public class JWTUtils {
     public static final int EXPIRE_TIME_IN_SECOND = GlobalConstant.EXPIRE_TIME_IN_SECOND;
 
     /**
-     * 校验token是否正确
+     * 校验token是否正确 过期会返回 false
      *
      * @param token  密钥
      * @param secret 用户的密码
@@ -74,6 +75,17 @@ public class JWTUtils {
                 .sign(algorithm);
     }
 
+    public static String sign(UserEntity user) {
+        Date expireDate = new Date(System.currentTimeMillis() + EXPIRE_TIME_IN_SECOND * 1000);
+        Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
+        // 附带username信息
+        return JWT.create()
+                .withSubject(user.getUserId().toString())
+                .withClaim("username", user.getUsername())
+                .withExpiresAt(expireDate)
+                .sign(algorithm);
+    }
+
     public static void main(String[] args) {
 //        SysUserEntity user = new SysUserEntity();
 //        user.setUserId(1L);
@@ -82,7 +94,8 @@ public class JWTUtils {
 //        String sign = sign(user);
 //        System.out.println("sign = " + sign);
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNTYyNTU1Nzk1LCJ1c2VybmFtZSI6ImFkbWluIn0.bbxF_nVYpv7wctS_ezzmM2OxJoHqQAqWxRRngc2Gbv0";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNTYyNTU3MDg3LCJ1c2VybmFtZSI6ImFkbWluIn0.Y9eycEAtJquimq2rONyaMTSBpCKjTiYQWNbV_84SWkY";
+        System.out.println("getUserId(token) = " + getUserId(token));
         boolean verify = verify(token, "admin", "p1");
         System.out.println("verify = " + verify);
     }

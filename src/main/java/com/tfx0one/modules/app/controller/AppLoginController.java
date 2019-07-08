@@ -14,7 +14,7 @@ import com.tfx0one.common.validator.ValidatorUtils;
 import com.tfx0one.modules.app.entity.UserEntity;
 import com.tfx0one.modules.app.form.LoginForm;
 import com.tfx0one.modules.app.service.UserService;
-import com.tfx0one.modules.app.utils.JwtUtils;
+import com.tfx0one.modules.app.utils.AppJWTUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class AppLoginController {
     @Autowired
     private UserService userService;
     @Autowired
-    private JwtUtils jwtUtils;
+    private AppJWTUtils appJwtUtils;
 
     /**
      * 登录
@@ -53,11 +53,11 @@ public class AppLoginController {
         UserEntity loginUser = userService.login(form);
 
         //生成token
-        String token = jwtUtils.generateToken(loginUser.getUserId());
+        String token = appJwtUtils.generateToken(loginUser.getUserId());
 
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);
-        map.put("expire", jwtUtils.getExpire());
+        map.put("expire", appJwtUtils.getExpire());
 
         return R.ok(map);
     }
