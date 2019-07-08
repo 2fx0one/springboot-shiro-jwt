@@ -5,6 +5,7 @@ package com.tfx0one.common.exception;
  * 2019/3/13 00:35
  */
 
+import com.tfx0one.common.utils.Constant;
 import com.tfx0one.common.utils.R;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthenticatedException;
@@ -32,7 +33,7 @@ public class CommonExceptionHandler {
     @ExceptionHandler(UnauthenticatedException.class)
     public R handleUnauthenticatedException(UnauthenticatedException e) {
 //        logger.error(e.getMessage(), e);
-        return R.error(HttpStatus.FORBIDDEN.value(), "身份未认证：" + e.getMessage());
+        return R.error(Constant.HTTPS_STATUS_RE_LOGIN, "身份未认证：" + e.getMessage());
     }
 
     //用户权限不足

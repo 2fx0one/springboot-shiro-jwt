@@ -77,7 +77,9 @@ public class R<T> implements Serializable {
 
     public static <T> R<T> ok() {
         return ok(null);
-//        return commonFunc(HttpStatus.OK.value(), "success", null);
+    }
+    public static <T> R<T> ok(String msg) {
+        return ok(null, msg);
     }
 
     public static <T> R<T> ok(T data) {
@@ -85,15 +87,16 @@ public class R<T> implements Serializable {
     }
 
     public static <T> R<T> ok(T data, String msg) {
-        return commonFunc(HttpStatus.OK.value(), msg, data);
+        return commonFunc(Constant.HTTP_STATUS_OK, msg, data);
     }
 
+
     public static R error() {
-        return error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "未知异常，请联系管理员");
+        return error("未知异常，请联系管理员");
     }
 
     public static R error(String msg) {
-        return error(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg);
+        return error(Constant.HTTPS_STATUS_ERROR, msg);
     }
 
     public static R error(int status, String msg) {

@@ -14,6 +14,12 @@ package com.tfx0one.common.utils;
  * @author Mark sunlightcs@gmail.com
  */
 public class Constant {
+
+    //统一状态码
+    public static final int HTTP_STATUS_OK = 20000;
+    public static final int HTTPS_STATUS_ERROR = 50000;
+    public static final int HTTPS_STATUS_RE_LOGIN = 50008; //重新登录
+
 	/** 超级管理员ID */
 	public static final int SUPER_ADMIN = 1;
     /**
