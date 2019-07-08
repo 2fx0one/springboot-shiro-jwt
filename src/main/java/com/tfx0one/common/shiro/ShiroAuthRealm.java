@@ -2,8 +2,8 @@ package com.tfx0one.common.shiro;
 
 import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.common.validator.Assert;
-import com.tfx0one.sys.entity.SysUserEntity;
-import com.tfx0one.sys.service.ShiroService;
+import com.tfx0one.modules.sys.entity.SysUserEntity;
+import com.tfx0one.modules.sys.service.ShiroService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;

@@ -7,7 +7,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.tfx0one.common.constant.GlobalConstant;
-import com.tfx0one.sys.entity.SysUserEntity;
+import com.tfx0one.modules.sys.entity.SysUserEntity;
 
 import java.util.Date;
 

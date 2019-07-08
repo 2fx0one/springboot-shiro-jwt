@@ -19,7 +19,7 @@ import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.shiro.ShiroAuthRealm;
 import com.tfx0one.common.shiro.ShiroConfig;
 import com.tfx0one.common.shiro.ShiroRedisCacheManager;
-import com.tfx0one.sys.entity.SysUserEntity;
+import com.tfx0one.modules.sys.entity.SysUserEntity;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.AuthorizationInfo;

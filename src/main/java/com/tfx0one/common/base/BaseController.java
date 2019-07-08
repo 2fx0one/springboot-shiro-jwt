@@ -1,7 +1,7 @@
 package com.tfx0one.common.base;
 
 import com.tfx0one.common.utils.ShiroUtils;
-import com.tfx0one.sys.entity.SysUserEntity;
+import com.tfx0one.modules.sys.entity.SysUserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
