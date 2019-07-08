@@ -16,7 +16,7 @@ import com.tfx0one.modules.app.form.RegisterForm;
 import com.tfx0one.modules.app.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-//import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,7 +46,7 @@ public class AppRegisterController {
         UserEntity user = new UserEntity();
         user.setMobile(form.getMobile());
         user.setUsername(form.getMobile());
-//        user.setPassword(DigestUtils.sha256Hex(form.getPassword()));
+        user.setPassword(DigestUtils.sha256Hex(form.getPassword()));
         user.setCreateTime(new Date());
         userService.save(user);
 
