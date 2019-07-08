@@ -11,6 +11,7 @@ package com.tfx0one.modules.app.controller;
 
 import com.tfx0one.common.utils.R;
 import com.tfx0one.common.validator.ValidatorUtils;
+import com.tfx0one.modules.app.entity.UserEntity;
 import com.tfx0one.modules.app.form.LoginForm;
 import com.tfx0one.modules.app.service.UserService;
 import com.tfx0one.modules.app.utils.JwtUtils;
@@ -49,10 +50,10 @@ public class AppLoginController {
         ValidatorUtils.validateEntity(form);
 
         //用户登录
-        long userId = userService.login(form);
+        UserEntity loginUser = userService.login(form);
 
         //生成token
-        String token = jwtUtils.generateToken(userId);
+        String token = jwtUtils.generateToken(loginUser.getUserId());
 
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);

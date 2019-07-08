@@ -60,21 +60,30 @@ public class JWTUtils {
     }
 
     /**
-     * @param user 用户
+     * @param user 系统 用户
      * @return 加密的token
      */
     public static String sign(SysUserEntity user) {
-        Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME_IN_SECOND * 1000);
+        Date expireDate = new Date(System.currentTimeMillis() + EXPIRE_TIME_IN_SECOND * 1000);
         Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
         // 附带username信息
         return JWT.create()
                 .withSubject(user.getUserId().toString())
                 .withClaim("username", user.getUsername())
-                .withExpiresAt(date)
+                .withExpiresAt(expireDate)
                 .sign(algorithm);
     }
 
-//    public static String sign(User user) {
-//        return sign(user.getLoginName(), user.getPassword());
-//    }
+    public static void main(String[] args) {
+//        SysUserEntity user = new SysUserEntity();
+//        user.setUserId(1L);
+//        user.setUsername("admin");
+//        user.setPassword("p1");
+//        String sign = sign(user);
+//        System.out.println("sign = " + sign);
+
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNTYyNTU1Nzk1LCJ1c2VybmFtZSI6ImFkbWluIn0.bbxF_nVYpv7wctS_ezzmM2OxJoHqQAqWxRRngc2Gbv0";
+        boolean verify = verify(token, "admin", "p1");
+        System.out.println("verify = " + verify);
+    }
 }

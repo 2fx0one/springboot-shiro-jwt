@@ -52,11 +52,11 @@ public class ShiroAuthRealm extends AuthorizingRealm {
 //        String token = (String) authenticationToken.getPrincipal();
         String jwtToken = (String) authenticationToken.getCredentials();
         // 解密获得username，用于和数据库进行对比
-        String username = JWTUtils.getUsername(jwtToken);
+//        String username = JWTUtils.getUsername(jwtToken);
         String userId = JWTUtils.getUserId(jwtToken);
 
         //TODO 切换成 Assert
-        Assert.notNull(username, "[用户名不存在] token invalid");
+//        Assert.notNull(username, "[用户名不存在] token invalid");
         Assert.notNull(userId, "[用户ID不存在] token invalid");
 //            只能抛出 AuthenticationException
 //        if (username == null) {
@@ -72,7 +72,7 @@ public class ShiroAuthRealm extends AuthorizingRealm {
             throw new UnauthenticatedException("[用户不存在] User didn't existed!");
         }
 
-        if (!JWTUtils.verify(jwtToken, username, user.getPassword())) {
+        if (!JWTUtils.verify(jwtToken, user.getUsername(), user.getPassword())) {
             //产生 JWTVerificationException 抛出异常
             throw new UnauthenticatedException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
         }

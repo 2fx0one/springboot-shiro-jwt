@@ -12,7 +12,6 @@ package com.tfx0one.modules.app.interceptor;
 import com.tfx0one.modules.app.annotation.Login;
 import com.tfx0one.modules.app.utils.JwtUtils;
 import com.tfx0one.common.exception.CommonException;
-import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private JwtUtils jwtUtils;
 
-    public static final String USER_KEY = "userId";
+    public static final String USER_KEY = "USER_ID";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -59,13 +58,13 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
             throw new CommonException(jwtUtils.getHeader() + "不能为空", HttpStatus.UNAUTHORIZED.value());
         }
 
-        Claims claims = jwtUtils.getClaimByToken(token);
-        if(claims == null || jwtUtils.isTokenExpired(claims.getExpiration())){
+        String userId = jwtUtils.getUserId(token);
+        if(userId == null){
             throw new CommonException(jwtUtils.getHeader() + "失效，请重新登录", HttpStatus.UNAUTHORIZED.value());
         }
 
         //设置userId到request里，后续根据userId，获取用户信息
-        request.setAttribute(USER_KEY, Long.parseLong(claims.getSubject()));
+        request.setAttribute(USER_KEY, Long.parseLong(userId));
 
         return true;
     }
