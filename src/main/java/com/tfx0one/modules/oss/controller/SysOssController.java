@@ -19,6 +19,7 @@ import com.tfx0one.common.validator.group.AliyunGroup;
 import com.tfx0one.common.validator.group.QcloudGroup;
 import com.tfx0one.common.validator.group.QiniuGroup;
 import com.tfx0one.modules.oss.cloud.CloudStorageConfig;
+import com.tfx0one.modules.oss.cloud.CloudStorageService;
 import com.tfx0one.modules.oss.cloud.OSSFactory;
 import com.tfx0one.modules.oss.entity.SysOssEntity;
 import com.tfx0one.modules.oss.service.SysOssService;
@@ -93,7 +94,7 @@ public class SysOssController {
 
         sysConfigService.updateValueByKey(KEY, new Gson().toJson(config));
 
-        return R.ok();
+        return R.ok("保存云存储配置信息成功");
     }
 
 
@@ -106,8 +107,11 @@ public class SysOssController {
         Assert.isTrue(!file.isEmpty(), "上传文件不能为空");
 
         //上传文件
-        String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        String url = OSSFactory.build().uploadSuffix(file.getBytes(), suffix);
+        String originalFilename = file.getOriginalFilename();
+        String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+        CloudStorageService cloudStorageService = OSSFactory.build();
+        Assert.isTrue(cloudStorageService!=null, "云存储配置不存在！");
+        String url = cloudStorageService.uploadSuffix(file.getBytes(), suffix);
 
         //保存文件信息
         SysOssEntity ossEntity = new SysOssEntity();

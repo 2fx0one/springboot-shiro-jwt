@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @ApiModel("返回结果模型 包装IPage对象")
 public class Pagination {
-    private List<?> records;// 当前页数据
+    private List<?> list;// 当前页数据
     //总记录数
     @ApiModelProperty(value = "总记录数", position = 1)
     protected Long total;
@@ -30,7 +30,7 @@ public class Pagination {
 
     public Pagination(IPage page) {
         this.total = page.getTotal();
-        this.records = page.getRecords();
+        this.list = page.getRecords();
         this.pages = page.getPages();
         this.size = page.getSize();
         this.current = page.getCurrent();

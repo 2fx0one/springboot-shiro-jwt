@@ -43,8 +43,8 @@ public class SysMenuEntity implements Serializable {
 	/**
 	 * 父菜单名称
 	 */
-	@TableField(exist=false)
-	private String parentName;
+//	@TableField(exist=false)
+//	private String parentName;
 
 	/**
 	 * 菜单名称

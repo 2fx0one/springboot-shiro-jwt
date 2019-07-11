@@ -12,8 +12,10 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/sys/menu")
@@ -41,15 +43,16 @@ public class SysMenuController extends AbstractController {
     @RequiresPermissions("sys:menu:list")
     public R list() {
         List<SysMenuEntity> menuList = sysMenuService.list();
-        for (SysMenuEntity sysMenuEntity : menuList) {
-            SysMenuEntity parentMenuEntity = sysMenuService.getById(sysMenuEntity.getParentId());
-            if (parentMenuEntity != null) {
-                sysMenuEntity.setParentName(parentMenuEntity.getName());
-            }
-        }
+//        for (SysMenuEntity sysMenuEntity : menuList) {
+//            SysMenuEntity parentMenuEntity = sysMenuService.getById(sysMenuEntity.getParentId());
+//            if (parentMenuEntity != null) {
+//                sysMenuEntity.setParentName(parentMenuEntity.getName());
+//            }
+//        }
 
         return R.ok(menuList);
     }
+
 
     /**
      * 选择菜单(添加、修改菜单)

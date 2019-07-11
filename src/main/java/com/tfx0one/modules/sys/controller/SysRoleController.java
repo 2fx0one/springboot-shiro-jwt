@@ -49,7 +49,7 @@ public class SysRoleController extends AbstractController {
 	 */
 	@GetMapping("/select")
 	@RequiresPermissions("sys:role:select")
-	public R select(){
+	public R<List<SysRoleEntity>> select(){
 		Map<String, Object> map = new HashMap<>();
 		
 		//如果不是超级管理员，则只查询自己所拥有的角色列表
