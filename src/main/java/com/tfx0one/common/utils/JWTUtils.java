@@ -6,7 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.tfx0one.common.constant.GlobalConstant;
+import com.tfx0one.common.constant.Constant;
 import com.tfx0one.modules.app.entity.UserEntity;
 import com.tfx0one.modules.sys.entity.SysUserEntity;
 
@@ -14,8 +14,12 @@ import java.util.Date;
 
 public class JWTUtils {
     // 过期时间 秒为单位 暂定为 1 天
-    public static final int EXPIRE_TIME_IN_SECOND = GlobalConstant.EXPIRE_TIME_IN_SECOND;
+    private static final int EXPIRE_TIME_IN_SECOND = Constant.JWT_REDIS_EXPIRE_TIME_IN_SECOND;
 
+        public static boolean isTokenExpired(String token) {
+        DecodedJWT jwt = JWT.decode(token);
+        return jwt.getExpiresAt().before(new Date());
+    }
     /**
      * 校验token是否正确 过期会返回 false
      *
@@ -31,6 +35,7 @@ public class JWTUtils {
                     .build();
 //            DecodedJWT jwt = verifier.verify(token);
             verifier.verify(token);
+
             return true;
         } catch (JWTVerificationException e) {
             return false;

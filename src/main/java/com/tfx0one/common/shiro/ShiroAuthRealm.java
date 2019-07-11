@@ -51,6 +51,11 @@ public class ShiroAuthRealm extends AuthorizingRealm {
 //        System.out.println(authenticationToken.getPrincipal());
 //        String token = (String) authenticationToken.getPrincipal();
         String jwtToken = (String) authenticationToken.getCredentials();
+
+        if (JWTUtils.isTokenExpired(jwtToken)){
+            throw new UnauthenticatedException("[TOKEN 已经过期] 请重新登录！");
+        }
+
         // 解密获得username，用于和数据库进行对比
 //        String username = JWTUtils.getUsername(jwtToken);
         String userId = JWTUtils.getUserId(jwtToken);

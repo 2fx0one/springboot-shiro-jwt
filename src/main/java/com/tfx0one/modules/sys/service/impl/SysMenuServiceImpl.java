@@ -10,7 +10,7 @@ package com.tfx0one.modules.sys.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tfx0one.common.utils.Constant;
+import com.tfx0one.common.constant.Constant;
 import com.tfx0one.common.utils.MapUtils;
 import com.tfx0one.modules.sys.dao.SysMenuDao;
 import com.tfx0one.modules.sys.entity.SysMenuEntity;

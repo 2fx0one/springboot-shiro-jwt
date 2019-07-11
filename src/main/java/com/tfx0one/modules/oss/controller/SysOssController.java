@@ -9,8 +9,8 @@
 package com.tfx0one.modules.oss.controller;
 
 import com.google.gson.Gson;
-import com.tfx0one.common.utils.ConfigConstant;
-import com.tfx0one.common.utils.Constant;
+import com.tfx0one.common.constant.ConfigConstant;
+import com.tfx0one.common.constant.Constant;
 import com.tfx0one.common.utils.Pagination;
 import com.tfx0one.common.utils.R;
 import com.tfx0one.common.validator.Assert;

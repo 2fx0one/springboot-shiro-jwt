@@ -6,7 +6,7 @@
  * 版权所有，侵权必究！
  */
 
-package com.tfx0one.common.utils;
+package com.tfx0one.common.constant;
 
 /**
  * 常量
@@ -20,7 +20,15 @@ public class Constant {
     public static final int HTTPS_STATUS_ERROR = 50000;
     public static final int HTTPS_STATUS_RE_LOGIN = 50008; //重新登录
 
-	/** 超级管理员ID */
+    public static final String SPLIT_DELIMETER = ",";
+
+    // JWT 和 shiro 缓存 过期时间 秒为单位
+    public static final int JWT_REDIS_EXPIRE_TIME_IN_SECOND = 24*3600;
+    // Redis 过期时间 秒为单位  -1 表示永不过期
+    public static final int REDIS_EXPIRE_TIME_IN_SECOND = 24*3600;
+
+
+    /** 超级管理员ID */
 	public static final int SUPER_ADMIN = 1;
     /**
      * 当前页码

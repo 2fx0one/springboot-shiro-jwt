@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tfx0one.common.utils.Pagination;
-import com.tfx0one.common.utils.Constant;
+import com.tfx0one.common.constant.Constant;
 import com.tfx0one.common.utils.QueryPage;
 import com.tfx0one.common.validator.Assert;
 import com.tfx0one.modules.sys.dao.SysRoleDao;

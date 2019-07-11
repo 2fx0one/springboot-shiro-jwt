@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@ConfigurationProperties(prefix = "jwt")
 @Component
+@ConfigurationProperties(prefix = "config.jwt")
 public class AppJWTUtils {
     private Logger logger = LoggerFactory.getLogger(getClass());
 

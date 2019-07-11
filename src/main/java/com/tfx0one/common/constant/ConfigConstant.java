@@ -6,7 +6,7 @@
  * 版权所有，侵权必究！
  */
 
-package com.tfx0one.common.utils;
+package com.tfx0one.common.constant;
 
 /**
  * 系统参数相关Key

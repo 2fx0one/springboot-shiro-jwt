@@ -15,7 +15,7 @@
  */
 package com.tfx0one.common.utils;
 
-import com.tfx0one.common.constant.GlobalConstant;
+import com.tfx0one.common.constant.Constant;
 import com.tfx0one.common.shiro.ShiroAuthRealm;
 import com.tfx0one.common.shiro.ShiroConfig;
 import com.tfx0one.common.shiro.ShiroRedisCacheManager;
@@ -148,7 +148,7 @@ public class ShiroUtils {
         boolean hasAnyRole = false;
         Subject subject = getSubject();
         if (subject != null && roleNames != null && roleNames.length() > 0) {
-            for (String role : roleNames.split(GlobalConstant.SPLIT_DELIMETER)) {
+            for (String role : roleNames.split(Constant.SPLIT_DELIMETER)) {
                 if (subject.hasRole(role.trim())) {
                     hasAnyRole = true;
                     break;

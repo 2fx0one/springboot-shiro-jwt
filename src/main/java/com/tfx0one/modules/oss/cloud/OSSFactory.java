@@ -9,8 +9,8 @@
 package com.tfx0one.modules.oss.cloud;
 
 
-import com.tfx0one.common.utils.ConfigConstant;
-import com.tfx0one.common.utils.Constant;
+import com.tfx0one.common.constant.ConfigConstant;
+import com.tfx0one.common.constant.Constant;
 import com.tfx0one.common.utils.SpringContextUtils;
 import com.tfx0one.modules.sys.service.SysConfigService;
 

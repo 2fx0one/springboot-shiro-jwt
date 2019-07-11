@@ -9,7 +9,7 @@
 package com.tfx0one.modules.job.utils;
 
 import com.tfx0one.common.exception.CommonException;
-import com.tfx0one.common.utils.Constant;
+import com.tfx0one.common.constant.Constant;
 import com.tfx0one.modules.job.entity.ScheduleJobEntity;
 import org.quartz.*;
 

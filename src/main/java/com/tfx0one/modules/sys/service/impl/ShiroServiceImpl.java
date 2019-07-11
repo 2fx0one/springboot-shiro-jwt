@@ -8,7 +8,7 @@
 
 package com.tfx0one.modules.sys.service.impl;
 
-import com.tfx0one.common.utils.Constant;
+import com.tfx0one.common.constant.Constant;
 import com.tfx0one.modules.sys.entity.SysMenuEntity;
 import com.tfx0one.modules.sys.entity.SysUserEntity;
 import com.tfx0one.modules.sys.service.ShiroService;

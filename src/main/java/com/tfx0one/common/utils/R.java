@@ -2,6 +2,7 @@ package com.tfx0one.common.utils;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.tfx0one.common.constant.Constant;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -9,7 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 

@@ -1,9 +1,7 @@
 package com.tfx0one.common.exception;
 
-import com.tfx0one.common.utils.Constant;
-import lombok.AllArgsConstructor;
+import com.tfx0one.common.constant.Constant;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /*
  * @Auth 2fx0one
