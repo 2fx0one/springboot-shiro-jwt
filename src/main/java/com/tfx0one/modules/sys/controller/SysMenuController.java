@@ -12,14 +12,12 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/sys/menu")
-public class SysMenuController extends AbstractController {
+public class SysMenuController extends AbstractSysController {
     @Autowired
     private SysMenuService sysMenuService;
     @Autowired

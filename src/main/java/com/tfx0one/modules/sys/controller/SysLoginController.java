@@ -14,10 +14,9 @@ import com.tfx0one.common.utils.ShiroUtils;
 import com.tfx0one.common.validator.Assert;
 import com.tfx0one.common.validator.ValidatorUtils;
 import com.tfx0one.modules.sys.entity.SysUserEntity;
-import com.tfx0one.modules.sys.vo.RequestSysLogin;
 import com.tfx0one.modules.sys.service.SysCaptchaService;
 import com.tfx0one.modules.sys.service.SysUserService;
-import com.tfx0one.modules.sys.service.SysUserTokenService;
+import com.tfx0one.modules.sys.vo.RequestSysLogin;
 import com.tfx0one.modules.sys.vo.ResponseSysLoginToken;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -34,11 +33,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 @RestController
-public class SysLoginController extends AbstractController {
+public class SysLoginController extends AbstractSysController {
     @Autowired
     private SysUserService sysUserService;
-    @Autowired
-    private SysUserTokenService sysUserTokenService;
     @Autowired
     private SysCaptchaService sysCaptchaService;
 

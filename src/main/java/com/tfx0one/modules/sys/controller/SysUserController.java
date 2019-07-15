@@ -33,7 +33,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/sys/user")
-public class SysUserController extends AbstractController {
+public class SysUserController extends AbstractSysController {
 	@Autowired
 	private SysUserService sysUserService;
 	@Autowired

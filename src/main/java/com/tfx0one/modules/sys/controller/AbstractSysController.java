@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark sunlightcs@gmail.com
  */
-public abstract class AbstractController {
+public abstract class AbstractSysController {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	
 	protected SysUserEntity getUser() {
