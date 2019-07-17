@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public interface SysUserService extends IService<SysUserEntity> {
 
-	Pagination queryPage(Map<String, Object> params);
+	Pagination<SysUserEntity> queryPage(Map<String, Object> params);
 
 	/**
 	 * 查询用户的所有权限

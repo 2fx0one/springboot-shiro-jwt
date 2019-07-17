@@ -9,6 +9,7 @@
 package com.tfx0one.modules.sys.controller;
 
 import com.tfx0one.common.annotation.SysLog;
+import com.tfx0one.common.utils.Pagination;
 import com.tfx0one.common.utils.R;
 import com.tfx0one.common.constant.Constant;
 import com.tfx0one.common.validator.Assert;
@@ -47,7 +48,7 @@ public class SysUserController extends AbstractSysController {
 	 */
 	@GetMapping("/list")
 	@RequiresPermissions("sys:user:list")
-	public R list(@RequestParam Map<String, Object> params){
+	public R<Pagination<SysUserEntity>> list(@RequestParam Map<String, Object> params){
 		//只有超级管理员，才能查看所有管理员列表
 		if(getUserId() != Constant.SUPER_ADMIN){
 			params.put("createUserId", getUserId());
@@ -59,7 +60,7 @@ public class SysUserController extends AbstractSysController {
 	 * 获取登录的用户信息
 	 */
 	@GetMapping("/info")
-	public R info() {
+	public R<ResponseUserInfo> info() {
 		SysUserEntity user = getUser();
 		Set<String> permissions = shiroService.getUserPermissions(getUserId());
 		return R.ok(ResponseUserInfo.create(user, permissions));
@@ -93,7 +94,7 @@ public class SysUserController extends AbstractSysController {
 	 */
 	@GetMapping("/info/{userId}")
 	@RequiresPermissions("sys:user:info")
-	public R info(@PathVariable("userId") Long userId){
+	public R<SysUserEntity> info(@PathVariable("userId") Long userId){
 		SysUserEntity user = sysUserService.getById(userId);
 		
 		//获取用户所属的角色列表

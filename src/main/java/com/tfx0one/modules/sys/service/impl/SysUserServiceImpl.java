@@ -47,7 +47,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
     private SysRoleService sysRoleService;
 
     @Override
-    public Pagination queryPage(Map<String, Object> params) {
+    public Pagination<SysUserEntity> queryPage(Map<String, Object> params) {
         String username = (String) params.get("username");
         Long createUserId = (Long) params.get("createUserId");
 
@@ -58,7 +58,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
                         .eq(createUserId != null, SysUserEntity::getCreateUserId, createUserId)
         );
 
-        return new Pagination(page);
+        return new Pagination<>(page);
     }
 
     @Override
