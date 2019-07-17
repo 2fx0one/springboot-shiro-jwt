@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tfx0one.modules.app.dao.OrderDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.tfx0one.modules.app.entity.OrderEntity" id="orderMap">
+        <result property="id" column="id"/>
+        <result property="totalPay" column="total_pay"/>
+        <result property="actualPay" column="actual_pay"/>
+        <result property="promotionIds" column="promotion_ids"/>
+        <result property="paymentType" column="payment_type"/>
+        <result property="postFee" column="post_fee"/>
+        <result property="createTime" column="create_time"/>
+        <result property="shippingName" column="shipping_name"/>
+        <result property="shippingCode" column="shipping_code"/>
+        <result property="userId" column="user_id"/>
+        <result property="buyerMessage" column="buyer_message"/>
+        <result property="buyerNick" column="buyer_nick"/>
+        <result property="buyerRate" column="buyer_rate"/>
+        <result property="receiverState" column="receiver_state"/>
+        <result property="receiverCity" column="receiver_city"/>
+        <result property="receiverDistrict" column="receiver_district"/>
+        <result property="receiverAddress" column="receiver_address"/>
+        <result property="receiverMobile" column="receiver_mobile"/>
+        <result property="receiverZip" column="receiver_zip"/>
+        <result property="receiver" column="receiver"/>
+        <result property="invoiceType" column="invoice_type"/>
+        <result property="sourceType" column="source_type"/>
+    </resultMap>
+
+
+</mapper>
