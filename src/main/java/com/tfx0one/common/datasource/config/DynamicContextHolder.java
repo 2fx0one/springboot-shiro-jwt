@@ -18,12 +18,7 @@ import java.util.Deque;
  */
 public class DynamicContextHolder {
     @SuppressWarnings("unchecked")
-    private static final ThreadLocal<Deque<String>> CONTEXT_HOLDER = new ThreadLocal() {
-        @Override
-        protected Object initialValue() {
-            return new ArrayDeque();
-        }
-    };
+    private static final ThreadLocal<Deque<String>> CONTEXT_HOLDER = ThreadLocal.withInitial(ArrayDeque::new);
 
     /**
      * 获得当前线程数据源
