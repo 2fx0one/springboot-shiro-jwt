@@ -85,6 +85,7 @@ public class JWTUtils {
         Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
         // 附带username信息
         return JWT.create()
+                .withIssuedAt(new Date())
                 .withSubject(user.getUserId().toString())
                 .withClaim("username", user.getUsername())
                 .withExpiresAt(expireDate)
