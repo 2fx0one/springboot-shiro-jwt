@@ -43,10 +43,6 @@ public class Swagger2Config {
     @Bean
     public Docket createRestApi() {
 
-        //获取管理员用户
-        SysUserEntity user = sysUserService.queryByUserName("admin");
-        String sign = JWTUtils.sign(sysUserService.queryByUserName("admin"));
-
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
@@ -61,7 +57,7 @@ public class Swagger2Config {
                                 .modelRef(new ModelRef("string"))
                                 .parameterType("header").required(false)
                                 .defaultValue("")
-//                                .defaultValue(JWTUtils.sign(sysUserService.queryByUserName("admin")))
+//                                .defaultValue(JWTUtils.sign(sysUserService.queryByUserName("admin"))) //获取管理员用户
                                 .build()
                 ))
                 .apiInfo(apiInfo());
