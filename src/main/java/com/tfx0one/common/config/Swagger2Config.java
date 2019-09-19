@@ -56,7 +56,8 @@ public class Swagger2Config {
                 .globalOperationParameters(newArrayList(
                         new ParameterBuilder()
                                 .name("Authorization")
-                                .description("默认使用 admin 账户的token")
+                                .description("账户的token")
+//                                .description("默认使用 admin 账户的token")
                                 .modelRef(new ModelRef("string"))
                                 .parameterType("header").required(false)
                                 .defaultValue("")
