@@ -35,7 +35,7 @@ import static com.google.common.collect.Lists.newArrayList;
 @ConditionalOnProperty(name = "swagger2.ui.enable", havingValue = "true")
 public class Swagger2Config {
 
-    //   访问可以查看api http://localhost:8080/swagger-ui.html
+    //   访问可以查看api http://localhost:8894/api/swagger-ui.html
 
     @Autowired
     private SysUserService sysUserService;
