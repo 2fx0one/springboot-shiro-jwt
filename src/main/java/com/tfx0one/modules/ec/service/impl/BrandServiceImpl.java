@@ -1,5 +1,6 @@
 package com.tfx0one.modules.ec.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -20,10 +21,11 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
     public Pagination queryPage(Map<String, Object> params) {
         IPage<BrandEntity> page = this.page(
                 new QueryPage<BrandEntity>().getPage(params),
-                new LambdaQueryWrapper<BrandEntity>()
+                Wrappers.<BrandEntity>lambdaQuery()
+//                new LambdaQueryWrapper<BrandEntity>()
         );
 
-        return new Pagination(page);
+        return new Pagination<>(page);
     }
 
 }

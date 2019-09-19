@@ -80,6 +80,7 @@ public class JWTUtils {
                 .sign(algorithm);
     }
 
+    //app 用户
     public static String sign(UserEntity user) {
         Date expireDate = new Date(System.currentTimeMillis() + EXPIRE_TIME_IN_SECOND * 1000);
         Algorithm algorithm = Algorithm.HMAC256(user.getPassword());

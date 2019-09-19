@@ -1,15 +1,13 @@
 package com.tfx0one.modules.ec.controller;
 
+import java.sql.Wrapper;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.tfx0one.modules.ec.entity.BrandEntity;
 import com.tfx0one.modules.ec.service.BrandService;
@@ -34,11 +32,10 @@ public class BrandController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
+    @GetMapping("/list")
     @RequiresPermissions("ec:brand:list")
     public R list(@RequestParam Map<String, Object> params){
         Pagination page = brandService.queryPage(params);
-
         return R.ok(page);
     }
 
@@ -46,18 +43,17 @@ public class BrandController {
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("ec:brand:info")
     public R info(@PathVariable("id") Long id){
 		BrandEntity brand = brandService.getById(id);
-
         return R.ok(brand);
     }
 
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("ec:brand:save")
     public R save(@RequestBody BrandEntity brand){
 		brandService.save(brand);
@@ -68,7 +64,7 @@ public class BrandController {
     /**
      * 修改
      */
-    @RequestMapping("/update")
+    @PutMapping("/update")
     @RequiresPermissions("ec:brand:update")
     public R update(@RequestBody BrandEntity brand){
 		brandService.updateById(brand);
@@ -79,7 +75,7 @@ public class BrandController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
     @RequiresPermissions("ec:brand:delete")
     public R delete(@RequestBody Long[] ids){
 		brandService.removeByIds(Arrays.asList(ids));

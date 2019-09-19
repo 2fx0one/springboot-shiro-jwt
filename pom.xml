@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <mybatisplus.version>3.1.0</mybatisplus.version>
+        <mybatisplus.version>3.2.0</mybatisplus.version>
         <mysql.version>5.1.44</mysql.version>
         <mssql.version>4.0</mssql.version>
         <oracle.version>11.2.0.3</oracle.version>
@@ -48,14 +48,6 @@
     </properties>
 
     <dependencies>
-
-
-        <!-- freemarker 模板引擎 -->
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.28</version>
-        </dependency>
 
         <!--druid-->
         <dependency>
@@ -264,24 +256,24 @@
 
     <repositories>
         <repository>
-            <id>public</id>
-            <name>aliyun nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
+            <id>nexusMirror</id>
+            <name>nexus-snapshots</name>
+            <url>http://192.168.199.12:8081/repository/maven-public/</url>
         </repository>
     </repositories>
+    <!-- 插件仓库配置 -->
     <pluginRepositories>
         <pluginRepository>
-            <id>public</id>
-            <name>aliyun nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <id>nexusMirror</id>
+            <name>nexus mirror</name>
+            <url>http://192.168.199.12:8081/repository/maven-public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
             <snapshots>
                 <enabled>false</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
             </snapshots>
         </pluginRepository>
     </pluginRepositories>

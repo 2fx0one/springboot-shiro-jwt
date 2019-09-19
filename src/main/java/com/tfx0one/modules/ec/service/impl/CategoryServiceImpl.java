@@ -23,7 +23,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 new LambdaQueryWrapper<CategoryEntity>()
         );
 
-        return new Pagination(page);
+        return new Pagination<>(page);
     }
 
 }
