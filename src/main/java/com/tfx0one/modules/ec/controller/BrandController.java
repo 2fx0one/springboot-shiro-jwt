@@ -1,19 +1,17 @@
 package com.tfx0one.modules.ec.controller;
 
-import java.sql.Wrapper;
-import java.util.Arrays;
-import java.util.Map;
-
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.tfx0one.common.utils.Pagination;
+import com.tfx0one.common.utils.R;
+import com.tfx0one.modules.ec.entity.BrandEntity;
+import com.tfx0one.modules.ec.service.BrandService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.tfx0one.modules.ec.entity.BrandEntity;
-import com.tfx0one.modules.ec.service.BrandService;
-import com.tfx0one.common.utils.Pagination;;
-import com.tfx0one.common.utils.R;
+import java.util.Arrays;
+import java.util.Map;
 
+;
 
 
 /**
@@ -34,7 +32,7 @@ public class BrandController {
      */
     @GetMapping("/list")
     @RequiresPermissions("ec:brand:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         Pagination page = brandService.queryPage(params);
         return R.ok(page);
     }
@@ -45,8 +43,8 @@ public class BrandController {
      */
     @GetMapping("/info/{id}")
     @RequiresPermissions("ec:brand:info")
-    public R info(@PathVariable("id") Long id){
-		BrandEntity brand = brandService.getById(id);
+    public R info(@PathVariable("id") Long id) {
+        BrandEntity brand = brandService.getById(id);
         return R.ok(brand);
     }
 
@@ -55,8 +53,8 @@ public class BrandController {
      */
     @PostMapping("/save")
     @RequiresPermissions("ec:brand:save")
-    public R save(@RequestBody BrandEntity brand){
-		brandService.save(brand);
+    public R save(@RequestBody BrandEntity brand) {
+        brandService.save(brand);
 
         return R.ok("保存成功！");
     }
@@ -66,8 +64,8 @@ public class BrandController {
      */
     @PutMapping("/update")
     @RequiresPermissions("ec:brand:update")
-    public R update(@RequestBody BrandEntity brand){
-		brandService.updateById(brand);
+    public R update(@RequestBody BrandEntity brand) {
+        brandService.updateById(brand);
 
         return R.ok("修改成功！");
     }
@@ -77,8 +75,8 @@ public class BrandController {
      */
     @DeleteMapping("/delete")
     @RequiresPermissions("ec:brand:delete")
-    public R delete(@RequestBody Long[] ids){
-		brandService.removeByIds(Arrays.asList(ids));
+    public R delete(@RequestBody Long[] ids) {
+        brandService.removeByIds(Arrays.asList(ids));
 
         return R.ok("删除成功！");
     }

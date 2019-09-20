@@ -9,7 +9,9 @@
 package com.tfx0one.modules.app.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tfx0one.common.exception.CommonException;
 import com.tfx0one.modules.app.dao.UserDao;
@@ -27,7 +29,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
 
     @Override
     public UserEntity queryByMobile(String mobile) {
-        return baseMapper.selectOne(new QueryWrapper<UserEntity>().eq("mobile", mobile));
+        return getOne(Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getMobile, mobile));
+//        return baseMapper.selectOne(new QueryWrapper<UserEntity>().eq("mobile", mobile));
     }
 
     @Override

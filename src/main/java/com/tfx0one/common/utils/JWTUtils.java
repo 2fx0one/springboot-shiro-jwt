@@ -13,13 +13,13 @@ import com.tfx0one.modules.sys.entity.SysUserEntity;
 import java.util.Date;
 
 public class JWTUtils {
-    // 过期时间 秒为单位 暂定为 1 天
     private static final int EXPIRE_TIME_IN_SECOND = Constant.JWT_REDIS_EXPIRE_TIME_IN_SECOND;
 
-        public static boolean isTokenExpired(String token) {
+    public static boolean isTokenExpired(String token) {
         DecodedJWT jwt = JWT.decode(token);
         return jwt.getExpiresAt().before(new Date());
     }
+
     /**
      * 校验token是否正确 过期会返回 false
      *
@@ -80,18 +80,18 @@ public class JWTUtils {
                 .sign(algorithm);
     }
 
-    //app 用户
-    public static String sign(UserEntity user) {
-        Date expireDate = new Date(System.currentTimeMillis() + EXPIRE_TIME_IN_SECOND * 1000);
-        Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
-        // 附带username信息
-        return JWT.create()
-                .withIssuedAt(new Date())
-                .withSubject(user.getUserId().toString())
-                .withClaim("username", user.getUsername())
-                .withExpiresAt(expireDate)
-                .sign(algorithm);
-    }
+    //app 用户 分离 不放一起
+//    public static String sign(UserEntity user) {
+//        Date expireDate = new Date(System.currentTimeMillis() + EXPIRE_TIME_IN_SECOND * 1000);
+//        Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
+//        // 附带username信息
+//        return JWT.create()
+//                .withIssuedAt(new Date())
+//                .withSubject(user.getUserId().toString())
+//                .withClaim("username", user.getUsername())
+//                .withExpiresAt(expireDate)
+//                .sign(algorithm);
+//    }
 
     public static void main(String[] args) {
 //        SysUserEntity user = new SysUserEntity();

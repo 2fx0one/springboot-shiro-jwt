@@ -4,6 +4,7 @@ package com.tfx0one.modules.app.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -12,7 +13,8 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-@ConfigurationProperties(prefix = "config.jwt")
+@ConfigurationProperties(prefix = "config.app.jwt")
+@Data
 public class AppJWTUtils {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -57,27 +59,5 @@ public class AppJWTUtils {
         return expiration.before(new Date());
     }
 
-    public String getSecret() {
-        return secret;
-    }
 
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
-
-    public long getExpire() {
-        return expire;
-    }
-
-    public void setExpire(long expire) {
-        this.expire = expire;
-    }
-
-    public String getHeader() {
-        return header;
-    }
-
-    public void setHeader(String header) {
-        this.header = header;
-    }
 }

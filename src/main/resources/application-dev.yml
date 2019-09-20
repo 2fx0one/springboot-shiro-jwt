@@ -2,7 +2,7 @@ spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
         druid:
-            driver-class-name: com.mysql.jdbc.Driver
+            driver-class-name: com.mysql.cj.jdbc.Driver
             url: jdbc:mysql://192.168.199.199:3306/ec_fast?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
             username: root
             password: root

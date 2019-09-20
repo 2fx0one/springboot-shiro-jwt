@@ -51,8 +51,17 @@ public class Swagger2Config {
                 .build()
                 .globalOperationParameters(newArrayList(
                         new ParameterBuilder()
+                                .name("token")
+                                .description("前端的token")
+//                                .description("默认使用 admin 账户的token")
+                                .modelRef(new ModelRef("string"))
+                                .parameterType("header").required(false)
+                                .defaultValue("")
+//                                .defaultValue(JWTUtils.sign(sysUserService.queryByUserName("admin"))) //获取管理员用户
+                                .build(),
+                        new ParameterBuilder()
                                 .name("Authorization")
-                                .description("账户的token")
+                                .description("后台的token")
 //                                .description("默认使用 admin 账户的token")
                                 .modelRef(new ModelRef("string"))
                                 .parameterType("header").required(false)

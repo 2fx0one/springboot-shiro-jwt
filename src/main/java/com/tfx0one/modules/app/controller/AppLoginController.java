@@ -9,6 +9,7 @@
 package com.tfx0one.modules.app.controller;
 
 
+import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.common.utils.R;
 import com.tfx0one.common.validator.ValidatorUtils;
 import com.tfx0one.modules.app.entity.UserEntity;
@@ -45,7 +46,7 @@ public class AppLoginController {
      */
     @PostMapping("login")
     @ApiOperation("登录")
-    public R login(@RequestBody LoginForm form){
+    public R login(LoginForm form){
         //表单校验
         ValidatorUtils.validateEntity(form);
 
@@ -53,7 +54,9 @@ public class AppLoginController {
         UserEntity loginUser = userService.login(form);
 
         //生成token
+//        String token = JWTUtils.sign(loginUser);
         String token = appJwtUtils.generateToken(loginUser.getUserId());
+
 
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);

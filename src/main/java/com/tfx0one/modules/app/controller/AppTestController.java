@@ -40,8 +40,8 @@ public class AppTestController {
     @Login
     @GetMapping("userId")
     @ApiOperation("获取用户ID")
-    public R userInfo(@RequestAttribute("userId") Integer userId){
-        return R.ok(userId);
+    public R userId(@LoginUser UserEntity user){
+        return R.ok(user.getUserId());
     }
 
     @GetMapping("notToken")
