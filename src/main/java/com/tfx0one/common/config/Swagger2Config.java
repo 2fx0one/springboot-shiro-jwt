@@ -1,11 +1,6 @@
 package com.tfx0one.common.config;
 
-import com.google.common.base.Predicate;
-import com.tfx0one.common.utils.JWTUtils;
-import com.tfx0one.modules.sys.entity.SysUserEntity;
-import com.tfx0one.modules.sys.service.SysUserService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,13 +11,10 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
-import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -37,8 +29,8 @@ public class Swagger2Config {
 
     //   访问可以查看api http://localhost:8894/api/swagger-ui.html
 
-    @Autowired
-    private SysUserService sysUserService;
+//    @Autowired
+//    private SysUserService sysUserService;
 
     @Bean
     public Docket createRestApi() {
