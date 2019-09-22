@@ -17,7 +17,7 @@ import com.tfx0one.modules.ec.service.BrandService;
 public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> implements BrandService {
 
     @Override
-    public Pagination<BrandEntity> queryPage(Map<String, Object> params) {
+    public Pagination<BrandEntity> queryPage(Map<String, Object> params, BrandEntity brand) {
         IPage<BrandEntity> page = this.page(
                 new QueryPage<BrandEntity>().getPage(params),
                 Wrappers.<BrandEntity>lambdaQuery()

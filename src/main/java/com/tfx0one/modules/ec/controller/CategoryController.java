@@ -5,11 +5,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.tfx0one.modules.ec.entity.CategoryEntity;
 import com.tfx0one.modules.ec.service.CategoryService;
@@ -23,7 +19,7 @@ import com.tfx0one.common.utils.R;
  *
  * @author 2fx0one
  * @email 2fx0one@gmail.com
- * @date 2019-07-17 23:04:34
+ * @date 2019-09-23 00:14:35
  */
 @RestController
 @RequestMapping("/ec/category")
@@ -34,10 +30,10 @@ public class CategoryController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
+    @GetMapping("/list")
     @RequiresPermissions("ec:category:list")
-    public R list(@RequestParam Map<String, Object> params){
-        Pagination page = categoryService.queryPage(params);
+    public R<Pagination<CategoryEntity>> list(@RequestParam Map<String, Object> params, CategoryEntity category){
+        Pagination<CategoryEntity> page = categoryService.queryPage(params, category);
 
         return R.ok(page);
     }
@@ -46,9 +42,9 @@ public class CategoryController {
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("ec:category:info")
-    public R info(@PathVariable("id") Long id){
+    public R<CategoryEntity> info(@PathVariable("id") Long id){
 		CategoryEntity category = categoryService.getById(id);
 
         return R.ok(category);
@@ -57,7 +53,7 @@ public class CategoryController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("ec:category:save")
     public R save(@RequestBody CategoryEntity category){
 		categoryService.save(category);
@@ -68,7 +64,7 @@ public class CategoryController {
     /**
      * 修改
      */
-    @RequestMapping("/update")
+    @PutMapping("/update")
     @RequiresPermissions("ec:category:update")
     public R update(@RequestBody CategoryEntity category){
 		categoryService.updateById(category);
@@ -79,7 +75,7 @@ public class CategoryController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
     @RequiresPermissions("ec:category:delete")
     public R delete(@RequestBody Long[] ids){
 		categoryService.removeByIds(Arrays.asList(ids));

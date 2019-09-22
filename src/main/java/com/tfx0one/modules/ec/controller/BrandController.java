@@ -19,7 +19,7 @@ import com.tfx0one.common.utils.R;
  *
  * @author 2fx0one
  * @email 2fx0one@gmail.com
- * @date 2019-09-22 23:17:30
+ * @date 2019-09-23 00:14:35
  */
 @RestController
 @RequestMapping("/ec/brand")
@@ -32,8 +32,8 @@ public class BrandController {
      */
     @GetMapping("/list")
     @RequiresPermissions("ec:brand:list")
-    public R<Pagination<BrandEntity>> list(@RequestParam Map<String, Object> params){
-        Pagination<BrandEntity> page = brandService.queryPage(params);
+    public R<Pagination<BrandEntity>> list(@RequestParam Map<String, Object> params, BrandEntity brand){
+        Pagination<BrandEntity> page = brandService.queryPage(params, brand);
 
         return R.ok(page);
     }
