@@ -1,7 +1,7 @@
 package com.tfx0one.modules.sys.controller;
 
 import com.tfx0one.common.annotation.SysLog;
-import com.tfx0one.common.constant.Constant;
+import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.utils.MapUtils;
 import com.tfx0one.common.utils.R;
 import com.tfx0one.common.validator.Assert;
@@ -17,7 +17,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/sys/menu")
-public class SysMenuController extends AbstractSysController {
+public class SysMenuController extends AbstractBaseController {
     @Autowired
     private SysMenuService sysMenuService;
     @Autowired
@@ -144,7 +144,7 @@ public class SysMenuController extends AbstractSysController {
 
 
         //菜单
-        if (menu.getType() == Constant.MenuType.MENU.getValue()) {
+        if (menu.getType() == GlobalConstant.MenuType.MENU.getValue()) {
             Assert.notBlank(menu.getUrl(), "菜单URL不能为空");
         }
 
@@ -155,16 +155,16 @@ public class SysMenuController extends AbstractSysController {
             int parentType = parentMenu.getType();
 
             //当前操作的节点为 目录或菜单
-            if (menu.getType() == Constant.MenuType.CATALOG.getValue() ||
-                    menu.getType() == Constant.MenuType.MENU.getValue()) {
+            if (menu.getType() == GlobalConstant.MenuType.CATALOG.getValue() ||
+                    menu.getType() == GlobalConstant.MenuType.MENU.getValue()) {
 
-                Assert.isTrue(parentType == Constant.MenuType.CATALOG.getValue(), "上级菜单只能为目录类型");
+                Assert.isTrue(parentType == GlobalConstant.MenuType.CATALOG.getValue(), "上级菜单只能为目录类型");
                 return;
             }
 
             //当前操作的节点为 按钮
-            if (menu.getType() == Constant.MenuType.BUTTON.getValue()) {
-                Assert.isTrue(parentType == Constant.MenuType.MENU.getValue(), "上级菜单只能为菜单类型");
+            if (menu.getType() == GlobalConstant.MenuType.BUTTON.getValue()) {
+                Assert.isTrue(parentType == GlobalConstant.MenuType.MENU.getValue(), "上级菜单只能为菜单类型");
                 return;
             }
         }

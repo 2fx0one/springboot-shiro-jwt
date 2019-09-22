@@ -10,7 +10,7 @@ package com.tfx0one.modules.oss.controller;
 
 import com.google.gson.Gson;
 import com.tfx0one.common.constant.ConfigConstant;
-import com.tfx0one.common.constant.Constant;
+import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.utils.Pagination;
 import com.tfx0one.common.utils.R;
 import com.tfx0one.common.validator.Assert;
@@ -81,13 +81,13 @@ public class SysOssController {
         //校验类型
         ValidatorUtils.validateEntity(config);
 
-        if (config.getType() == Constant.CloudService.QINIU.getValue()) {
+        if (config.getType() == GlobalConstant.CloudService.QINIU.getValue()) {
             //校验七牛数据
             ValidatorUtils.validateEntity(config, QiniuGroup.class);
-        } else if (config.getType() == Constant.CloudService.ALIYUN.getValue()) {
+        } else if (config.getType() == GlobalConstant.CloudService.ALIYUN.getValue()) {
             //校验阿里云数据
             ValidatorUtils.validateEntity(config, AliyunGroup.class);
-        } else if (config.getType() == Constant.CloudService.QCLOUD.getValue()) {
+        } else if (config.getType() == GlobalConstant.CloudService.QCLOUD.getValue()) {
             //校验腾讯云数据
             ValidatorUtils.validateEntity(config, QcloudGroup.class);
         }

@@ -2,7 +2,7 @@ package com.tfx0one.common.utils;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.tfx0one.common.constant.Constant;
+import com.tfx0one.common.constant.GlobalConstant;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -87,7 +87,7 @@ public class R<T> implements Serializable {
     }
 
     public static <T> R<T> ok(T data, String msg) {
-        return commonFunc(Constant.HTTP_STATUS_OK, msg, data);
+        return commonFunc(GlobalConstant.HTTP_STATUS_OK, msg, data);
     }
 
 
@@ -96,7 +96,7 @@ public class R<T> implements Serializable {
     }
 
     public static R error(String msg) {
-        return error(Constant.HTTPS_STATUS_ERROR, msg);
+        return error(GlobalConstant.HTTPS_STATUS_ERROR, msg);
     }
 
     public static R error(int status, String msg) {

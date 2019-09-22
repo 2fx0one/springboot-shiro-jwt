@@ -6,14 +6,14 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.tfx0one.common.constant.Constant;
+import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.modules.app.entity.UserEntity;
 import com.tfx0one.modules.sys.entity.SysUserEntity;
 
 import java.util.Date;
 
 public class JWTUtils {
-    private static final int EXPIRE_TIME_IN_SECOND = Constant.JWT_REDIS_EXPIRE_TIME_IN_SECOND;
+    private static final int EXPIRE_TIME_IN_SECOND = GlobalConstant.JWT_REDIS_EXPIRE_TIME_IN_SECOND;
 
     public static boolean isTokenExpired(String token) {
         DecodedJWT jwt = JWT.decode(token);

@@ -1,16 +1,10 @@
-/**
- * Copyright (c) 2016-2019 人人开源 All rights reserved.
- *
- * https://www.renren.io
- *
- * 版权所有，侵权必究！
- */
+
 
 package com.tfx0one.modules.sys.controller;
 
 import com.tfx0one.common.annotation.SysLog;
 import com.tfx0one.common.utils.R;
-import com.tfx0one.common.constant.Constant;
+import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.validator.ValidatorUtils;
 import com.tfx0one.modules.sys.entity.SysRoleEntity;
 import com.tfx0one.modules.sys.service.SysRoleMenuService;
@@ -25,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/sys/role")
-public class SysRoleController extends AbstractSysController {
+public class SysRoleController extends AbstractBaseController {
 	@Autowired
 	private SysRoleService sysRoleService;
 	@Autowired
@@ -38,7 +32,7 @@ public class SysRoleController extends AbstractSysController {
 	@RequiresPermissions("sys:role:list")
 	public R list(@RequestParam Map<String, Object> params){
 		//如果不是超级管理员，则只查询自己创建的角色列表
-		if(getUserId() != Constant.SUPER_ADMIN){
+		if(getUserId() != GlobalConstant.SUPER_ADMIN){
 			params.put("createUserId", getUserId());
 		}
 		return R.ok(sysRoleService.queryPage(params));
@@ -53,7 +47,7 @@ public class SysRoleController extends AbstractSysController {
 		Map<String, Object> map = new HashMap<>();
 		
 		//如果不是超级管理员，则只查询自己所拥有的角色列表
-		if(getUserId() != Constant.SUPER_ADMIN){
+		if(getUserId() != GlobalConstant.SUPER_ADMIN){
 			map.put("create_user_id", getUserId());
 		}
 		List<SysRoleEntity> list = (List<SysRoleEntity>) sysRoleService.listByMap(map);

@@ -10,7 +10,7 @@ package com.tfx0one.modules.sys.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tfx0one.common.constant.Constant;
+import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.utils.MapUtils;
 import com.tfx0one.modules.sys.dao.SysMenuDao;
 import com.tfx0one.modules.sys.entity.SysMenuEntity;
@@ -70,7 +70,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
     @Override
     public List<SysMenuEntity> getUserMenuList(Long userId) {
         //系统管理员，拥有最高权限
-        if (userId == Constant.SUPER_ADMIN) {
+        if (userId == GlobalConstant.SUPER_ADMIN) {
             return getAllMenuList(null);
         }
 
@@ -106,7 +106,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
 //        List<SysMenuEntity> subMenuList = new ArrayList<>();
 
         parentList.stream()
-                .filter(menu -> menu.getType() == Constant.MenuType.CATALOG.getValue())
+                .filter(menu -> menu.getType() == GlobalConstant.MenuType.CATALOG.getValue())
                 .forEach(
                         menu -> menu.setChildren(getMenuTreeList(listByParentId(menu.getMenuId(), menuIdList), menuIdList))
                 );

@@ -256,24 +256,24 @@
 
     <repositories>
         <repository>
-            <id>nexusMirror</id>
-            <name>nexus-snapshots</name>
-            <url>http://192.168.199.12:8081/repository/maven-public/</url>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </repository>
     </repositories>
-    <!-- 插件仓库配置 -->
     <pluginRepositories>
         <pluginRepository>
-            <id>nexusMirror</id>
-            <name>nexus mirror</name>
-            <url>http://192.168.199.12:8081/repository/maven-public/</url>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
             <snapshots>
                 <enabled>false</enabled>
-                <updatePolicy>always</updatePolicy>
-                <checksumPolicy>warn</checksumPolicy>
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
