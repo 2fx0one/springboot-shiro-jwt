@@ -51,7 +51,7 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
 			new QueryWrapper <ScheduleJobEntity>().like(StringUtils.isNotBlank(beanName),"bean_name", beanName)
 		);
 
-		return new Pagination(page);
+		return new Pagination<>(page);
 	}
 
 

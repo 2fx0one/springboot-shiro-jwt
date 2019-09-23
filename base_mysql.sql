@@ -1,3 +1,7 @@
+
+CREATE DATABASE `ec_fast`;
+USE `ec_fast`;
+
 -- 菜单
 CREATE TABLE `sys_menu` (
   `menu_id` bigint NOT NULL AUTO_INCREMENT,
@@ -9,7 +13,7 @@ CREATE TABLE `sys_menu` (
   `icon` varchar(50) COMMENT '菜单图标',
   `order_num` int COMMENT '排序',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单管理';
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8mb4 COMMENT='菜单管理';
 
 -- 系统用户
 CREATE TABLE `sys_user` (
@@ -24,7 +28,7 @@ CREATE TABLE `sys_user` (
   `create_time` datetime COMMENT '创建时间',
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统用户';
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8mb4 COMMENT='系统用户';
 
 -- 系统用户Token
 CREATE TABLE `sys_user_token` (
@@ -34,7 +38,7 @@ CREATE TABLE `sys_user_token` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `token` (`token`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统用户Token';
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8mb4 COMMENT='系统用户Token';
 
 -- 系统验证码
 CREATE TABLE `sys_captcha` (
@@ -42,7 +46,7 @@ CREATE TABLE `sys_captcha` (
   `code` varchar(6) NOT NULL COMMENT '验证码',
   `expire_time` datetime DEFAULT NULL COMMENT '过期时间',
   PRIMARY KEY (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统验证码';
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8mb4 COMMENT='系统验证码';
 
 -- 角色
 CREATE TABLE `sys_role` (
@@ -52,7 +56,7 @@ CREATE TABLE `sys_role` (
   `create_user_id` bigint(20) COMMENT '创建者ID',
   `create_time` datetime COMMENT '创建时间',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8mb4 COMMENT='角色';
 
 -- 用户与角色对应关系
 CREATE TABLE `sys_user_role` (
@@ -60,7 +64,7 @@ CREATE TABLE `sys_user_role` (
   `user_id` bigint COMMENT '用户ID',
   `role_id` bigint COMMENT '角色ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户与角色对应关系';
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8mb4 COMMENT='用户与角色对应关系';
 
 -- 角色与菜单对应关系
 CREATE TABLE `sys_role_menu` (
@@ -68,18 +72,18 @@ CREATE TABLE `sys_role_menu` (
   `role_id` bigint COMMENT '角色ID',
   `menu_id` bigint COMMENT '菜单ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8mb4 COMMENT='角色与菜单对应关系';
 
 -- 系统配置信息
 CREATE TABLE `sys_config` (
 	`id` bigint NOT NULL AUTO_INCREMENT,
 	`param_key` varchar(50) COMMENT 'key',
-	`param_value` varchar(2000) COMMENT 'value',
+	`param_value` json COMMENT 'value',
 	`status` tinyint DEFAULT 1 COMMENT '状态   0：隐藏   1：显示',
 	`remark` varchar(500) COMMENT '备注',
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX (`param_key`)
-) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COMMENT='系统配置信息表';
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8mb4 COMMENT='系统配置信息表';
 
 
 -- 系统日志
@@ -93,7 +97,7 @@ CREATE TABLE `sys_log` (
   `ip` varchar(64) COMMENT 'IP地址',
   `create_date` datetime COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COMMENT='系统日志';
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8mb4 COMMENT='系统日志';
 
 
 -- 文件上传
@@ -102,7 +106,7 @@ CREATE TABLE `sys_oss` (
   `url` varchar(200) COMMENT 'URL地址',
   `create_date` datetime COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COMMENT='文件上传';
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8mb4 COMMENT='文件上传';
 
 
 -- 定时任务
@@ -115,7 +119,7 @@ CREATE TABLE `schedule_job` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`job_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定时任务';
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8mb4 COMMENT='定时任务';
 
 -- 定时任务日志
 CREATE TABLE `schedule_job_log` (
@@ -129,12 +133,12 @@ CREATE TABLE `schedule_job_log` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`log_id`),
   KEY `job_id` (`job_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定时任务日志';
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8mb4 COMMENT='定时任务日志';
 
 
 
 -- 用户表
-CREATE TABLE `tb_user` (
+CREATE TABLE `ec_user` (
   `user_id` bigint NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL COMMENT '用户名',
   `mobile` varchar(20) NOT NULL COMMENT '手机号',
@@ -142,21 +146,21 @@ CREATE TABLE `tb_user` (
   `create_time` datetime COMMENT '创建时间',
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户';
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8mb4 COMMENT='用户';
 
 
 
 
 
 
--- 初始数据 
+-- 初始数据
 INSERT INTO `sys_user` (`user_id`, `username`, `password`, `salt`, `email`, `mobile`, `status`, `create_user_id`, `create_time`) VALUES ('1', 'admin', '9ec9750e709431dad22365cabc5c625482e574c74adaebba7dd02f1129e4ce1d', 'YzcmCZNvbXocrsz9dm8e', 'root@renren.io', '13612345678', '1', '1', '2016-11-11 11:11:11');
 
-INSERT INTO `sys_menu`(`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES (1, 0, '系统管理', '/sys', NULL, 0, 'system', 0);
+INSERT INTO `sys_menu`(`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES (1, 0, '系统管理', NULL, NULL, 0, 'system', 0);
 INSERT INTO `sys_menu`(`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES (2, 1, '管理员列表', 'sys/user', NULL, 1, 'admin', 1);
 INSERT INTO `sys_menu`(`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES (3, 1, '角色管理', 'sys/role', NULL, 1, 'role', 2);
 INSERT INTO `sys_menu`(`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES (4, 1, '菜单管理', 'sys/menu', NULL, 1, 'menu', 3);
-INSERT INTO `sys_menu`(`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES (5, 1, 'SQL监控', 'http://localhost:8080/druid/sql.html', NULL, 1, 'sql', 4);
+INSERT INTO `sys_menu`(`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES (5, 1, 'SQL监控', 'http://localhost:8894/api/druid/sql.html', NULL, 1, 'sql', 4);
 INSERT INTO `sys_menu`(`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES (6, 1, '定时任务', 'job/schedule', NULL, 1, 'job', 5);
 INSERT INTO `sys_menu`(`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES (7, 6, '查看', NULL, 'sys:schedule:list,sys:schedule:info', 2, NULL, 0);
 INSERT INTO `sys_menu`(`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES (8, 6, '新增', NULL, 'sys:schedule:save', 2, NULL, 0);
@@ -183,11 +187,11 @@ INSERT INTO `sys_menu`(`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `
 INSERT INTO `sys_menu`(`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES (30, 1, '文件上传', 'oss/oss', 'sys:oss:all', 1, 'oss', 6);
 
 INSERT INTO `sys_config` (`param_key`, `param_value`, `status`, `remark`) VALUES ('CLOUD_STORAGE_CONFIG_KEY', '{\"aliyunAccessKeyId\":\"\",\"aliyunAccessKeySecret\":\"\",\"aliyunBucketName\":\"\",\"aliyunDomain\":\"\",\"aliyunEndPoint\":\"\",\"aliyunPrefix\":\"\",\"qcloudBucketName\":\"\",\"qcloudDomain\":\"\",\"qcloudPrefix\":\"\",\"qcloudSecretId\":\"\",\"qcloudSecretKey\":\"\",\"qiniuAccessKey\":\"NrgMfABZxWLo5B-YYSjoE8-AZ1EISdi1Z3ubLOeZ\",\"qiniuBucketName\":\"ios-app\",\"qiniuDomain\":\"http://7xqbwh.dl1.z0.glb.clouddn.com\",\"qiniuPrefix\":\"upload\",\"qiniuSecretKey\":\"uIwJHevMRWU0VLxFvgy0tAcOdGqasdtVlJkdy6vV\",\"type\":1}', '0', '云存储配置信息');
-INSERT INTO `schedule_job` (`bean_name`, `params`, `cron_expression`, `status`, `remark`, `create_time`) VALUES ('testTask', 'params', '0 0/30 * * * ?', '0', '参数测试', now());
+INSERT INTO `schedule_job` (`bean_name`, `params`, `cron_expression`, `status`, `remark`, `create_time`) VALUES ('testTask', 'p1', '0 0/30 * * * ?', '0', '参数测试', now());
 
 
 -- 账号：13612345678  密码：admin
-INSERT INTO `tb_user` (`username`, `mobile`, `password`, `create_time`) VALUES ('mark', '13612345678', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '2017-03-23 22:37:41');
+INSERT INTO `ec_user` (`username`, `mobile`, `password`, `create_time`) VALUES ('mark', '13612345678', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '2017-03-23 22:37:41');
 
 
 
