@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tfx0one.common.utils.Pagination;
 import com.tfx0one.common.constant.GlobalConstant;
-import com.tfx0one.common.utils.QueryPage;
+import com.tfx0one.common.utils.Query;
 import com.tfx0one.common.validator.Assert;
 import com.tfx0one.modules.sys.dao.SysRoleDao;
 import com.tfx0one.modules.sys.entity.SysRoleEntity;
@@ -43,13 +43,13 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
         Long createUserId = (Long) params.get("createUserId");
 
         IPage<SysRoleEntity> page = this.page(
-                new QueryPage<SysRoleEntity>().getPage(params),
+                Query.page(params),
                 new LambdaQueryWrapper<SysRoleEntity>()
                         .like(StringUtils.isNotBlank(roleName), SysRoleEntity::getRoleName, roleName)
                         .eq(createUserId != null, SysRoleEntity::getCreateUserId, createUserId)
         );
 
-        return new Pagination(page);
+        return Pagination.create(page);
     }
 
     @Override

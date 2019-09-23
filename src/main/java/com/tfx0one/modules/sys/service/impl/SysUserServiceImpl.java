@@ -1,12 +1,12 @@
 package com.tfx0one.modules.sys.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tfx0one.common.utils.Pagination;
 import com.tfx0one.common.constant.GlobalConstant;
-import com.tfx0one.common.utils.QueryPage;
+import com.tfx0one.common.utils.Pagination;
+import com.tfx0one.common.utils.Query;
 import com.tfx0one.common.validator.Assert;
 import com.tfx0one.modules.sys.dao.SysUserDao;
 import com.tfx0one.modules.sys.entity.SysUserEntity;
@@ -28,7 +28,6 @@ import java.util.Map;
 
 /**
  * 系统用户
- *
  */
 @Service("sysUserService")
 public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> implements SysUserService {
@@ -43,13 +42,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
         Long createUserId = (Long) params.get("createUserId");
 
         IPage<SysUserEntity> page = this.page(
-                new QueryPage<SysUserEntity>().getPage(params),
-                new LambdaQueryWrapper<SysUserEntity>()
+                Query.page(params),
+                Wrappers.<SysUserEntity>lambdaQuery()
                         .like(StringUtils.isNotBlank(username), SysUserEntity::getUsername, username)
                         .eq(createUserId != null, SysUserEntity::getCreateUserId, createUserId)
         );
 
-        return new Pagination<>(page);
+        return Pagination.create(page);
     }
 
     @Override

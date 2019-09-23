@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tfx0one.common.utils.Pagination;
-import com.tfx0one.common.utils.QueryPage;
+import com.tfx0one.common.utils.Query;
 import com.tfx0one.modules.sys.dao.SysLogDao;
 import com.tfx0one.modules.sys.entity.SysLogEntity;
 import com.tfx0one.modules.sys.service.SysLogService;
@@ -22,10 +22,10 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogDao, SysLogEntity> impl
         String key = (String)params.get("key");
 
         IPage<SysLogEntity> page = this.page(
-            new QueryPage<SysLogEntity>().getPage(params),
+                Query.page(params),
             new QueryWrapper<SysLogEntity>().like(StringUtils.isNotBlank(key),"username", key)
         );
 
-        return new Pagination(page);
+        return Pagination.create(page);
     }
 }

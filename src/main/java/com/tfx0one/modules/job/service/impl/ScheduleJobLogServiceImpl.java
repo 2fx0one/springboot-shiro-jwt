@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tfx0one.common.utils.Pagination;
-import com.tfx0one.common.utils.QueryPage;
+import com.tfx0one.common.utils.Query;
 import com.tfx0one.modules.job.dao.ScheduleJobLogDao;
 import com.tfx0one.modules.job.entity.ScheduleJobLogEntity;
 import com.tfx0one.modules.job.service.ScheduleJobLogService;
@@ -17,16 +17,16 @@ import java.util.Map;
 public class ScheduleJobLogServiceImpl extends ServiceImpl<ScheduleJobLogDao, ScheduleJobLogEntity> implements ScheduleJobLogService {
 
 
-	@Override
-	public Pagination queryPage(Map<String, Object> params) {
-		String jobId = (String)params.get("jobId");
+    @Override
+    public Pagination queryPage(Map<String, Object> params) {
+        String jobId = (String) params.get("jobId");
 
-		IPage<ScheduleJobLogEntity> page = this.page(
-			new QueryPage<ScheduleJobLogEntity>().getPage(params),
-			new QueryWrapper<ScheduleJobLogEntity>().like(StringUtils.isNotBlank(jobId),"job_id", jobId)
-		);
+        IPage<ScheduleJobLogEntity> page = this.page(
+                Query.page(params),
+                new QueryWrapper<ScheduleJobLogEntity>().like(StringUtils.isNotBlank(jobId), "job_id", jobId)
+        );
 
-		return new Pagination(page);
-	}
+		return Pagination.create(page);
+    }
 
 }

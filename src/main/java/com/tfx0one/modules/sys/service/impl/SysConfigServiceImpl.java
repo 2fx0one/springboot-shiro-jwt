@@ -1,12 +1,12 @@
 package com.tfx0one.modules.sys.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.gson.Gson;
 import com.tfx0one.common.utils.Pagination;
 import com.tfx0one.common.exception.CommonException;
-import com.tfx0one.common.utils.QueryPage;
+import com.tfx0one.common.utils.Query;
 import com.tfx0one.modules.sys.dao.SysConfigDao;
 import com.tfx0one.modules.sys.entity.SysConfigEntity;
 import com.tfx0one.modules.sys.redis.SysConfigRedis;
@@ -30,13 +30,13 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
 		String paramKey = (String)params.get("paramKey");
 
 		IPage<SysConfigEntity> page = this.page(
-			new QueryPage<SysConfigEntity>().getPage(params),
-			new QueryWrapper<SysConfigEntity>()
-				.like(StringUtils.isNotBlank(paramKey),"param_key", paramKey)
-				.eq("status", 1)
+				Query.page(params),
+				Wrappers.<SysConfigEntity>lambdaQuery()
+				.like(StringUtils.isNotBlank(paramKey),SysConfigEntity::getParamKey, paramKey)
+				.eq(SysConfigEntity::getParamKey, 1)
 		);
 
-		return new Pagination<>(page);
+		return Pagination.create(page);
 	}
 
 	@Override

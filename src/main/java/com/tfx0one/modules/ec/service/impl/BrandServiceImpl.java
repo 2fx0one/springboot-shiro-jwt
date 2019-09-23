@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tfx0one.common.utils.Pagination;
-import com.tfx0one.common.utils.QueryPage;
+import com.tfx0one.common.utils.Query;
 
 import com.tfx0one.modules.ec.dao.BrandDao;
 import com.tfx0one.modules.ec.entity.BrandEntity;
@@ -19,11 +19,11 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
     @Override
     public Pagination<BrandEntity> queryPage(Map<String, Object> params, BrandEntity brand) {
         IPage<BrandEntity> page = this.page(
-                new QueryPage<BrandEntity>().getPage(params),
+                Query.page(params),
                 Wrappers.<BrandEntity>lambdaQuery()
         );
 
-        return new Pagination<>(page);
+        return Pagination.create(page);
     }
 
 }

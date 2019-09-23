@@ -28,7 +28,11 @@ public class Pagination<T> {
     @ApiModelProperty(value = "当前页记录的条数", position = 7)
     private Long size;
 
-    public Pagination(IPage<T> page) {
+    public static <T> Pagination<T> create(IPage<T> page) {
+        return new Pagination<>(page);
+    }
+
+    private Pagination(IPage<T> page) {
         this.total = page.getTotal();
         this.list = page.getRecords();
         this.pages = page.getPages();
