@@ -19,7 +19,7 @@ public interface SysMenuService extends IService<SysMenuEntity> {
      * @param parentId 父菜单ID
      * @param menuIdList  用户菜单ID
      */
-    List<SysMenuEntity> listByParentId(Long parentId, List<Long> menuIdList);
+//    List<SysMenuEntity> listByParentId(Long parentId, List<Long> menuIdList);
 
     /**
      * 根据父菜单，查询子菜单
@@ -41,4 +41,6 @@ public interface SysMenuService extends IService<SysMenuEntity> {
      * 删除
      */
     void delete(Long menuId);
+
+    Boolean updateMenuById(SysMenuEntity menu);
 }

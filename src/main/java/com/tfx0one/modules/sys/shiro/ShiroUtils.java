@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tfx0one.common.utils;
+package com.tfx0one.modules.sys.shiro;
 
 import com.tfx0one.common.constant.GlobalConstant;
+import com.tfx0one.common.utils.SpringContextUtils;
 import com.tfx0one.modules.sys.shiro.ShiroAuthRealm;
 import com.tfx0one.common.config.ShiroConfig;
 import com.tfx0one.modules.sys.shiro.ShiroRedisCacheManager;
@@ -31,7 +32,6 @@ import org.apache.shiro.subject.Subject;
 /**
  * shiro工具类
  *
- * @author dafei, Chill Zhuang
  */
 public class ShiroUtils {
 

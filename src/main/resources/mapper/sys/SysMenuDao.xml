@@ -3,12 +3,6 @@
 
 <mapper namespace="com.tfx0one.modules.sys.dao.SysMenuDao">
 
-	<select id="queryListParentId" resultType="com.tfx0one.modules.sys.entity.SysMenuEntity">
-		select * from sys_menu where parent_id = #{parentId} order by order_num asc
-	</select>
 
-	<select id="queryNotButtonList" resultType="com.tfx0one.modules.sys.entity.SysMenuEntity">
-		select * from sys_menu where type != 2 order by order_num asc
-	</select>
 
 </mapper>

@@ -6,8 +6,9 @@ import com.tfx0one.common.utils.MapUtils;
 import com.tfx0one.common.utils.R;
 import com.tfx0one.common.validator.Assert;
 import com.tfx0one.modules.sys.entity.SysMenuEntity;
-import com.tfx0one.modules.sys.service.ShiroService;
 import com.tfx0one.modules.sys.service.SysMenuService;
+import com.tfx0one.modules.sys.service.SysUserService;
+import lombok.AllArgsConstructor;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,19 +18,22 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/sys/menu")
+@AllArgsConstructor
 public class SysMenuController extends AbstractBaseController {
-    @Autowired
-    private SysMenuService sysMenuService;
-    @Autowired
-    private ShiroService shiroService;
+
+    private final SysMenuService sysMenuService;
+    private final SysUserService sysUserService;
 
     /**
-     * 导航菜单
+     * 导航菜单 不缓存。方便用户刷新使用新的菜单 缓存会增加逻辑复杂度。这个是后台用户使用。不需要过度使用缓存
      */
     @GetMapping("/nav")
     public R nav() {
         List<SysMenuEntity> menuList = sysMenuService.getUserMenuList(getUserId());
-        Set<String> permissions = shiroService.getUserPermissions(getUserId());
+
+//        Collection<String> permissions = ShiroUtils.getAuthorizationInfo().getStringPermissions();
+
+        Set<String> permissions = sysUserService.queryAllPerms(getUserId());
         return R.ok(MapUtils.create().put("menuList", menuList).put("permissions", permissions));
 //        return R.ok(menuList.stream().map(ResponseSysMenu::create).collect(Collectors.toList()));
     }
@@ -107,7 +111,7 @@ public class SysMenuController extends AbstractBaseController {
         //数据校验
         verifyForm(menu);
 
-        sysMenuService.updateById(menu);
+        sysMenuService.updateMenuById(menu);
 
         return R.ok();
     }

@@ -38,9 +38,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
     private SysUserRoleService sysUserRoleService;
 
     @Override
-    public Pagination queryPage(Map<String, Object> params) {
-        String roleName = (String) params.get("roleName");
-        Long createUserId = (Long) params.get("createUserId");
+    public Pagination<SysRoleEntity> queryPage(Map<String, Object> params, SysRoleEntity sysRole) {
+        String roleName = sysRole.getRoleName();//(String)  params.get("roleName");
+        Long createUserId = sysRole.getCreateUserId();// (Long) params.get("createUserId");
 
         IPage<SysRoleEntity> page = this.page(
                 Query.page(params),
@@ -59,7 +59,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
         this.save(role);
 
         //检查权限是否越权
-        checkPrems(role);
+        checkPermission(role);
 
         //保存角色与菜单关系
         sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
@@ -71,7 +71,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
         this.updateById(role);
 
         //检查权限是否越权
-        checkPrems(role);
+        checkPermission(role);
 
         //更新角色与菜单关系
         sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
@@ -99,7 +99,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
     /**
      * 检查权限是否越权
      */
-    private void checkPrems(SysRoleEntity role) {
+    private void checkPermission(SysRoleEntity role) {
         //如果不是超级管理员，则需要判断角色的权限是否超过自己的权限
         if (role.getCreateUserId() == GlobalConstant.SUPER_ADMIN) {
             return;

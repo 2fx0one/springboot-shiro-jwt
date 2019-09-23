@@ -1,6 +1,5 @@
 package com.tfx0one.modules.sys.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -9,7 +8,9 @@ import com.tfx0one.common.utils.Pagination;
 import com.tfx0one.common.utils.Query;
 import com.tfx0one.common.validator.Assert;
 import com.tfx0one.modules.sys.dao.SysUserDao;
+import com.tfx0one.modules.sys.entity.SysMenuEntity;
 import com.tfx0one.modules.sys.entity.SysUserEntity;
+import com.tfx0one.modules.sys.service.SysMenuService;
 import com.tfx0one.modules.sys.service.SysRoleService;
 import com.tfx0one.modules.sys.service.SysUserRoleService;
 import com.tfx0one.modules.sys.service.SysUserService;
@@ -20,10 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -35,11 +34,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
     private SysUserRoleService sysUserRoleService;
     @Autowired
     private SysRoleService sysRoleService;
+    @Autowired
+    private SysMenuService sysMenuService;
 
     @Override
-    public Pagination<SysUserEntity> queryPage(Map<String, Object> params) {
-        String username = (String) params.get("username");
-        Long createUserId = (Long) params.get("createUserId");
+    public Pagination<SysUserEntity> queryPage(Map<String, Object> params, SysUserEntity sysUser) {
+        String username = sysUser.getUsername();// (String) params.get("username");
+        Long createUserId = sysUser.getCreateUserId();// (Long) params.get("createUserId");
 
         IPage<SysUserEntity> page = this.page(
                 Query.page(params),
@@ -52,8 +53,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
     }
 
     @Override
-    public List<String> queryAllPerms(Long userId) {
-        return baseMapper.queryAllPerms(userId);
+    public Set<String> queryAllPerms(Long userId) {
+        List<String> permsList;
+
+        //系统管理员，拥有最高权限
+        if (userId == GlobalConstant.SUPER_ADMIN) {
+            List<SysMenuEntity> menuList = sysMenuService.list();
+            permsList = menuList.stream().map(SysMenuEntity::getPerms).collect(Collectors.toList());
+        } else {
+            permsList = baseMapper.queryAllPerms(userId);
+        }
+
+        //用户权限列表
+        return permsList.stream().filter(Objects::nonNull).flatMap(s -> Arrays.stream(s.split(","))).collect(Collectors.toSet());
     }
 
     @Override
@@ -63,7 +75,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
 
     @Override
     public SysUserEntity queryByUserName(String username) {
-        return baseMapper.queryByUserName(username);
+        return this.getOne(Wrappers.<SysUserEntity>lambdaQuery().eq(SysUserEntity::getUsername, username));
     }
 
     @Override
@@ -109,8 +121,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
     public boolean updatePassword(Long userId, String password, String newPassword) {
         SysUserEntity userEntity = new SysUserEntity();
         userEntity.setPassword(newPassword);
-        return this.update(userEntity,
-                new QueryWrapper<SysUserEntity>().eq("user_id", userId).eq("password", password));
+        return this.update(
+                userEntity,
+                Wrappers.<SysUserEntity>lambdaUpdate().eq(SysUserEntity::getUserId, userId).eq(SysUserEntity::getPassword, password)
+        );
     }
 
     /**

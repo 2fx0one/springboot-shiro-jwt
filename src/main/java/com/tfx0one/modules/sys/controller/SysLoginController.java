@@ -2,7 +2,7 @@ package com.tfx0one.modules.sys.controller;
 
 import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.common.utils.R;
-import com.tfx0one.common.utils.ShiroUtils;
+import com.tfx0one.modules.sys.shiro.ShiroUtils;
 import com.tfx0one.common.validator.Assert;
 import com.tfx0one.common.validator.ValidatorUtils;
 import com.tfx0one.modules.sys.entity.SysUserEntity;

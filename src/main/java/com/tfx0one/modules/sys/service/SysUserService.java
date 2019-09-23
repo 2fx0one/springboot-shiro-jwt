@@ -6,6 +6,7 @@ import com.tfx0one.modules.sys.entity.SysUserEntity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -14,13 +15,13 @@ import java.util.Map;
  */
 public interface SysUserService extends IService<SysUserEntity> {
 
-	Pagination<SysUserEntity> queryPage(Map<String, Object> params);
+	Pagination<SysUserEntity> queryPage(Map<String, Object> params, SysUserEntity sysUser);
 
 	/**
 	 * 查询用户的所有权限
 	 * @param userId  用户ID
 	 */
-	List<String> queryAllPerms(Long userId);
+	Set<String> queryAllPerms(Long userId);
 	
 	/**
 	 * 查询用户的所有菜单ID

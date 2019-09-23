@@ -1,6 +1,7 @@
 package com.tfx0one.modules.sys.service.impl;
 
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.utils.MapUtils;
@@ -10,6 +11,8 @@ import com.tfx0one.modules.sys.service.SysMenuService;
 import com.tfx0one.modules.sys.service.SysRoleMenuService;
 import com.tfx0one.modules.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,52 +26,30 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
     @Autowired
     private SysRoleMenuService sysRoleMenuService;
 
-    @Override
-    public List<SysMenuEntity> listByParentId(Long parentId, List<Long> menuIdList) {
-        List<SysMenuEntity> parentList = listByParentId(parentId);
-
-        return parentList.stream()
-                .filter(menu -> menuIdList == null || menuIdList.contains(menu.getMenuId()))
-                .collect(Collectors.toList());
-
-//        if (menuIdList == null) {
-//            return parentList;
-//        } else {
-//            return parentList.stream()
-//                    .filter(menu -> menuIdList == null || menuIdList.contains(menu.getMenuId()))
-//                    .collect(Collectors.toList());
-//        }
-
-
-//        List<SysMenuEntity> tempList = new ArrayList<>();
-//        for (SysMenuEntity menu : parentList) {
-//            if (menuIdList.contains(menu.getMenuId())) {
-//                tempList.add(menu);
-//            }
-//        }
-//        return tempList;
-    }
 
     @Override
     public List<SysMenuEntity> listByParentId(Long parentId) {
-        return baseMapper.queryListParentId(parentId);
+        return this.list(
+                Wrappers.<SysMenuEntity>lambdaQuery().eq(SysMenuEntity::getParentId, parentId).orderByAsc(SysMenuEntity::getOrderNum));
+//        return baseMapper.queryListParentId(parentId);
     }
 
     @Override
     public List<SysMenuEntity> queryNotButtonList() {
-        return baseMapper.queryNotButtonList();
+        return this.list(
+                Wrappers.<SysMenuEntity>lambdaQuery().ne(SysMenuEntity::getType, 2).orderByAsc(SysMenuEntity::getOrderNum));
     }
 
     @Override
     public List<SysMenuEntity> getUserMenuList(Long userId) {
         //系统管理员，拥有最高权限
         if (userId == GlobalConstant.SUPER_ADMIN) {
-            return getAllMenuList(null);
+            return getAllMenuRecursive(null);
         }
 
         //用户菜单列表
         List<Long> menuIdList = sysUserService.queryAllMenuId(userId);
-        return getAllMenuList(menuIdList);
+        return getAllMenuRecursive(menuIdList);
     }
 
     @Override
@@ -79,37 +60,36 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
         sysRoleMenuService.removeByMap(new MapUtils().put("menu_id", menuId));
     }
 
+    @Override
+    public Boolean updateMenuById(SysMenuEntity menu) {
+        return this.updateById(menu);
+    }
+
+
     /**
      * 获取所有菜单列表
      */
-    private List<SysMenuEntity> getAllMenuList(List<Long> menuIdList) {
-        //查询根菜单列表
-        List<SysMenuEntity> parentList = listByParentId(0L, menuIdList);
+    private List<SysMenuEntity> getAllMenuRecursive(List<Long> menuIdList) {
         //递归获取子菜单
-        getMenuTreeList(parentList, menuIdList);
+        return getMenuTreeList(0L, menuIdList);
 
-        return parentList;
+//        return parentList;
     }
 
     /**
      * 递归
      */
-    private List<SysMenuEntity> getMenuTreeList(List<SysMenuEntity> parentList, List<Long> menuIdList) {
-//        List<SysMenuEntity> subMenuList = new ArrayList<>();
+    private List<SysMenuEntity> getMenuTreeList(Long parentId, List<Long> menuIdList) {
 
-        parentList.stream()
-                .filter(menu -> menu.getType() == GlobalConstant.MenuType.CATALOG.getValue())
-                .forEach(
-                        menu -> menu.setChildren(getMenuTreeList(listByParentId(menu.getMenuId(), menuIdList), menuIdList))
-                );
-//        for (SysMenuEntity entity : parentList) {
-//            //目录
-//            if (entity.getType() == Constant.MenuType.CATALOG.getValue()) {
-//                entity.setChildren(getMenuTreeList(listByParentId(entity.getMenuId(), menuIdList), menuIdList));
-//            }
-//            subMenuList.add(entity);
-//        }
-
-        return parentList;
+        return listByParentId(parentId).stream()
+                //节点过滤 需要用户持有的id
+                .filter(menu -> menuIdList == null || menuIdList.contains(menu.getMenuId()))
+                .peek(menu -> {
+                    if (menu.getType() == GlobalConstant.MenuType.CATALOG.getValue()) {
+                        //只递归目录
+                        menu.setChildren(getMenuTreeList(menu.getMenuId(), menuIdList));
+                    }
+                })
+                .collect(Collectors.toList());
     }
 }

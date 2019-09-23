@@ -3,7 +3,6 @@ package com.tfx0one.modules.sys.shiro;
 import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.common.validator.Assert;
 import com.tfx0one.modules.sys.entity.SysUserEntity;
-import com.tfx0one.modules.sys.service.ShiroService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -52,7 +51,7 @@ public class ShiroAuthRealm extends AuthorizingRealm {
 //        String token = (String) authenticationToken.getPrincipal();
         String jwtToken = (String) authenticationToken.getCredentials();
 
-        if (JWTUtils.isTokenExpired(jwtToken)){
+        if (JWTUtils.isTokenExpired(jwtToken)) {
             throw new UnauthenticatedException("[TOKEN 已经过期] 请重新登录！");
         }
 
