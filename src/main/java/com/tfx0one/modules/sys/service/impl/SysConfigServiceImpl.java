@@ -36,7 +36,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
 				.eq("status", 1)
 		);
 
-		return new Pagination(page);
+		return new Pagination<>(page);
 	}
 
 	@Override

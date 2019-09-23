@@ -1,4 +1,4 @@
-package com.tfx0one.common.shiro;
+package com.tfx0one.modules.sys.shiro;
 
 import com.tfx0one.common.constant.GlobalConstant;
 import org.apache.shiro.cache.Cache;

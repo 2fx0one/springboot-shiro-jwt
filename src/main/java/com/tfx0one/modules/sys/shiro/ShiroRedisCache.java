@@ -1,6 +1,5 @@
-package com.tfx0one.common.shiro;
+package com.tfx0one.modules.sys.shiro;
 
-import com.tfx0one.common.utils.JWTUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.slf4j.Logger;

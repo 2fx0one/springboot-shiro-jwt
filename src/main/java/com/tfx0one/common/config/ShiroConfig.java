@@ -1,12 +1,13 @@
-package com.tfx0one.common.shiro;
+package com.tfx0one.common.config;
 
+import com.tfx0one.modules.sys.shiro.AuthFilter;
+import com.tfx0one.modules.sys.shiro.ShiroAuthRealm;
+import com.tfx0one.modules.sys.shiro.ShiroRedisCacheManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
-import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
@@ -25,10 +26,10 @@ import java.util.Map;
 public class ShiroConfig {
 
     //身份验证缓存
-    public static final String AUTHENTICATION_CACHE_NAME = "AUTH_C";
+    public static final String AUTHENTICATION_CACHE_NAME = "C";
 
     //权限验证缓存
-    public static final String AUTHORIZATION_CACHE_NAME = "AUTH_Z";
+    public static final String AUTHORIZATION_CACHE_NAME = "Z";
 
     /**
      * shiro缓存管理器;
@@ -82,18 +83,16 @@ public class ShiroConfig {
         factoryBean.setSecurityManager(securityManager);
         //自定义URL
         Map<String, String> rule = new HashMap<>();
-//        rule.put("/webjars/**", "anon");
-//        rule.put("/druid/**", "anon");
-//        rule.put("/app/**", "anon");
-//        rule.put("/sys/login", "anon");
-//        rule.put("/swagger/**", "anon");
-//        rule.put("/v2/api-docs", "anon");
-//        rule.put("/swagger-ui.html", "anon");
-//        rule.put("/swagger-resources/**", "anon");
-//        rule.put("/captcha.jpg", "anon");
-//        rule.put("/aaa.txt", "anon");
-        rule.put("/api/app/**", "anon");
-//        rule.put("/api/sys/login", "anon");
+        rule.put("/webjars/**", "anon");
+        rule.put("/druid/**", "anon");
+        rule.put("/app/**", "anon");
+        rule.put("/sys/login", "anon");
+        rule.put("/swagger/**", "anon");
+        rule.put("/v2/api-docs", "anon");
+        rule.put("/swagger-ui.html", "anon");
+        rule.put("/swagger-resources/**", "anon");
+        rule.put("/captcha.jpg", "anon");
+        rule.put("/aaa.txt", "anon");
         rule.put("/**", "AuthFilter");
 
 
@@ -102,9 +101,6 @@ public class ShiroConfig {
         return factoryBean;
     }
 
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
-    }
 
     // 自动代理所有的advisor: 由Advisor决定对哪些类的方法进行AOP代理。
     @Bean
@@ -115,6 +111,10 @@ public class ShiroConfig {
         // https://zhuanlan.zhihu.com/p/29161098
         defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
         return defaultAdvisorAutoProxyCreator;
+    }
+    @Bean("lifecycleBeanPostProcessor")
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
     }
 
     //注解支持

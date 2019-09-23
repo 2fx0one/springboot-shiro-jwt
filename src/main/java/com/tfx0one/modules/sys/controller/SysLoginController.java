@@ -10,6 +10,7 @@ import com.tfx0one.modules.sys.service.SysCaptchaService;
 import com.tfx0one.modules.sys.service.SysUserService;
 import com.tfx0one.modules.sys.vo.RequestSysLogin;
 import com.tfx0one.modules.sys.vo.ResponseSysLoginToken;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ public class SysLoginController extends AbstractBaseController {
      * 登录
      */
     @PostMapping("/sys/login")
+    @ApiOperation("登录")
     public R login(@RequestBody RequestSysLogin form) {
         ValidatorUtils.validateEntity(form);
 

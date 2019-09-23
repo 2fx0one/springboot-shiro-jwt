@@ -4,6 +4,7 @@ package com.tfx0one.modules.oss.cloud;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.request.UploadFileRequest;
@@ -52,6 +53,7 @@ public class QcloudCloudStorageService extends CloudStorageService {
         String response = client.uploadFile(request);
 
         JSONObject jsonObject = JSONObject.parseObject(response);
+
         if(jsonObject.getInteger("code") != 0) {
             throw new CommonException("文件上传失败，" + jsonObject.getString("message"));
         }

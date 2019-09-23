@@ -1,7 +1,6 @@
 package com.tfx0one.common.aspect;
 
-import com.alibaba.fastjson.JSONObject;
-
+import com.google.gson.Gson;
 import com.tfx0one.common.annotation.SysLog;
 import com.tfx0one.common.utils.HttpContextUtils;
 import com.tfx0one.common.utils.IPUtils;
@@ -66,7 +65,7 @@ public class SysLogAspect {
         //请求的参数
         Object[] args = joinPoint.getArgs();
         try {
-            String params = JSONObject.toJSONString(args); //new Gson().toJson(args);
+            String params = new Gson().toJson(args);
             log.setParams(params);
         } catch (Exception e) {
 

@@ -1,4 +1,4 @@
-package com.tfx0one.common.shiro;
+package com.tfx0one.modules.sys.shiro;
 
 import com.tfx0one.common.utils.JWTUtils;
 import com.tfx0one.common.validator.Assert;

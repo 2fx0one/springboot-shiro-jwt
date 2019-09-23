@@ -13,7 +13,7 @@ public class GlobalConstant {
     public static final String SPLIT_DELIMETER = ",";
 
     // JWT 和 shiro 缓存 过期时间 秒为单位 保持一致
-    public static final int JWT_REDIS_EXPIRE_TIME_IN_SECOND = 7*24*3600;
+    public static final int JWT_REDIS_EXPIRE_TIME_IN_SECOND = 10;
     // Redis 过期时间 秒为单位  -1 表示永不过期
     public static final int REDIS_EXPIRE_TIME_IN_SECOND = 24*3600;
 
