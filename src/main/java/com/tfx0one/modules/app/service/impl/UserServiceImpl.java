@@ -1,11 +1,3 @@
-/**
- * Copyright (c) 2016-2019 人人开源 All rights reserved.
- * <p>
- * https://www.renren.io
- * <p>
- * 版权所有，侵权必究！
- */
-
 package com.tfx0one.modules.app.service.impl;
 
 
@@ -29,8 +21,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
 
     @Override
     public UserEntity queryByMobile(String mobile) {
-        return getOne(Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getMobile, mobile));
-//        return baseMapper.selectOne(new QueryWrapper<UserEntity>().eq("mobile", mobile));
+        return this.getOne(Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getMobile, mobile));
     }
 
     @Override

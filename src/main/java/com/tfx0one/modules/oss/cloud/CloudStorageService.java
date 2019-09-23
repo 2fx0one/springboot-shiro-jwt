@@ -1,10 +1,4 @@
-/**
- * Copyright (c) 2016-2019 人人开源 All rights reserved.
- *
- * https://www.renren.io
- *
- * 版权所有，侵权必究！
- */
+
 
 package com.tfx0one.modules.oss.cloud;
 
@@ -18,7 +12,6 @@ import java.util.UUID;
 /**
  * 云存储(支持七牛、阿里云、腾讯云、又拍云)
  *
- * @author Mark sunlightcs@gmail.com
  */
 public abstract class CloudStorageService {
     /** 云存储配置信息 */

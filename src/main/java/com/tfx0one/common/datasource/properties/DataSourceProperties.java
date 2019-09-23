@@ -3,7 +3,6 @@ package com.tfx0one.common.datasource.properties;
 /**
  * 多数据源属性
  *
- * @since 1.0.0
  */
 public class DataSourceProperties {
     private String driverClassName;

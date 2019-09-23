@@ -1,11 +1,3 @@
-/**
- * Copyright (c) 2018 人人开源 All rights reserved.
- *
- * https://www.renren.io
- *
- * 版权所有，侵权必究！
- */
-
 package com.tfx0one.common.datasource.config;
 
 import java.util.ArrayDeque;
@@ -14,7 +6,6 @@ import java.util.Deque;
 /**
  * 多数据源上下文
  *
- * @author Mark sunlightcs@gmail.com
  */
 public class DynamicContextHolder {
     @SuppressWarnings("unchecked")
