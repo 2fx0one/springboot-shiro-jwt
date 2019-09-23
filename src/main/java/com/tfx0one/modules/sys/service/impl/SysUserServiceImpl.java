@@ -13,7 +13,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tfx0one.common.utils.Pagination;
-import com.tfx0one.common.constant.Constant;
+import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.utils.QueryPage;
 import com.tfx0one.common.validator.Assert;
 import com.tfx0one.modules.sys.dao.SysUserDao;
@@ -131,7 +131,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
             return;
         }
         //如果不是超级管理员，则需要判断用户的角色是否自己创建
-        if (user.getCreateUserId() == Constant.SUPER_ADMIN) {
+        if (user.getCreateUserId() == GlobalConstant.SUPER_ADMIN) {
             return;
         }
 

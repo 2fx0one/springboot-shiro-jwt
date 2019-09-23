@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tfx0one.common.utils.Pagination;
-import com.tfx0one.common.constant.Constant;
+import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.utils.QueryPage;
 import com.tfx0one.common.validator.Assert;
 import com.tfx0one.modules.sys.dao.SysRoleDao;
@@ -104,7 +104,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
      */
     private void checkPrems(SysRoleEntity role) {
         //如果不是超级管理员，则需要判断角色的权限是否超过自己的权限
-        if (role.getCreateUserId() == Constant.SUPER_ADMIN) {
+        if (role.getCreateUserId() == GlobalConstant.SUPER_ADMIN) {
             return;
         }
 

@@ -1,17 +1,9 @@
-/**
- * Copyright (c) 2016-2019 人人开源 All rights reserved.
- *
- * https://www.renren.io
- *
- * 版权所有，侵权必究！
- */
-
 package com.tfx0one.modules.sys.controller;
 
 import com.tfx0one.common.annotation.SysLog;
 import com.tfx0one.common.utils.Pagination;
 import com.tfx0one.common.utils.R;
-import com.tfx0one.common.constant.Constant;
+import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.validator.Assert;
 import com.tfx0one.common.validator.ValidatorUtils;
 import com.tfx0one.common.validator.group.AddGroup;
@@ -34,7 +26,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/sys/user")
-public class SysUserController extends AbstractSysController {
+public class SysUserController extends AbstractBaseController {
 	@Autowired
 	private SysUserService sysUserService;
 	@Autowired
@@ -50,7 +42,7 @@ public class SysUserController extends AbstractSysController {
 	@RequiresPermissions("sys:user:list")
 	public R<Pagination<SysUserEntity>> list(@RequestParam Map<String, Object> params){
 		//只有超级管理员，才能查看所有管理员列表
-		if(getUserId() != Constant.SUPER_ADMIN){
+		if(getUserId() != GlobalConstant.SUPER_ADMIN){
 			params.put("createUserId", getUserId());
 		}
 		return R.ok(sysUserService.queryPage(params));

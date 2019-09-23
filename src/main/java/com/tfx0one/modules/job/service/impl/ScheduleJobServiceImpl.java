@@ -3,7 +3,7 @@ package com.tfx0one.modules.job.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tfx0one.common.constant.Constant;
+import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.utils.Pagination;
 import com.tfx0one.common.utils.QueryPage;
 import com.tfx0one.modules.job.dao.ScheduleJobDao;
@@ -59,7 +59,7 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
 	@Transactional(rollbackFor = Exception.class)
 	public void saveJob(ScheduleJobEntity scheduleJob) {
 		scheduleJob.setCreateTime(new Date());
-		scheduleJob.setStatus(Constant.ScheduleStatus.NORMAL.getValue());
+		scheduleJob.setStatus(GlobalConstant.ScheduleStatus.NORMAL.getValue());
         this.save(scheduleJob);
         
         ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
@@ -107,7 +107,7 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
     		ScheduleUtils.pauseJob(scheduler, jobId);
     	}
         
-    	updateBatch(jobIds, Constant.ScheduleStatus.PAUSE.getValue());
+    	updateBatch(jobIds, GlobalConstant.ScheduleStatus.PAUSE.getValue());
     }
 
 	@Override
@@ -117,7 +117,7 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
     		ScheduleUtils.resumeJob(scheduler, jobId);
     	}
 
-    	updateBatch(jobIds, Constant.ScheduleStatus.NORMAL.getValue());
+    	updateBatch(jobIds, GlobalConstant.ScheduleStatus.NORMAL.getValue());
     }
     
 }

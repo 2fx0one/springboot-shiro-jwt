@@ -11,10 +11,10 @@ import java.util.Map;
  *
  * @author 2fx0one
  * @email 2fx0one@gmail.com
- * @date 2019-07-17 23:04:34
+ * @date 2019-09-23 00:14:35
  */
 public interface CategoryService extends IService<CategoryEntity> {
 
-    Pagination queryPage(Map<String, Object> params);
+    Pagination<CategoryEntity> queryPage(Map<String, Object> params, CategoryEntity category);
 }
 

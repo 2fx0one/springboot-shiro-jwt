@@ -10,7 +10,7 @@ package com.tfx0one.modules.oss.cloud;
 
 
 import com.tfx0one.common.constant.ConfigConstant;
-import com.tfx0one.common.constant.Constant;
+import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.utils.SpringContextUtils;
 import com.tfx0one.modules.sys.service.SysConfigService;
 
@@ -30,11 +30,11 @@ public final class OSSFactory {
         //获取云存储配置信息
         CloudStorageConfig config = sysConfigService.getConfigObject(ConfigConstant.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
 
-        if(config.getType() == Constant.CloudService.QINIU.getValue()){
+        if(config.getType() == GlobalConstant.CloudService.QINIU.getValue()){
             return new QiniuCloudStorageService(config);
-        }else if(config.getType() == Constant.CloudService.ALIYUN.getValue()){
+        }else if(config.getType() == GlobalConstant.CloudService.ALIYUN.getValue()){
             return new AliyunCloudStorageService(config);
-        }else if(config.getType() == Constant.CloudService.QCLOUD.getValue()){
+        }else if(config.getType() == GlobalConstant.CloudService.QCLOUD.getValue()){
             return new QcloudCloudStorageService(config);
         }
 

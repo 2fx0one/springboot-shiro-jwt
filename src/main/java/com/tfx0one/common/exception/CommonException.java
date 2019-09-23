@@ -1,6 +1,6 @@
 package com.tfx0one.common.exception;
 
-import com.tfx0one.common.constant.Constant;
+import com.tfx0one.common.constant.GlobalConstant;
 import lombok.Getter;
 
 /*
@@ -12,7 +12,7 @@ public class CommonException extends RuntimeException{
     private static final long serialVersionUID = 1L;
 
     private String msg;
-    private int code = Constant.HTTPS_STATUS_ERROR;
+    private int code = GlobalConstant.HTTPS_STATUS_ERROR;
 
     public CommonException() {
         super();

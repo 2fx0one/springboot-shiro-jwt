@@ -1,11 +1,3 @@
-/**
- * Copyright (c) 2016-2019 人人开源 All rights reserved.
- * <p>
- * https://www.renren.io
- * <p>
- * 版权所有，侵权必究！
- */
-
 package com.tfx0one.modules.sys.controller;
 
 import com.tfx0one.common.utils.JWTUtils;
@@ -33,7 +25,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 @RestController
-public class SysLoginController extends AbstractSysController {
+public class SysLoginController extends AbstractBaseController {
     @Autowired
     private SysUserService sysUserService;
     @Autowired
