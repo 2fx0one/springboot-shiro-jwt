@@ -5,23 +5,23 @@ package com.tfx0one.common.exception;
  * 2019/3/13 00:35
  */
 
-import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.utils.R;
-import org.apache.shiro.authz.AuthorizationException;
-import org.apache.shiro.authz.UnauthenticatedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import java.util.List;
 
+@Slf4j
 @RestControllerAdvice
 public class CommonExceptionHandler {
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @ExceptionHandler(CommonException.class)
     @ResponseStatus
@@ -29,37 +29,42 @@ public class CommonExceptionHandler {
         return R.error(e.getCode(), e.getMsg());
     }
 
-//    //身份未认证
-//    @ExceptionHandler(UnauthenticatedException.class)
-//    public R handleUnauthenticatedException(UnauthenticatedException e) {
-////        logger.error(e.getMessage(), e);
-//        return R.error(GlobalConstant.HTTPS_STATUS_RE_LOGIN, "身份未认证,请重新登录！");
-//    }
-//
-//    //用户权限不足
-//    @ExceptionHandler(AuthorizationException.class)
-//    public R handleAuthorizedException(AuthorizationException e) {
-////        logger.error(e.getMessage(), e);
-//        return R.error(HttpStatus.UNAUTHORIZED.value(), "没有权限，请联系管理员授权" + e.getMessage());
-//    }
-
     @ExceptionHandler(NoHandlerFoundException.class)
     public R handlerNoFoundException(Exception e) {
-        logger.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return R.error(HttpStatus.NOT_FOUND.value(), "路径不存在，请检查路径是否正确" + e.getMessage());
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
     public R handleDuplicateKeyException(DuplicateKeyException e) {
-        logger.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return R.error("数据库中已存在该记录" + e.getMessage());
     }
 
     // 捕捉控制器的其他所有异常
     @ExceptionHandler({Exception.class})
     public R globalException(Exception e) {
-        logger.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return R.error("系统错误！ " + e.getMessage());
+    }
+
+    /**
+     * validation Exception
+     */
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public R bodyValidExceptionHandler(MethodArgumentNotValidException exception) {
+        List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+        log.warn(fieldErrors.get(0).getDefaultMessage());
+        return R.error(fieldErrors.get(0).getDefaultMessage());
+    }
+
+    @ExceptionHandler({BindException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public R bodyValidExceptionHandler(BindException exception) {
+        List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+        log.warn(fieldErrors.get(0).getDefaultMessage());
+        return R.error(fieldErrors.get(0).getDefaultMessage());
     }
 
 }

@@ -12,6 +12,7 @@ import com.tfx0one.modules.ec.service.CategoryService;
 import com.tfx0one.common.utils.Pagination;;
 import com.tfx0one.common.utils.R;
 
+import javax.validation.Valid;
 
 
 /**
@@ -66,7 +67,7 @@ public class CategoryController {
      */
     @PutMapping("/update")
     @RequiresPermissions("ec:category:update")
-    public R update(@RequestBody CategoryEntity category){
+    public R update(@RequestBody @Valid CategoryEntity category){
 		categoryService.updateById(category);
 
         return R.ok("修改成功！");
