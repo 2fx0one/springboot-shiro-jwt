@@ -12,6 +12,7 @@ import com.tfx0one.modules.sys.vo.RequestSysLogin;
 import com.tfx0one.modules.sys.vo.ResponseSysLoginToken;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.IOUtils;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -79,7 +80,6 @@ public class SysLoginController extends AbstractBaseController {
         }
 
         //生成token，并保存到数据库
-//		R r = sysUserTokenService.createToken(user.getUserId());
         return R.ok(ResponseSysLoginToken.create(JWTUtils.sign(user)));
     }
 

@@ -26,8 +26,8 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
 	private SysConfigRedis sysConfigRedis;
 
 	@Override
-	public Pagination queryPage(Map<String, Object> params) {
-		String paramKey = (String)params.get("paramKey");
+	public Pagination queryPage(Map<String, Object> params, SysConfigEntity sysConfig) {
+		String paramKey = sysConfig.getParamKey();//  (String)params.get("paramKey");
 
 		IPage<SysConfigEntity> page = this.page(
 				Query.page(params),

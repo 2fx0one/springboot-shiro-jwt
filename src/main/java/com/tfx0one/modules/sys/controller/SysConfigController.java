@@ -24,8 +24,8 @@ public class SysConfigController extends AbstractBaseController {
      */
     @GetMapping("/list")
     @RequiresPermissions("sys:config:list")
-    public R list(@RequestParam Map<String, Object> params) {
-        Pagination page = sysConfigService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params, SysConfigEntity sysConfig) {
+        Pagination page = sysConfigService.queryPage(params, sysConfig);
 
         return R.ok(page);
     }

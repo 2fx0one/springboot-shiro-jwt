@@ -47,8 +47,6 @@ public class ShiroAuthRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         log.info("AUTH_C 认证信息(身份验证) ===> MyShiroRealm.doGetAuthenticationInfo()");
 //        authenticationToken 实际是 JWTToken对象包装 在 executeLogin 中  getSubject(request, response).login(token); 传入
-//        System.out.println(authenticationToken.getPrincipal());
-//        String token = (String) authenticationToken.getPrincipal();
         String jwtToken = (String) authenticationToken.getCredentials();
 
         if (JWTUtils.isTokenExpired(jwtToken)) {
@@ -62,22 +60,13 @@ public class ShiroAuthRealm extends AuthorizingRealm {
         //TODO 切换成 Assert
 //        Assert.notNull(username, "[用户名不存在] token invalid");
         Assert.notNull(userId, "[用户ID不存在] token invalid");
-//            只能抛出 AuthenticationException
-//        if (username == null) {
-//            throw new UnauthenticatedException("[用户名不存在] token invalid");
-//        }
-//        if (userId == null) {
-//            throw new UnauthenticatedException("[用户ID不存在] token invalid");
-//        }
 
         SysUserEntity user = shiroService.queryUserById(Long.parseLong(userId));
         if (user == null) {
-//            throw new CommonException(TOKEN_INVALID);
             throw new UnauthenticatedException("[用户不存在] User didn't existed!");
         }
 
         if (!JWTUtils.verify(jwtToken, user.getUsername(), user.getPassword())) {
-            //产生 JWTVerificationException 抛出异常
             throw new UnauthenticatedException("[TOKEN 认证信息(身份验证) 认证失败] 请重新登录！");
         }
 
@@ -138,19 +127,7 @@ public class ShiroAuthRealm extends AuthorizingRealm {
 
 
         SysUserEntity user = (SysUserEntity) principals.getPrimaryPrincipal();
-//        List<SysRole> roleList = user.getRoleList();
-//
-//        //角色字符串
-//        List<String> roles = roleList.stream().map(SysRole::getRoleType).collect(Collectors.toList());
-//        simpleAuthorizationInfo.addRoles(roles);
-//
-//        //权限字符串
-//        Set<String> permissions = user.getMenuList().stream()
-////                .map(Role::getMenuList).flatMap(Collection::stream)
-//                .map(SysMenu::getPermission).filter(StringUtils::isNotEmpty) //过滤空
-//                .flatMap(s -> Arrays.stream(s.split(GlobalConstant.SPLIT_DELIMETER)))
-////                .sorted()
-//                .collect(Collectors.toSet());
+
         Set<String> permissions = shiroService.getUserPermissions(user.getUserId());
         simpleAuthorizationInfo.setStringPermissions(permissions);
 

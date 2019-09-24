@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public interface SysConfigService extends IService<SysConfigEntity> {
 
-	Pagination queryPage(Map<String, Object> params);
+	Pagination queryPage(Map<String, Object> params, SysConfigEntity sysConfig);
 	
 	/**
 	 * 保存配置信息
