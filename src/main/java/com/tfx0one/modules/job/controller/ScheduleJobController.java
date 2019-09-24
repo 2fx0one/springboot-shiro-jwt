@@ -49,7 +49,7 @@ public class ScheduleJobController {
 	 * 保存定时任务
 	 */
 	@SysLog("保存定时任务")
-	@RequestMapping("/save")
+	@PostMapping("/save")
 	@RequiresPermissions("sys:schedule:save")
 	public R save(@RequestBody ScheduleJobEntity scheduleJob){
 		ValidatorUtils.validateEntity(scheduleJob);
@@ -63,7 +63,7 @@ public class ScheduleJobController {
 	 * 修改定时任务
 	 */
 	@SysLog("修改定时任务")
-	@RequestMapping("/update")
+	@PostMapping("/update")
 	@RequiresPermissions("sys:schedule:update")
 	public R update(@RequestBody ScheduleJobEntity scheduleJob){
 		ValidatorUtils.validateEntity(scheduleJob);
