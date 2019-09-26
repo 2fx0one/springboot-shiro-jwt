@@ -22,7 +22,7 @@ public class AppWebMvcConfig implements WebMvcConfigurer {
     private LoginUserHandlerMethodArgumentResolver loginUserHandlerMethodArgumentResolver;
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(InterceptorRegistry registry)  {
         registry.addInterceptor(authorizationInterceptor).addPathPatterns("/app/**");
     }
 

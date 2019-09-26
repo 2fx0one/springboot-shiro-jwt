@@ -16,7 +16,7 @@ import java.util.Map;
 public class SysOssServiceImpl extends ServiceImpl<SysOssDao, SysOssEntity> implements SysOssService {
 
     @Override
-    public Pagination queryPage(Map<String, Object> params) {
+    public Pagination<SysOssEntity> queryPage(Map<String, Object> params) {
         IPage<SysOssEntity> page = this.page(
                 Query.page(params)
                 );
