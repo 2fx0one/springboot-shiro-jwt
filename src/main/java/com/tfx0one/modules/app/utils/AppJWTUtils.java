@@ -18,6 +18,7 @@ import java.util.Date;
 public class AppJWTUtils {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
+    private String a_b;
     private String secret;
     private long expire;
     private String header;
