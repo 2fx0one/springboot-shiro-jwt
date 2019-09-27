@@ -10,6 +10,7 @@ import com.tfx0one.modules.job.entity.ScheduleJobEntity;
 import com.tfx0one.modules.job.service.ScheduleJobService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -51,8 +52,8 @@ public class ScheduleJobController {
 	@SysLog("保存定时任务")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:schedule:save")
-	public R save(@RequestBody ScheduleJobEntity scheduleJob){
-		ValidatorUtils.validateEntity(scheduleJob);
+	public R save(@Validated @RequestBody ScheduleJobEntity scheduleJob){
+//		ValidatorUtils.validateEntity(scheduleJob);
 		
 		scheduleJobService.saveJob(scheduleJob);
 		
@@ -65,9 +66,8 @@ public class ScheduleJobController {
 	@SysLog("修改定时任务")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:schedule:update")
-	public R update(@RequestBody ScheduleJobEntity scheduleJob){
-		ValidatorUtils.validateEntity(scheduleJob);
-				
+	public R update(@Validated @RequestBody ScheduleJobEntity scheduleJob){
+
 		scheduleJobService.update(scheduleJob);
 		
 		return R.ok();

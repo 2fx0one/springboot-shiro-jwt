@@ -13,6 +13,7 @@ import com.tfx0one.modules.sys.service.SysRoleMenuService;
 import com.tfx0one.modules.sys.service.SysRoleService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -76,8 +77,8 @@ public class SysRoleController extends AbstractBaseController {
     @SysLog("保存角色")
     @PostMapping("/save")
     @RequiresPermissions("sys:role:save")
-    public R save(@RequestBody SysRoleEntity role) {
-        ValidatorUtils.validateEntity(role);
+    public R save(@Validated @RequestBody SysRoleEntity role) {
+//        ValidatorUtils.validateEntity(role);
 
         role.setCreateUserId(getUserId());
         sysRoleService.saveRole(role);
@@ -91,8 +92,8 @@ public class SysRoleController extends AbstractBaseController {
     @SysLog("修改角色")
     @PostMapping("/update")
     @RequiresPermissions("sys:role:update")
-    public R update(@RequestBody SysRoleEntity role) {
-        ValidatorUtils.validateEntity(role);
+    public R update(@Validated @RequestBody SysRoleEntity role) {
+//        ValidatorUtils.validateEntity(role);
 
         role.setCreateUserId(getUserId());
         sysRoleService.update(role);

@@ -1,5 +1,6 @@
 package com.tfx0one.modules.app.form;
 
+import com.tfx0one.common.validator.group.AddGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

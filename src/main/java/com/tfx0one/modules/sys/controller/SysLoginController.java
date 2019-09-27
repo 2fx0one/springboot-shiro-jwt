@@ -15,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,8 +55,8 @@ public class SysLoginController extends AbstractBaseController {
      */
     @PostMapping("/sys/login")
     @ApiOperation("登录")
-    public R login(@RequestBody RequestSysLogin form) {
-        ValidatorUtils.validateEntity(form);
+    public R login(@Validated @RequestBody RequestSysLogin form) {
+//        ValidatorUtils.validateEntity(form);
 
         //暂时不要验证码
 //		boolean captcha = sysCaptchaService.validate(form.getUuid(), form.getCaptcha());

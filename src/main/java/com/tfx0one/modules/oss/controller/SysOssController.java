@@ -18,6 +18,7 @@ import com.tfx0one.modules.oss.service.SysOssService;
 import com.tfx0one.modules.sys.service.SysConfigService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
