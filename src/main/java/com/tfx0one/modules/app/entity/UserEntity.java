@@ -4,7 +4,9 @@ package com.tfx0one.modules.app.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,8 +17,9 @@ import java.util.Date;
  *
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("ec_user")
-public class UserEntity implements Serializable {
+public class UserEntity extends Model<UserEntity> {
 	private static final long serialVersionUID = 1L;
 
 	/**

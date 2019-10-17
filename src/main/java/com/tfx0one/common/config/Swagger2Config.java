@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -11,10 +12,13 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -41,26 +45,27 @@ public class Swagger2Config {
 //                .apis(RequestHandlerSelectors.basePackage("com.tfx0one"))
                 .paths(PathSelectors.any())
                 .build()
-                .globalOperationParameters(newArrayList(
-                        new ParameterBuilder()
-                                .name("token")
-                                .description("前端的token")
-//                                .description("默认使用 admin 账户的token")
-                                .modelRef(new ModelRef("string"))
-                                .parameterType("header").required(false)
-                                .defaultValue("")
-//                                .defaultValue(JWTUtils.sign(sysUserService.queryByUserName("admin"))) //获取管理员用户
-                                .build(),
-                        new ParameterBuilder()
-                                .name("Authorization")
-                                .description("后台的token")
-//                                .description("默认使用 admin 账户的token")
-                                .modelRef(new ModelRef("string"))
-                                .parameterType("header").required(false)
-                                .defaultValue("")
-//                                .defaultValue(JWTUtils.sign(sysUserService.queryByUserName("admin"))) //获取管理员用户
-                                .build()
-                ))
+                .securitySchemes(Collections.singletonList(apiKey()))
+//                .globalOperationParameters(newArrayList(
+//                        new ParameterBuilder()
+//                                .name("token")
+//                                .description("前端的token")
+////                                .description("默认使用 admin 账户的token")
+//                                .modelRef(new ModelRef("string"))
+//                                .parameterType("header").required(false)
+//                                .defaultValue("")
+////                                .defaultValue(JWTUtils.sign(sysUserService.queryByUserName("admin"))) //获取管理员用户
+//                                .build(),
+//                        new ParameterBuilder()
+//                                .name("Authorization")
+//                                .description("后台的token")
+////                                .description("默认使用 admin 账户的token")
+//                                .modelRef(new ModelRef("string"))
+//                                .parameterType("header").required(false)
+//                                .defaultValue("")
+////                                .defaultValue(JWTUtils.sign(sysUserService.queryByUserName("admin"))) //获取管理员用户
+//                                .build()
+//                ))
                 .apiInfo(apiInfo());
     }
 
@@ -75,10 +80,15 @@ public class Swagger2Config {
                 .build();
     }
 
-    private List<ApiKey> security() {
-        return newArrayList(
-                new ApiKey("token", "Authorization", "header")
-        );
+//    @Bean
+    public SecurityScheme apiKey() {
+        return new ApiKey(HttpHeaders.AUTHORIZATION, HttpHeaders.AUTHORIZATION, "header");
     }
+
+//    private List<ApiKey> security() {
+//        return newArrayList(
+//                new ApiKey("token", "Authorization", "header")
+//        );
+//    }
 
 }
