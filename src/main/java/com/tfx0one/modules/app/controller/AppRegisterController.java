@@ -5,6 +5,7 @@ package com.tfx0one.modules.app.controller;
 
 import com.tfx0one.common.utils.R;
 import com.tfx0one.common.validator.ValidatorUtils;
+import com.tfx0one.common.validator.group.AddGroup;
 import com.tfx0one.modules.app.entity.UserEntity;
 import com.tfx0one.modules.app.form.RegisterForm;
 import com.tfx0one.modules.app.service.UserService;
@@ -12,11 +13,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 /**
@@ -32,9 +35,9 @@ public class AppRegisterController {
 
     @PostMapping("register")
     @ApiOperation("注册")
-    public R register(@RequestBody RegisterForm form){
+    public R register(@RequestBody @Validated RegisterForm form){
         //表单校验
-        ValidatorUtils.validateEntity(form);
+//        ValidatorUtils.validateEntity(form);
 
         UserEntity user = new UserEntity();
         user.setMobile(form.getMobile());

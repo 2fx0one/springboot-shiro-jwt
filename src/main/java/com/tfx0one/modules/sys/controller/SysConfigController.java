@@ -9,6 +9,7 @@ import com.tfx0one.modules.sys.entity.SysConfigEntity;
 import com.tfx0one.modules.sys.service.SysConfigService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -48,9 +49,7 @@ public class SysConfigController extends AbstractBaseController {
     @SysLog("保存配置")
     @PostMapping("/save")
     @RequiresPermissions("sys:config:save")
-    public R save(@RequestBody SysConfigEntity config) {
-        ValidatorUtils.validateEntity(config);
-
+    public R save(@Validated @RequestBody SysConfigEntity config) {
         sysConfigService.saveConfig(config);
 
         return R.ok();
@@ -62,8 +61,7 @@ public class SysConfigController extends AbstractBaseController {
     @SysLog("修改配置")
     @PostMapping("/update")
     @RequiresPermissions("sys:config:update")
-    public R update(@RequestBody SysConfigEntity config) {
-        ValidatorUtils.validateEntity(config);
+    public R update(@Validated @RequestBody SysConfigEntity config) {
 
         sysConfigService.update(config);
 

@@ -17,6 +17,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,8 +62,8 @@ public class SysUserController extends AbstractBaseController {
      */
     @SysLog("修改密码")
     @PostMapping("/password")
-    public R password(@RequestBody RequestPassword form) {
-        ValidatorUtils.validateEntity(form);
+    public R password(@Validated @RequestBody RequestPassword form) {
+//        ValidatorUtils.validateEntity(form);
         Assert.notBlank(form.getNewPassword(), "新密码不为能空");
 
         //sha256加密
@@ -100,8 +101,8 @@ public class SysUserController extends AbstractBaseController {
     @SysLog("保存用户")
     @PostMapping("/save")
     @RequiresPermissions("sys:user:save")
-    public R save(@RequestBody SysUserEntity user) {
-        ValidatorUtils.validateEntity(user, AddGroup.class);
+    public R save(@Validated({AddGroup.class}) @RequestBody SysUserEntity user) {
+//        ValidatorUtils.validateEntity(user, AddGroup.class);
 
         user.setCreateUserId(getUserId());
         sysUserService.saveUser(user);
@@ -115,8 +116,8 @@ public class SysUserController extends AbstractBaseController {
     @SysLog("修改用户")
     @PostMapping("/update")
     @RequiresPermissions("sys:user:update")
-    public R update(@RequestBody SysUserEntity user) {
-        ValidatorUtils.validateEntity(user, UpdateGroup.class);
+    public R update(@Validated({UpdateGroup.class}) @RequestBody SysUserEntity user) {
+//        ValidatorUtils.validateEntity(user, UpdateGroup.class);
 
         user.setCreateUserId(getUserId());
         sysUserService.update(user);

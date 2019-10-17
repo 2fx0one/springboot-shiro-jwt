@@ -10,6 +10,8 @@ import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.modules.app.entity.UserEntity;
 import com.tfx0one.modules.sys.entity.SysUserEntity;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class JWTUtils {
@@ -100,6 +102,8 @@ public class JWTUtils {
 //        user.setPassword("p1");
 //        String sign = sign(user);
 //        System.out.println("sign = " + sign);
+        long until = LocalDateTime.now().until(LocalDateTime.now(), ChronoUnit.DAYS);
+        System.out.println("until = " + until);
 
         String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNTYyNTU3MDg3LCJ1c2VybmFtZSI6ImFkbWluIn0.Y9eycEAtJquimq2rONyaMTSBpCKjTiYQWNbV_84SWkY";
         System.out.println("getUserId(token) = " + getUserId(token));
