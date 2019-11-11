@@ -12,7 +12,7 @@ public class CorsConfig implements WebMvcConfigurer {
     /**
     * @Author wangk
     * @Description 跨域由NGINX 解决
-    * @Date 17:07 2019-11-11
+    * @Date 17:10 2019-11-11
     **/
     @Override
     public void addCorsMappings(CorsRegistry registry) {

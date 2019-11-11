@@ -16,6 +16,6 @@ public interface SysMenuDao extends BaseMapper<SysMenuEntity> {
     /**
      * 获取不包含按钮的菜单列表
      */
-    List<SysMenuEntity> queryNotButtonList();
+//    List<SysMenuEntity> queryNotButtonList();
 
 }

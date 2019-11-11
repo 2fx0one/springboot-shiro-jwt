@@ -149,7 +149,7 @@ public class SysMenuController extends AbstractBaseController {
 
         //菜单
         if (menu.getType() == GlobalConstant.MenuType.MENU.getValue()) {
-            Assert.notBlank(menu.getUrl(), "菜单URL不能为空");
+            Assert.notBlank(menu.getPath(), "菜单PATH不能为空");
         }
 
         //如果不是父节点不是根节点，找到其父节点。
