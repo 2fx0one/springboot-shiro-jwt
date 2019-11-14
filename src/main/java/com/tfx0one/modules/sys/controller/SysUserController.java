@@ -16,7 +16,10 @@ import com.tfx0one.modules.sys.vo.ResponseUserInfo;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.session.RedisSessionProperties;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -94,6 +97,9 @@ public class SysUserController extends AbstractBaseController {
 
         return R.ok(user);
     }
+
+    @Autowired
+    private RedissonClient redissonClient;
 
     /**
      * 保存用户
