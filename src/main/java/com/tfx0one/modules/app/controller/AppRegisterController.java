@@ -41,7 +41,7 @@ public class AppRegisterController {
 
     @PostMapping("register")
     @ApiOperation("注册")
-    public R<String> register(@RequestBody @Validated RegisterForm form) {
+    public R register(@RequestBody @Validated RegisterForm form) {
 
         RLock lock = redissonClient.getLock(form.getMobile());
 
