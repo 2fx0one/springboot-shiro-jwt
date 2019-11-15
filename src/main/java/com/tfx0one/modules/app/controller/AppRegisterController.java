@@ -41,14 +41,13 @@ public class AppRegisterController {
 
     @PostMapping("register")
     @ApiOperation("注册")
-    public R register(@RequestBody @Validated RegisterForm form) {
+    public R<String> register(@RequestBody @Validated RegisterForm form) {
 
         RLock lock = redissonClient.getLock(form.getMobile());
 
         try {
             lock.lock();
 
-            Thread.sleep(1000);
             UserEntity userEntity = userService.queryByMobile(form.getMobile());
             if (userEntity != null) {
                 return R.error("用户已经存在！");
