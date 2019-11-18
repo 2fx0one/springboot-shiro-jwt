@@ -203,7 +203,8 @@ INSERT INTO `ec_user` (`username`, `mobile`, `password`, `create_time`) VALUES (
 
 
 
---  quartz自带表结构
+
+--  ########### quartz自带表结构 ###########
 CREATE TABLE QRTZ_JOB_DETAILS(
 SCHED_NAME VARCHAR(120) NOT NULL,
 JOB_NAME VARCHAR(200) NOT NULL,
