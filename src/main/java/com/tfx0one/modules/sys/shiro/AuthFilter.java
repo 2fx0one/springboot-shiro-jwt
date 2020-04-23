@@ -77,7 +77,7 @@ public class AuthFilter extends AuthenticatingFilter {
 
 //            String json = new Gson().toJson(R.error(GlobalConstant.HTTPS_STATUS_RE_LOGIN, "Access Denied"));
 
-            httpResponse.getWriter().print(new Gson().toJson(R.error(GlobalConstant.HTTPS_STATUS_RE_LOGIN, "Access Denied")));
+            httpResponse.getWriter().print(new Gson().toJson(R.error(GlobalConstant.HTTPS_STATUS_RE_LOGIN, "Access Denied token 不存在！")));
 
             return false;
         }

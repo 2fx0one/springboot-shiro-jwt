@@ -17,9 +17,6 @@ package com.tfx0one.modules.sys.shiro;
 
 import com.tfx0one.common.constant.GlobalConstant;
 import com.tfx0one.common.utils.SpringContextUtils;
-import com.tfx0one.modules.sys.shiro.ShiroAuthRealm;
-import com.tfx0one.common.config.ShiroConfig;
-import com.tfx0one.modules.sys.shiro.ShiroRedisCacheManager;
 import com.tfx0one.modules.sys.entity.SysUserEntity;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;

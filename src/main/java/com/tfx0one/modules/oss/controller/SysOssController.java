@@ -75,7 +75,7 @@ public class SysOssController {
 
         if (config.getType() == GlobalConstant.CloudService.QINIU.getValue()) {
             //校验七牛数据
-            ValidatorUtils.validateEntity(config, QiniuGroup.class);
+            ValidatorUtils.  validateEntity(config, QiniuGroup.class);
         } else if (config.getType() == GlobalConstant.CloudService.ALIYUN.getValue()) {
             //校验阿里云数据
             ValidatorUtils.validateEntity(config, AliyunGroup.class);

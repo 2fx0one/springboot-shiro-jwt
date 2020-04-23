@@ -3,6 +3,7 @@ package com.tfx0one.modules.sys.shiro;
 import com.tfx0one.modules.sys.entity.SysUserEntity;
 import com.tfx0one.modules.sys.service.SysUserService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -15,9 +16,10 @@ import java.util.Set;
  * @return 
  **/
 @Service
-@AllArgsConstructor
 public class ShiroService {
-    private final SysUserService sysUserService;
+
+    @Autowired
+    private SysUserService sysUserService;
 
     //用户权限列表
     Set<String> getUserPermissions(Long userId) {
