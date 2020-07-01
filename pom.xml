@@ -25,7 +25,7 @@
         <mssql.version>4.0</mssql.version>
         <oracle.version>11.2.0.3</oracle.version>
         <druid.version>1.1.13</druid.version>
-        <quartz.version>2.3.0</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
         <commons-io.version>2.5</commons-io.version>
         <shiro.version>1.4.0-RC2</shiro.version>
         <auth0-jwt.version>3.5.0</auth0-jwt.version>
